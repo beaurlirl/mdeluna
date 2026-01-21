@@ -3,7 +3,7 @@ import { contact, siteInfo } from '../data/siteContent'
 
 function Contact() {
   return (
-    <div className="pt-28 lg:pt-36 pb-20 lg:pb-32 px-6 lg:px-12">
+    <div className="pt-20 lg:pt-28 pb-20 lg:pb-32 px-6 lg:px-12">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           {/* Contact Info */}

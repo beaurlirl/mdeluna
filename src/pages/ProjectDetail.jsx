@@ -27,7 +27,7 @@ function ProjectDetail() {
   }
 
   return (
-    <div className="pt-28 lg:pt-36 pb-20 lg:pb-32">
+    <div className="pt-20 lg:pt-28 pb-20 lg:pb-32">
       {/* Header */}
       <div className="px-6 lg:px-12 max-w-7xl mx-auto">
         <motion.div

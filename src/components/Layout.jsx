@@ -56,9 +56,9 @@ function Layout({ children }) {
         transition={{ duration: 0.4, ease: 'easeOut' }}
       >
         {breadcrumbs.length > 1 && (
-          <div className="pt-24 lg:pt-28">
+          <div className="pt-20 lg:pt-24">
             <div className="max-w-7xl mx-auto px-6 lg:px-12">
-              <nav className="flex flex-wrap items-center gap-2 text-[0.65rem] uppercase tracking-[0.25em] text-mid-gray">
+              <nav className="flex flex-wrap items-center gap-2 text-[0.7rem] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] text-mid-gray">
                 {breadcrumbs.map((crumb, index) => {
                   const isLast = index === breadcrumbs.length - 1
                   return (

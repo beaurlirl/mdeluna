@@ -11,7 +11,7 @@ function Projects() {
     : projects.filter(p => p.category === activeCategory)
 
   return (
-    <div className="pt-28 lg:pt-36 pb-20 lg:pb-32 px-6 lg:px-12">
+    <div className="pt-20 lg:pt-28 pb-20 lg:pb-32 px-6 lg:px-12">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
