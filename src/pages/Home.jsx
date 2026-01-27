@@ -1,32 +1,68 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getFeaturedProjects } from '../data/projects'
 import { siteInfo, services } from '../data/siteContent'
-import ProjectCard from '../components/ProjectCard'
 
 function Home() {
-  const featuredProjects = getFeaturedProjects()
+  const heroImages = [
+    '/petrossian1.png',
+    '/petrossian2.png',
+    '/pizza1.png',
+    '/jewishacademy1.png',
+  ]
+  const [heroIndex, setHeroIndex] = useState(0)
+
+  useEffect(() => {
+    if (!heroImages.length) return
+    heroImages.forEach((src) => {
+      const image = new Image()
+      image.src = src
+    })
+  }, [heroImages])
+
+  useEffect(() => {
+    if (heroImages.length <= 1) return
+    const interval = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % heroImages.length)
+    }, 3500)
+    return () => clearInterval(interval)
+  }, [heroImages])
 
   return (
     <>
       {/* Hero Section */}
-      <section className="min-h-[85vh] flex items-center pt-24 pb-16 px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto w-full">
+      <section className="relative h-screen flex items-center pt-24 pb-12 px-6 lg:px-12 overflow-hidden">
+        <div className="absolute inset-0 bg-charcoal">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={heroImages[heroIndex]}
+              className="absolute inset-0 bg-center bg-cover blur-sm scale-105"
+              style={{ backgroundImage: `url(${heroImages[heroIndex]})` }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+            />
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-navy/35" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto w-full">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light text-charcoal leading-[0.95] tracking-tight">
+            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light text-warm-white leading-[0.95] tracking-tight">
               {siteInfo.name}
             </h1>
-            <p className="mt-4 text-xl md:text-2xl text-mid-gray font-light">
+            <p className="mt-4 text-xl md:text-2xl text-light-gray font-light">
               {siteInfo.title}
             </p>
           </motion.div>
 
           <motion.p
-            className="mt-8 lg:mt-12 text-lg md:text-xl text-mid-gray max-w-2xl leading-relaxed font-light"
+            className="mt-8 lg:mt-12 text-lg md:text-xl text-light-gray max-w-2xl leading-relaxed font-light"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
@@ -69,7 +105,7 @@ function Home() {
           >
             <Link
               to="/contact"
-              className="inline-block bg-charcoal text-warm-white font-medium text-sm tracking-wide px-8 py-4 rounded-full shadow-sm transition-all duration-300 hover:bg-burgundy hover:-translate-y-0.5 hover:shadow-md"
+              className="inline-block bg-warm-white text-charcoal font-medium text-sm tracking-wide px-8 py-4 rounded-full shadow-sm transition-all duration-300 hover:bg-burgundy hover:text-warm-white hover:-translate-y-0.5 hover:shadow-md"
             >
               Start Your Project
             </Link>
@@ -77,79 +113,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Featured Projects */}
-      <section className="py-20 lg:py-32 px-6 lg:px-12 border-t border-light-gray">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            className="flex items-end justify-between mb-12 lg:mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div>
-              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-light text-charcoal">
-                Selected Work
-              </h2>
-              <p className="mt-3 text-mid-gray text-lg">
-                Featured projects from our portfolio
-              </p>
-            </div>
-            <Link
-              to="/projects"
-              className="hidden md:block text-charcoal font-medium text-sm border-b border-charcoal pb-1 hover:text-burgundy hover:border-burgundy transition-colors duration-300"
-            >
-              View All Projects
-            </Link>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            {featuredProjects.slice(0, 4).map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
-            ))}
-          </div>
-
-          <motion.div
-            className="mt-12 text-center md:hidden"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <Link
-              to="/projects"
-              className="inline-block text-charcoal font-medium text-sm border-b border-charcoal pb-1"
-            >
-              View All Projects
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Brief About */}
-      <section className="py-20 lg:py-32 px-6 lg:px-12 bg-charcoal">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            className="max-w-3xl"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-light text-warm-white leading-tight">
-              Full-service architecture firm integrating design, code compliance, and expediting.
-            </h2>
-            <p className="mt-8 text-light-gray text-lg leading-relaxed">
-              {siteInfo.description}
-            </p>
-            <Link
-              to="/about"
-              className="inline-block mt-8 text-warm-white font-medium text-sm border-b border-warm-white pb-1 hover:text-burgundy hover:border-burgundy transition-colors duration-300"
-            >
-              Learn More About Us
-            </Link>
-          </motion.div>
-        </div>
-      </section>
     </>
   )
 }

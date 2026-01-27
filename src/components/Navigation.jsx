@@ -12,6 +12,11 @@ function Navigation() {
   const [activeCategory, setActiveCategory] = useState(null)
   const dropdownRef = useRef(null)
   const location = useLocation()
+  const isHome = location.pathname === '/'
+  const useLightNav = isHome && !scrolled
+  const idleTextClass = useLightNav
+    ? 'text-warm-white hover:text-burgundy'
+    : 'text-charcoal hover:text-burgundy'
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -66,7 +71,7 @@ function Navigation() {
                     className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-300 ${
                       location.pathname.startsWith('/projects')
                         ? 'text-burgundy'
-                        : 'text-charcoal hover:text-burgundy'
+                        : idleTextClass
                     }`}
                     onClick={() => {
                       setProjectsDropdownOpen(!projectsDropdownOpen)
@@ -94,7 +99,7 @@ function Navigation() {
                     className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-300 ${
                       location.pathname.startsWith('/services')
                         ? 'text-burgundy'
-                        : 'text-charcoal hover:text-burgundy'
+                        : idleTextClass
                     }`}
                     onClick={() => {
                       setServicesDropdownOpen(!servicesDropdownOpen)
@@ -125,7 +130,7 @@ function Navigation() {
                     className={`text-sm font-medium transition-colors duration-300 ${
                       location.pathname === link.href
                         ? 'text-burgundy'
-                        : 'text-charcoal hover:text-burgundy'
+                        : idleTextClass
                     }`}
                   >
                     {link.name}
@@ -228,7 +233,12 @@ function Navigation() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            <svg className="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className={`w-6 h-6 ${useLightNav ? 'text-warm-white' : 'text-charcoal'}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               {mobileMenuOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
               ) : (

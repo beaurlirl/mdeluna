@@ -9,6 +9,7 @@ function Layout({ children }) {
   const location = useLocation()
   const pathSegments = location.pathname.split('/').filter(Boolean)
   const projectId = pathSegments[1]
+  const isHome = location.pathname === '/'
   const project = location.pathname.startsWith('/projects/') 
     ? projects.find((item) => item.id === projectId)
     : null
@@ -80,7 +81,7 @@ function Layout({ children }) {
         )}
         {children}
       </motion.main>
-      <Footer />
+      {!isHome && <Footer />}
     </div>
   )
 }
