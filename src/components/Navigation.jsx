@@ -65,7 +65,19 @@ function Navigation() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-12" ref={dropdownRef}>
             {navLinks.map((link) => (
-              <div key={link.name} className="relative">
+              <div
+                key={link.name}
+                className="relative"
+                onMouseLeave={() => {
+                  if (link.dropdown === 'projects') {
+                    setProjectsDropdownOpen(false)
+                    setActiveCategory(null)
+                  }
+                  if (link.dropdown === 'services') {
+                    setServicesDropdownOpen(false)
+                  }
+                }}
+              >
                 {link.dropdown === 'projects' ? (
                   <button
                     className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-300 ${
