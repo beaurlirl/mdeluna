@@ -11,6 +11,7 @@ function Navigation() {
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState(null)
   const dropdownRef = useRef(null)
+  const closeTimeoutRef = useRef(null)
   const location = useLocation()
   const isHome = location.pathname === '/'
   const useLightNav = isHome && !scrolled
@@ -43,8 +44,38 @@ function Navigation() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  const clearCloseTimeout = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current)
+      closeTimeoutRef.current = null
+    }
+  }
+
+  const scheduleProjectsClose = () => {
+    clearCloseTimeout()
+    closeTimeoutRef.current = setTimeout(() => {
+      setProjectsDropdownOpen(false)
+      setActiveCategory(null)
+    }, 250)
+  }
+
+  const scheduleServicesClose = () => {
+    clearCloseTimeout()
+    closeTimeoutRef.current = setTimeout(() => {
+      setServicesDropdownOpen(false)
+    }, 250)
+  }
+
   const navLinks = [
-    { name: 'Portfolio', href: '/projects', dropdown: 'projects' },
+    { name: 'Our Work', href: '/projects', dropdown: 'projects' },
     { name: 'Services', href: '/services', dropdown: 'services' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
@@ -70,11 +101,10 @@ function Navigation() {
                 className="relative"
                 onMouseLeave={() => {
                   if (link.dropdown === 'projects') {
-                    setProjectsDropdownOpen(false)
-                    setActiveCategory(null)
+                    scheduleProjectsClose()
                   }
                   if (link.dropdown === 'services') {
-                    setServicesDropdownOpen(false)
+                    scheduleServicesClose()
                   }
                 }}
               >
@@ -86,10 +116,12 @@ function Navigation() {
                         : idleTextClass
                     }`}
                     onClick={() => {
+                      clearCloseTimeout()
                       setProjectsDropdownOpen(!projectsDropdownOpen)
                       setServicesDropdownOpen(false)
                     }}
                     onMouseEnter={() => {
+                      clearCloseTimeout()
                       setProjectsDropdownOpen(true)
                       setServicesDropdownOpen(false)
                     }}
@@ -114,11 +146,13 @@ function Navigation() {
                         : idleTextClass
                     }`}
                     onClick={() => {
+                      clearCloseTimeout()
                       setServicesDropdownOpen(!servicesDropdownOpen)
                       setProjectsDropdownOpen(false)
                       setActiveCategory(null)
                     }}
                     onMouseEnter={() => {
+                      clearCloseTimeout()
                       setServicesDropdownOpen(true)
                       setProjectsDropdownOpen(false)
                       setActiveCategory(null)
@@ -158,10 +192,8 @@ function Navigation() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.2 }}
-                      onMouseLeave={() => {
-                        setProjectsDropdownOpen(false)
-                        setActiveCategory(null)
-                      }}
+                      onMouseEnter={clearCloseTimeout}
+                      onMouseLeave={scheduleProjectsClose}
                     >
                       <div className="flex">
                         {/* Categories */}
@@ -219,7 +251,8 @@ function Navigation() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.2 }}
-                      onMouseLeave={() => setServicesDropdownOpen(false)}
+                      onMouseEnter={clearCloseTimeout}
+                      onMouseLeave={scheduleServicesClose}
                     >
                       <div className="py-3">
                         {services.map((service) => (
@@ -276,7 +309,7 @@ function Navigation() {
                 to="/projects"
                 className="block text-2xl font-light text-charcoal hover:text-burgundy transition-colors"
               >
-                Portfolio
+                Our Work
               </Link>
               <div className="pl-4 space-y-3 border-l-2 border-light-gray">
                 {categories.map((cat) => (

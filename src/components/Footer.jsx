@@ -33,7 +33,7 @@ function Footer() {
                 to="/projects"
                 className="block text-light-gray hover:text-warm-white transition-colors duration-300"
               >
-                Portfolio
+                Our Work
               </Link>
               <Link
                 to="/services"

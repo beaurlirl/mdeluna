@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
-import { services } from '../data/siteContent'
+import { consultingWork, services } from '../data/siteContent'
 
 function Services() {
   const location = useLocation()
@@ -11,7 +11,13 @@ function Services() {
       const element = document.getElementById(location.hash.slice(1))
       if (element) {
         setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          const header = document.querySelector('header')
+          const headerOffset = header ? header.offsetHeight + 16 : 120
+          const elementTop = element.getBoundingClientRect().top + window.scrollY
+          window.scrollTo({
+            top: Math.max(elementTop - headerOffset, 0),
+            behavior: 'smooth',
+          })
         }, 100)
       }
     }
@@ -31,70 +37,101 @@ function Services() {
             Services
           </h1>
           <p className="mt-6 text-lg text-mid-gray leading-relaxed">
-            We offer comprehensive architecture and expediting services, guiding projects 
-            from initial concept through final Department of Buildings approval.
+            Expediting support and consulting expertise to guide approvals, permits, and filings from start to finish.
           </p>
         </motion.div>
 
-        {/* Services Grid */}
-        <div className="mt-16 lg:mt-24 space-y-20 lg:space-y-32">
-          {services.map((service, index) => (
+        {/* Expediting Services */}
+        <div className="mt-16 lg:mt-24">
+          <h2 className="font-display text-3xl md:text-4xl font-light text-charcoal">
+            Expediting Services We Offer
+          </h2>
+          <div className="mt-12 space-y-16 lg:space-y-24">
+            {services.map((service, index) => (
             <motion.div
-              key={service.id}
-              id={service.id}
-              className="scroll-mt-32"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
-                {/* Letter Badge */}
-                <div className="lg:col-span-2">
-                  <div
-                    className="w-16 h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center"
-                    style={{ backgroundColor: service.color }}
-                  >
-                    <span className="text-warm-white font-semibold text-2xl lg:text-3xl">
-                      {service.letter}
-                    </span>
+                key={service.id}
+                id={service.id}
+              className={`scroll-mt-32 ${index > 0 ? 'pt-12 lg:pt-16 border-t border-light-gray' : ''}`}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+                  {/* Letter Badge */}
+                  <div className="lg:col-span-2">
+                    <div
+                      className="w-16 h-16 lg:w-20 lg:h-20 rounded-full flex items-center justify-center"
+                      style={{ backgroundColor: service.color }}
+                    >
+                      <span className="text-warm-white font-semibold text-2xl lg:text-3xl">
+                        {service.letter}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="lg:col-span-4">
+                    <h3 className="font-display text-2xl lg:text-3xl font-light text-charcoal">
+                      {service.title}
+                    </h3>
+                  </div>
+
+                  {/* Details */}
+                  <div className="lg:col-span-6">
+                    <ul className="space-y-3">
+                      {service.details.map((detail, i) => (
+                        <li
+                          key={i}
+                          className="flex items-center gap-3 text-charcoal"
+                        >
+                          <span
+                            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: service.color }}
+                          />
+                          {detail}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="lg:col-span-5">
-                  <h2 className="font-display text-2xl lg:text-3xl font-light text-charcoal">
-                    {service.title}
-                  </h2>
-                  <p className="mt-4 text-mid-gray leading-relaxed">
-                    {service.description}
-                  </p>
-                </div>
+                {index < services.length - 1 && (
+                  <div className="mt-12 lg:mt-16" />
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
 
-                {/* Details */}
-                <div className="lg:col-span-5">
-                  <ul className="space-y-3">
-                    {service.details.map((detail, i) => (
-                      <li
-                        key={i}
-                        className="flex items-center gap-3 text-charcoal"
-                      >
-                        <span
-                          className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                          style={{ backgroundColor: service.color }}
-                        />
-                        {detail}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {index < services.length - 1 && (
-                <div className="mt-16 lg:mt-24 border-b border-light-gray" />
-              )}
-            </motion.div>
-          ))}
+        {/* Consulting Work */}
+        <div className="mt-20 lg:mt-32">
+          <h2 className="font-display text-3xl md:text-4xl font-light text-charcoal">
+            Consulting Work
+          </h2>
+          <div className="mt-10 space-y-12 lg:space-y-16">
+            {consultingWork.map((section, index) => (
+              <motion.div
+                key={section.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: index * 0.1 }}
+              >
+                <h3 className="text-lg font-semibold tracking-wide text-charcoal uppercase">
+                  {section.title}
+                </h3>
+                <ul className="mt-4 space-y-2 text-mid-gray">
+                  {section.items.map((item) => (
+                    <li key={item} className="flex items-center gap-3">
+                      <span className="w-1.5 h-1.5 rounded-full bg-burgundy flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         {/* CTA */}

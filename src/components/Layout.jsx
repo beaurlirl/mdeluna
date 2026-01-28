@@ -17,7 +17,7 @@ function Layout({ children }) {
     if (location.pathname === '/') return []
     const items = [{ name: 'Home', href: '/' }]
     if (location.pathname.startsWith('/projects')) {
-      items.push({ name: 'Portfolio', href: '/projects' })
+      items.push({ name: 'Our Work', href: '/projects' })
       if (project) {
         items.push({ name: project.title, href: location.pathname })
       }
