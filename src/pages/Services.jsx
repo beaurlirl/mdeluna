@@ -1,16 +1,20 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
 import { consultingWork, services } from '../data/siteContent'
 
 function Services() {
   const location = useLocation()
+  const scrollTimeoutRef = useRef(null)
 
   useEffect(() => {
     if (location.hash) {
       const element = document.getElementById(location.hash.slice(1))
       if (element) {
-        setTimeout(() => {
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current)
+        }
+        scrollTimeoutRef.current = setTimeout(() => {
           const header = document.querySelector('header')
           const headerOffset = header ? header.offsetHeight + 16 : 120
           const elementTop = element.getBoundingClientRect().top + window.scrollY
@@ -19,6 +23,12 @@ function Services() {
             behavior: 'smooth',
           })
         }, 100)
+      }
+    }
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current)
+        scrollTimeoutRef.current = null
       }
     }
   }, [location])

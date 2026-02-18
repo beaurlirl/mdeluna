@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { categories } from '../data/projects'
 
 function ProjectCard({ project, index = 0 }) {
   const [imageError, setImageError] = useState(false)
-  const category = categories.find(c => c.id === project.category)
+  const category = useMemo(() => categories.find((c) => c.id === project.category), [project.category])
 
   return (
     <motion.article

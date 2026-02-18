@@ -1,7 +1,7 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { getProjectById, projects, categories } from '../data/projects'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback, useMemo } from 'react'
 
 function ProjectDetail() {
   const { id } = useParams()
@@ -15,16 +15,22 @@ function ProjectDetail() {
     }
   }, [project, navigate])
 
+  const handleImageError = useCallback((imageKey) => {
+    setImageError((prev) => ({ ...prev, [imageKey]: true }))
+  }, [])
+
+  const { category, nextProject, prevProject } = useMemo(() => {
+    if (!project) return { category: null, nextProject: null, prevProject: null }
+    const cat = categories.find((c) => c.id === project.category)
+    const idx = projects.findIndex((p) => p.id === id)
+    return {
+      category: cat,
+      nextProject: projects[(idx + 1) % projects.length],
+      prevProject: projects[(idx - 1 + projects.length) % projects.length],
+    }
+  }, [project, id])
+
   if (!project) return null
-
-  const category = categories.find(c => c.id === project.category)
-  const projectIndex = projects.findIndex(p => p.id === id)
-  const nextProject = projects[(projectIndex + 1) % projects.length]
-  const prevProject = projects[(projectIndex - 1 + projects.length) % projects.length]
-
-  const handleImageError = (imageKey) => {
-    setImageError(prev => ({ ...prev, [imageKey]: true }))
-  }
 
   return (
     <div className="pt-20 lg:pt-28 pb-20 lg:pb-32">

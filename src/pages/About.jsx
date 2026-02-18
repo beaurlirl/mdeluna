@@ -65,8 +65,10 @@ function About() {
                 alt={siteInfo.name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  e.target.style.display = 'none'
-                  e.target.nextSibling.style.display = 'flex'
+                  const img = e.currentTarget
+                  img.style.display = 'none'
+                  const fallback = img.nextElementSibling
+                  if (fallback) fallback.style.display = 'flex'
                 }}
               />
               <div className="hidden w-full h-full items-center justify-center text-mid-gray absolute inset-0 bg-light-gray">

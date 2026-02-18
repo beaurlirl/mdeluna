@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { projects, categories } from '../data/projects'
 import ProjectCard from '../components/ProjectCard'
@@ -6,9 +6,10 @@ import ProjectCard from '../components/ProjectCard'
 function Projects() {
   const [activeCategory, setActiveCategory] = useState('all')
 
-  const filteredProjects = activeCategory === 'all' 
-    ? projects 
-    : projects.filter(p => p.category === activeCategory)
+  const filteredProjects = useMemo(
+    () => (activeCategory === 'all' ? projects : projects.filter((p) => p.category === activeCategory)),
+    [activeCategory]
+  )
 
   return (
     <div className="pt-20 lg:pt-28 pb-20 lg:pb-32 px-6 lg:px-12">

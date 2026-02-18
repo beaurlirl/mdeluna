@@ -91,7 +91,12 @@ function Contact() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <form className="space-y-6">
+            <form
+              className="space-y-6"
+              onSubmit={(e) => {
+                e.preventDefault()
+              }}
+            >
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-charcoal mb-2">
                   Name

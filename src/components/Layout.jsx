@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Navigation from './Navigation'
@@ -7,13 +7,14 @@ import { projects } from '../data/projects'
 
 function Layout({ children }) {
   const location = useLocation()
-  const pathSegments = location.pathname.split('/').filter(Boolean)
+  const pathSegments = useMemo(() => location.pathname.split('/').filter(Boolean), [location.pathname])
   const projectId = pathSegments[1]
   const isHome = location.pathname === '/'
-  const project = location.pathname.startsWith('/projects/') 
-    ? projects.find((item) => item.id === projectId)
-    : null
-  const breadcrumbs = (() => {
+  const project = useMemo(
+    () => (location.pathname.startsWith('/projects/') ? projects.find((item) => item.id === projectId) : null),
+    [location.pathname, projectId]
+  )
+  const breadcrumbs = useMemo(() => {
     if (location.pathname === '/') return []
     const items = [{ name: 'Home', href: '/' }]
     if (location.pathname.startsWith('/projects')) {
@@ -39,7 +40,7 @@ function Layout({ children }) {
       items.push({ name: pathSegments[0].replace(/-/g, ' '), href: location.pathname })
     }
     return items
-  })()
+  }, [location.pathname, pathSegments, project])
 
   // Scroll to top on route change
   useEffect(() => {

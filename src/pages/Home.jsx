@@ -1,32 +1,33 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { siteInfo, services } from '../data/siteContent'
+import { siteInfo } from '../data/siteContent'
+
+const HERO_IMAGES = [
+  '/petrossian1.png',
+  '/petrossian2.png',
+  '/pizza1.png',
+  '/jewishacademy1.png',
+]
 
 function Home() {
-  const heroImages = [
-    '/petrossian1.png',
-    '/petrossian2.png',
-    '/pizza1.png',
-    '/jewishacademy1.png',
-  ]
   const [heroIndex, setHeroIndex] = useState(0)
 
   useEffect(() => {
-    if (!heroImages.length) return
-    heroImages.forEach((src) => {
+    if (!HERO_IMAGES.length) return
+    HERO_IMAGES.forEach((src) => {
       const image = new Image()
       image.src = src
     })
-  }, [heroImages])
+  }, [])
 
   useEffect(() => {
-    if (heroImages.length <= 1) return
+    if (HERO_IMAGES.length <= 1) return
     const interval = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroImages.length)
+      setHeroIndex((prev) => (prev + 1) % HERO_IMAGES.length)
     }, 3500)
     return () => clearInterval(interval)
-  }, [heroImages])
+  }, [])
 
   return (
     <>
@@ -35,9 +36,9 @@ function Home() {
         <div className="absolute inset-0 bg-charcoal">
           <AnimatePresence mode="wait">
             <motion.div
-              key={heroImages[heroIndex]}
+              key={HERO_IMAGES[heroIndex]}
               className="absolute inset-0 bg-center bg-cover blur-sm scale-105"
-              style={{ backgroundImage: `url(${heroImages[heroIndex]})` }}
+              style={{ backgroundImage: `url(${HERO_IMAGES[heroIndex]})` }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -69,33 +70,6 @@ function Home() {
           >
             {siteInfo.tagline}
           </motion.p>
-
-          {/* Service Indicators */}
-          <motion.div
-            className="mt-12 lg:mt-16 flex flex-wrap gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {services.map((service, index) => (
-              <Link
-                key={service.id}
-                to={`/services#${service.id}`}
-                className="group flex items-center gap-3 pr-6"
-              >
-                <motion.div
-                  className="w-10 h-10 rounded-full flex items-center justify-center bg-burgundy transition-transform duration-300 group-hover:scale-110"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 + index * 0.1, type: 'spring' }}
-                >
-                  <span className="text-warm-white font-medium text-sm">
-                    {service.letter}
-                  </span>
-                </motion.div>
-              </Link>
-            ))}
-          </motion.div>
 
           <motion.div
             className="mt-12 lg:mt-16"

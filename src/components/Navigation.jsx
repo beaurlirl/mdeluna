@@ -2,7 +2,13 @@ import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { categories, getProjectsByCategory } from '../data/projects'
-import { services } from '../data/siteContent'
+
+const servicesNavItems = [
+  { name: 'Architecture', href: '/projects' },
+  { name: 'Code', href: '/services' },
+  { name: 'Zoning', href: '/services' },
+  { name: 'Filing', href: '/services' },
+]
 
 function Navigation() {
   const [scrolled, setScrolled] = useState(false)
@@ -21,7 +27,7 @@ function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -41,14 +47,9 @@ function Navigation() {
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
-
-  useEffect(() => {
     return () => {
-      if (closeTimeoutRef.current) {
-        clearTimeout(closeTimeoutRef.current)
-      }
+      document.removeEventListener('mousedown', handleClickOutside)
+      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current)
     }
   }, [])
 
@@ -255,13 +256,13 @@ function Navigation() {
                       onMouseLeave={scheduleServicesClose}
                     >
                       <div className="py-3">
-                        {services.map((service) => (
+                        {servicesNavItems.map((item) => (
                           <Link
-                            key={service.id}
-                            to={`/services#${service.id}`}
+                            key={item.name}
+                            to={item.href}
                             className="block px-6 py-2 text-sm text-charcoal hover:text-burgundy hover:bg-light-gray/30 transition-colors duration-200"
                           >
-                            {service.title}
+                            {item.name}
                           </Link>
                         ))}
                       </div>
@@ -336,13 +337,13 @@ function Navigation() {
                 Services
               </Link>
               <div className="pl-4 space-y-2 border-l-2 border-light-gray">
-                {services.map((service) => (
+                {servicesNavItems.map((item) => (
                   <Link
-                    key={service.id}
-                    to={`/services#${service.id}`}
+                    key={item.name}
+                    to={item.href}
                     className="block text-sm text-mid-gray hover:text-burgundy transition-colors"
                   >
-                    {service.title}
+                    {item.name}
                   </Link>
                 ))}
               </div>
