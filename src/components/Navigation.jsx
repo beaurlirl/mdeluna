@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { categories, getProjectsByCategory } from '../data/projects'
+import { categories, getProjectsByCategory, projects } from '../data/projects'
 
 const servicesNavItems = [
   { name: 'Architecture', href: '/projects' },
@@ -13,7 +13,6 @@ const servicesNavItems = [
 function Navigation() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [projectsDropdownOpen, setProjectsDropdownOpen] = useState(false)
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState(null)
   const dropdownRef = useRef(null)
@@ -33,7 +32,6 @@ function Navigation() {
 
   useEffect(() => {
     setMobileMenuOpen(false)
-    setProjectsDropdownOpen(false)
     setServicesDropdownOpen(false)
     setActiveCategory(null)
   }, [location])
@@ -41,7 +39,6 @@ function Navigation() {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setProjectsDropdownOpen(false)
         setServicesDropdownOpen(false)
         setActiveCategory(null)
       }
@@ -60,14 +57,6 @@ function Navigation() {
     }
   }
 
-  const scheduleProjectsClose = () => {
-    clearCloseTimeout()
-    closeTimeoutRef.current = setTimeout(() => {
-      setProjectsDropdownOpen(false)
-      setActiveCategory(null)
-    }, 250)
-  }
-
   const scheduleServicesClose = () => {
     clearCloseTimeout()
     closeTimeoutRef.current = setTimeout(() => {
@@ -76,7 +65,6 @@ function Navigation() {
   }
 
   const navLinks = [
-    { name: 'Our Work', href: '/projects', dropdown: 'projects' },
     { name: 'Services', href: '/services', dropdown: 'services' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
@@ -101,61 +89,26 @@ function Navigation() {
                 key={link.name}
                 className="relative"
                 onMouseLeave={() => {
-                  if (link.dropdown === 'projects') {
-                    scheduleProjectsClose()
-                  }
                   if (link.dropdown === 'services') {
                     scheduleServicesClose()
                   }
                 }}
               >
-                {link.dropdown === 'projects' ? (
+                {link.dropdown === 'services' ? (
                   <button
                     className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-300 ${
-                      location.pathname.startsWith('/projects')
-                        ? 'text-burgundy'
-                        : idleTextClass
-                    }`}
-                    onClick={() => {
-                      clearCloseTimeout()
-                      setProjectsDropdownOpen(!projectsDropdownOpen)
-                      setServicesDropdownOpen(false)
-                    }}
-                    onMouseEnter={() => {
-                      clearCloseTimeout()
-                      setProjectsDropdownOpen(true)
-                      setServicesDropdownOpen(false)
-                    }}
-                  >
-                    {link.name}
-                    <svg
-                      className={`w-3.5 h-3.5 transition-transform duration-300 ${
-                        projectsDropdownOpen ? 'rotate-180' : ''
-                      }`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                ) : link.dropdown === 'services' ? (
-                  <button
-                    className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-300 ${
-                      location.pathname.startsWith('/services')
+                      location.pathname.startsWith('/services') || location.pathname.startsWith('/projects')
                         ? 'text-burgundy'
                         : idleTextClass
                     }`}
                     onClick={() => {
                       clearCloseTimeout()
                       setServicesDropdownOpen(!servicesDropdownOpen)
-                      setProjectsDropdownOpen(false)
                       setActiveCategory(null)
                     }}
                     onMouseEnter={() => {
                       clearCloseTimeout()
                       setServicesDropdownOpen(true)
-                      setProjectsDropdownOpen(false)
                       setActiveCategory(null)
                     }}
                   >
@@ -184,9 +137,9 @@ function Navigation() {
                   </Link>
                 )}
 
-                {/* Mega Dropdown */}
+                {/* Services Dropdown */}
                 <AnimatePresence>
-                  {link.dropdown === 'projects' && projectsDropdownOpen && (
+                  {link.dropdown === 'services' && servicesDropdownOpen && (
                     <motion.div
                       className="absolute top-full left-0 mt-4 bg-warm-white shadow-xl border border-light-gray"
                       initial={{ opacity: 0, y: 10 }}
@@ -194,77 +147,67 @@ function Navigation() {
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.2 }}
                       onMouseEnter={clearCloseTimeout}
-                      onMouseLeave={scheduleProjectsClose}
-                    >
-                      <div className="flex">
-                        {/* Categories */}
-                        <div className="w-48 py-4 border-r border-light-gray">
-                          <Link
-                            to="/projects"
-                            className="block px-6 py-2 text-sm font-medium text-charcoal hover:text-burgundy hover:bg-light-gray/30 transition-colors duration-200"
-                          >
-                            All Projects
-                          </Link>
-                          {categories.map((cat) => (
-                            <button
-                              key={cat.id}
-                              className={`w-full text-left px-6 py-2 text-sm transition-colors duration-200 ${
-                                activeCategory === cat.id
-                                  ? 'text-burgundy bg-light-gray/30'
-                                  : 'text-charcoal hover:text-burgundy hover:bg-light-gray/30'
-                              }`}
-                              onMouseEnter={() => setActiveCategory(cat.id)}
-                            >
-                              {cat.name}
-                            </button>
-                          ))}
-                        </div>
-
-                        {/* Projects List */}
-                        <div className="w-64 py-4">
-                          {activeCategory ? (
-                            getProjectsByCategory(activeCategory).map((project) => (
-                              <Link
-                                key={project.id}
-                                to={`/projects/${project.id}`}
-                                className="block px-6 py-2 text-sm text-mid-gray hover:text-burgundy transition-colors duration-200"
-                              >
-                                {project.title}
-                              </Link>
-                            ))
-                          ) : (
-                            <div className="px-6 py-2 text-sm text-mid-gray">
-                              Hover over a category
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {/* Services Dropdown */}
-                <AnimatePresence>
-                  {link.dropdown === 'services' && servicesDropdownOpen && (
-                    <motion.div
-                      className="absolute top-full left-0 mt-4 bg-warm-white shadow-xl border border-light-gray w-56"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                      onMouseEnter={clearCloseTimeout}
                       onMouseLeave={scheduleServicesClose}
                     >
-                      <div className="py-3">
-                        {servicesNavItems.map((item) => (
+                      <div className="flex">
+                        {/* Architecture with Projects */}
+                        <div className="border-r border-light-gray">
                           <Link
-                            key={item.name}
-                            to={item.href}
-                            className="block px-6 py-2 text-sm text-charcoal hover:text-burgundy hover:bg-light-gray/30 transition-colors duration-200"
+                            to="/projects"
+                            className="block px-6 py-3 text-sm font-medium text-charcoal hover:text-burgundy hover:bg-light-gray/30 transition-colors duration-200 border-b border-light-gray"
                           >
-                            {item.name}
+                            Architecture
                           </Link>
-                        ))}
+                          <div className="flex">
+                            <div className="w-48 py-4">
+                              <Link
+                                to="/projects"
+                                className={`block px-6 py-2 text-sm font-medium transition-colors duration-200 ${
+                                  !activeCategory ? 'text-burgundy bg-light-gray/30' : 'text-charcoal hover:text-burgundy hover:bg-light-gray/30'
+                                }`}
+                                onMouseEnter={() => setActiveCategory(null)}
+                              >
+                                All Projects
+                              </Link>
+                              {categories.map((cat) => (
+                                <button
+                                  key={cat.id}
+                                  className={`w-full text-left px-6 py-2 text-sm transition-colors duration-200 ${
+                                    activeCategory === cat.id
+                                      ? 'text-burgundy bg-light-gray/30'
+                                      : 'text-charcoal hover:text-burgundy hover:bg-light-gray/30'
+                                  }`}
+                                  onMouseEnter={() => setActiveCategory(cat.id)}
+                                >
+                                  {cat.name}
+                                </button>
+                              ))}
+                            </div>
+                            <div className="w-64 py-4 max-h-80 overflow-y-auto">
+                              {(activeCategory ? getProjectsByCategory(activeCategory) : projects).map((project) => (
+                                <Link
+                                  key={project.id}
+                                  to={`/projects/${project.id}`}
+                                  className="block px-6 py-2 text-sm text-mid-gray hover:text-burgundy transition-colors duration-200"
+                                >
+                                  {project.title}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                        {/* Other Services */}
+                        <div className="w-48 py-4">
+                          {servicesNavItems.filter((item) => item.name !== 'Architecture').map((item) => (
+                            <Link
+                              key={item.name}
+                              to={item.href}
+                              className="block px-6 py-2 text-sm text-charcoal hover:text-burgundy hover:bg-light-gray/30 transition-colors duration-200"
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
                       </div>
                     </motion.div>
                   )}
@@ -307,37 +250,39 @@ function Navigation() {
           >
             <nav className="px-6 py-8 space-y-6">
               <Link
-                to="/projects"
-                className="block text-2xl font-light text-charcoal hover:text-burgundy transition-colors"
-              >
-                Our Work
-              </Link>
-              <div className="pl-4 space-y-3 border-l-2 border-light-gray">
-                {categories.map((cat) => (
-                  <div key={cat.id}>
-                    <span className="text-sm font-medium text-charcoal">{cat.name}</span>
-                    <div className="mt-2 space-y-2">
-                      {getProjectsByCategory(cat.id).map((project) => (
-                        <Link
-                          key={project.id}
-                          to={`/projects/${project.id}`}
-                          className="block text-sm text-mid-gray hover:text-burgundy transition-colors"
-                        >
-                          {project.title}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <Link
                 to="/services"
                 className="block text-2xl font-light text-charcoal hover:text-burgundy transition-colors"
               >
                 Services
               </Link>
-              <div className="pl-4 space-y-2 border-l-2 border-light-gray">
-                {servicesNavItems.map((item) => (
+              <div className="pl-4 space-y-3 border-l-2 border-light-gray">
+                <div>
+                  <Link
+                    to="/projects"
+                    className="text-sm font-medium text-charcoal hover:text-burgundy transition-colors"
+                  >
+                    Architecture
+                  </Link>
+                  <div className="mt-2 space-y-2 pl-4">
+                    {categories.map((cat) => (
+                      <div key={cat.id}>
+                        <span className="text-xs font-medium text-mid-gray">{cat.name}</span>
+                        <div className="mt-1 space-y-1">
+                          {getProjectsByCategory(cat.id).map((project) => (
+                            <Link
+                              key={project.id}
+                              to={`/projects/${project.id}`}
+                              className="block text-sm text-mid-gray hover:text-burgundy transition-colors"
+                            >
+                              {project.title}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {servicesNavItems.filter((item) => item.name !== 'Architecture').map((item) => (
                   <Link
                     key={item.name}
                     to={item.href}

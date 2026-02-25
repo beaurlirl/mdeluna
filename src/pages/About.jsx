@@ -61,7 +61,7 @@ function About() {
           >
             <div className="aspect-[3/4] bg-light-gray overflow-hidden sticky top-32 rounded-2xl shadow-sm">
               <img
-                src="/about-portrait.jpg"
+                src="/mikecartoon.jpg"
                 alt={siteInfo.name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
@@ -77,7 +77,7 @@ function About() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                   <p className="text-sm">Add portrait image:</p>
-                  <p className="text-xs mt-2 font-mono">/public/about-portrait.jpg</p>
+                  <p className="text-xs mt-2 font-mono">/public/mikecartoon.jpg</p>
                 </div>
               </div>
             </div>
