@@ -2,13 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { categories, getProjectsByCategory, projects } from '../data/projects'
-
-const servicesNavItems = [
-  { name: 'Architecture', href: '/projects' },
-  { name: 'Code', href: '/services' },
-  { name: 'Zoning', href: '/services' },
-  { name: 'Filing', href: '/services' },
-]
+import { services } from '../data/siteContent'
 
 function Navigation() {
   const [scrolled, setScrolled] = useState(false)
@@ -206,15 +200,21 @@ function Navigation() {
                             </div>
                           </div>
                         </div>
-                        {/* Other Services */}
-                        <div className="w-48 py-4">
-                          {servicesNavItems.filter((item) => item.name !== 'Architecture').map((item) => (
+                        {/* Expediting Services */}
+                        <div className="w-64 py-4">
+                          <Link
+                            to="/services"
+                            className="block px-6 py-3 text-sm font-medium text-charcoal hover:text-burgundy hover:bg-light-gray/30 transition-colors duration-200 border-b border-light-gray"
+                          >
+                            Expediting & Filing
+                          </Link>
+                          {services.map((service) => (
                             <Link
-                              key={item.name}
-                              to={item.href}
-                              className="block px-6 py-2 text-sm text-charcoal hover:text-burgundy hover:bg-light-gray/30 transition-colors duration-200"
+                              key={service.id}
+                              to={`/services#${service.id}`}
+                              className="block px-6 py-2 text-sm text-mid-gray hover:text-burgundy hover:bg-light-gray/30 transition-colors duration-200"
                             >
-                              {item.name}
+                              {service.title}
                             </Link>
                           ))}
                         </div>
@@ -292,15 +292,25 @@ function Navigation() {
                     ))}
                   </div>
                 </div>
-                {servicesNavItems.filter((item) => item.name !== 'Architecture').map((item) => (
+                <div>
                   <Link
-                    key={item.name}
-                    to={item.href}
-                    className="block text-sm text-mid-gray hover:text-burgundy transition-colors"
+                    to="/services"
+                    className="text-sm font-medium text-charcoal hover:text-burgundy transition-colors"
                   >
-                    {item.name}
+                    Expediting & Filing
                   </Link>
-                ))}
+                  <div className="mt-2 space-y-2 pl-4">
+                    {services.map((service) => (
+                      <Link
+                        key={service.id}
+                        to={`/services#${service.id}`}
+                        className="block text-sm text-mid-gray hover:text-burgundy transition-colors"
+                      >
+                        {service.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               </div>
               <Link
                 to="/about"
