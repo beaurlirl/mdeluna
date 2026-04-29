@@ -24,6 +24,7 @@ function ProjectCard({ project, index = 0 }) {
             <img
               src={project.coverImage}
               alt={project.title}
+              loading="lazy"
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               onError={() => setImageError(true)}
             />

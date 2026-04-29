@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { contact, siteInfo } from '../data/siteContent'
 
 function Contact() {
+  const [submitted, setSubmitted] = useState(false)
+
   return (
     <div className="pt-20 lg:pt-28 pb-20 lg:pb-32 px-6 lg:px-12">
       <div className="max-w-7xl mx-auto">
@@ -91,10 +94,33 @@ function Contact() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
+            {submitted ? (
+              <motion.div
+                className="flex flex-col justify-center h-full min-h-[400px]"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="w-10 h-10 rounded-full bg-charcoal flex items-center justify-center mb-6">
+                  <svg className="w-5 h-5 text-warm-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="font-display text-2xl font-light text-charcoal">Message sent.</h3>
+                <p className="mt-3 text-mid-gray">Thank you for reaching out. We'll be in touch shortly.</p>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="mt-8 text-sm text-mid-gray hover:text-burgundy transition-colors duration-300 text-left"
+                >
+                  Send another message →
+                </button>
+              </motion.div>
+            ) : (
             <form
               className="space-y-6"
               onSubmit={(e) => {
                 e.preventDefault()
+                setSubmitted(true)
               }}
             >
               <div>
@@ -174,6 +200,7 @@ function Contact() {
                 Send Message
               </button>
             </form>
+            )}
           </motion.div>
         </div>
       </div>
