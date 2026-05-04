@@ -145,7 +145,7 @@ function Navigation() {
                 <AnimatePresence>
                   {link.dropdown === 'services' && servicesDropdownOpen && (
                     <motion.div
-                      className="absolute top-full left-0 mt-4 bg-warm-white shadow-xl border border-light-gray"
+                      className="absolute top-full right-0 mt-4 bg-warm-white/85 backdrop-blur-md shadow-xl border border-light-gray/60"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
