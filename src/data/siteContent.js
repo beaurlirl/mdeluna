@@ -151,7 +151,6 @@ export const about = {
   credentials: [
     'Licensed Architect, New York State',
     'Member, American Institute of Architects',
-    'LEED Accredited Professional',
   ],
 }
 

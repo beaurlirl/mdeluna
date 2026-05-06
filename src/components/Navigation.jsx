@@ -83,8 +83,8 @@ function Navigation() {
               useLightNav ? 'text-warm-white hover:text-light-gray' : 'text-charcoal hover:text-burgundy'
             }`}
           >
-            <span className="text-sm font-medium tracking-wide">
-              Michael De Luna, <span className="text-xs opacity-60 tracking-widest">AIA</span>
+            <span className="font-display text-xl font-light tracking-wide">
+              Michael De Luna, <span className="text-sm opacity-60 tracking-widest">AIA</span>
             </span>
             <span className="font-display text-xl font-light tracking-wide">Architect</span>
           </Link>
