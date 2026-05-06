@@ -1,9 +1,9 @@
 // Site content - Easy to update contact info and about content
 
 export const siteInfo = {
-  name: 'Michael De Luna, AIA',
+  name: 'Michael De Luna, AIA, Architect',
   title: 'Architect',
-  tagline: '30 Years of Experience in Architecture, Code, Zoning & Filing',
+  tagline: 'Code / Zoning / Architecture / Filing',
   description: 'Full-service architecture firm in New York City. Expert in DOB filings, zoning analysis, and code compliance.',
 }
 
@@ -15,9 +15,9 @@ export const contact = {
     zip: '11201',
   },
   phone: '917.405.7186',
+  cell: '929.761.6640',
   email: 'michael@mdeluna.com',
   social: {
-    instagram: '#',
     linkedin: '#',
   },
 }

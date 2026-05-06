@@ -39,12 +39,26 @@ function Contact() {
                 <h3 className="text-sm font-medium text-charcoal uppercase tracking-wide mb-3">
                   Phone
                 </h3>
-                <a
-                  href={`tel:${contact.phone.replace(/\./g, '')}`}
-                  className="text-mid-gray hover:text-burgundy transition-colors duration-300"
-                >
-                  {contact.phone}
-                </a>
+                <div className="space-y-1">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-medium text-mid-gray uppercase tracking-wide w-10">Work</span>
+                    <a
+                      href={`tel:${contact.phone.replace(/\./g, '')}`}
+                      className="text-mid-gray hover:text-burgundy transition-colors duration-300"
+                    >
+                      {contact.phone}
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-medium text-mid-gray uppercase tracking-wide w-10">Cell</span>
+                    <a
+                      href={`tel:${contact.cell.replace(/\./g, '')}`}
+                      className="text-mid-gray hover:text-burgundy transition-colors duration-300"
+                    >
+                      {contact.cell}
+                    </a>
+                  </div>
+                </div>
               </div>
 
               {/* Email */}
@@ -63,27 +77,16 @@ function Contact() {
               {/* Social */}
               <div>
                 <h3 className="text-sm font-medium text-charcoal uppercase tracking-wide mb-3">
-                  Follow
+                  Connect
                 </h3>
-                <div className="flex gap-4">
-                  <a
-                    href={contact.social.instagram}
-                    className="text-mid-gray hover:text-burgundy transition-colors duration-300"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Instagram
-                  </a>
-                  <span className="text-light-gray">·</span>
-                  <a
-                    href={contact.social.linkedin}
-                    className="text-mid-gray hover:text-burgundy transition-colors duration-300"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    LinkedIn
-                  </a>
-                </div>
+                <a
+                  href={contact.social.linkedin}
+                  className="text-mid-gray hover:text-burgundy transition-colors duration-300"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  LinkedIn
+                </a>
               </div>
             </div>
           </motion.div>

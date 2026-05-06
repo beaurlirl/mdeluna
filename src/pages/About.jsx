@@ -59,27 +59,13 @@ function About() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="aspect-[3/4] bg-light-gray overflow-hidden sticky top-32 rounded-2xl shadow-sm">
+            <div className="sticky top-32">
               <img
-                src="/mikecartoon.jpg"
+                src="/mikelucidcartoon.png"
                 alt={siteInfo.name}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  const img = e.currentTarget
-                  img.style.display = 'none'
-                  const fallback = img.nextElementSibling
-                  if (fallback) fallback.style.display = 'flex'
-                }}
+                className="w-full h-auto object-contain"
+                style={{ filter: 'sepia(30%) saturate(0.6) brightness(0.95)' }}
               />
-              <div className="hidden w-full h-full items-center justify-center text-mid-gray absolute inset-0 bg-light-gray">
-                <div className="text-center p-8">
-                  <svg className="w-20 h-20 mx-auto mb-6 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  <p className="text-sm">Add portrait image:</p>
-                  <p className="text-xs mt-2 font-mono">/public/mikecartoon.jpg</p>
-                </div>
-              </div>
             </div>
           </motion.div>
         </div>

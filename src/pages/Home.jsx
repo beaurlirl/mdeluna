@@ -3,6 +3,13 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { siteInfo } from '../data/siteContent'
 
+const EXPEDITING_PROJECTS = [
+  { src: '/petrossian1.png', label: 'Petrossian Boutique', location: 'Manhattan, NY' },
+  { src: '/petrossian2.png', label: 'Petrossian Boutique', location: 'Manhattan, NY' },
+  { src: '/pizza1.png', label: 'Shelter Pizza', location: 'Brooklyn, NY' },
+  { src: '/jewishacademy1.png', label: 'BK Heights Jewish Academy', location: 'Brooklyn, NY' },
+]
+
 const HERO_IMAGES = [
   '/petrossian1.png',
   '/petrossian2.png',
@@ -57,13 +64,10 @@ function Home() {
             <h1 className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light text-warm-white leading-[0.95] tracking-tight">
               {siteInfo.name}
             </h1>
-            <p className="mt-4 text-xl md:text-2xl text-light-gray font-light">
-              {siteInfo.title}
-            </p>
           </motion.div>
 
           <motion.p
-            className="mt-8 lg:mt-12 text-lg md:text-xl text-light-gray max-w-2xl leading-relaxed font-light"
+            className="mt-8 lg:mt-12 text-lg md:text-xl text-light-gray max-w-2xl leading-relaxed font-light tracking-widest uppercase"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
@@ -87,6 +91,66 @@ function Home() {
         </div>
       </section>
 
+      {/* Ready to Start Your Project — Expediting Portfolio */}
+      <section className="bg-warm-white py-20 lg:py-32 px-6 lg:px-12">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="mb-12 lg:mb-16"
+          >
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-light text-charcoal">
+              Ready to Start Your Project?
+            </h2>
+            <p className="mt-4 text-mid-gray text-lg max-w-xl">
+              From architecture and design to DOB filings and expediting — we handle every step.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {EXPEDITING_PROJECTS.map((project, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="group"
+              >
+                <div className="aspect-[4/5] overflow-hidden bg-light-gray rounded-sm">
+                  <img
+                    src={project.src}
+                    alt={project.label}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="mt-3">
+                  <p className="text-charcoal font-medium text-sm">{project.label}</p>
+                  <p className="text-mid-gray text-xs mt-0.5">{project.location}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-12"
+          >
+            <Link
+              to="/contact"
+              className="inline-block bg-charcoal text-warm-white font-medium text-sm tracking-wide px-8 py-4 rounded-full shadow-sm transition-all duration-300 hover:bg-burgundy hover:-translate-y-0.5 hover:shadow-md"
+            >
+              Get in Touch
+            </Link>
+          </motion.div>
+        </div>
+      </section>
     </>
   )
 }

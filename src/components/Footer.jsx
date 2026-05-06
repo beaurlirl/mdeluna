@@ -65,11 +65,21 @@ function Footer() {
               <p>{contact.address.street}</p>
               <p>{contact.address.city}, {contact.address.state} {contact.address.zip}</p>
               <p className="pt-2">
+                <span className="text-xs opacity-60 uppercase tracking-wide mr-2">Work</span>
                 <a
                   href={`tel:${contact.phone.replace(/\./g, '')}`}
                   className="hover:text-warm-white transition-colors duration-300"
                 >
                   {contact.phone}
+                </a>
+              </p>
+              <p>
+                <span className="text-xs opacity-60 uppercase tracking-wide mr-2">Cell</span>
+                <a
+                  href={`tel:${contact.cell.replace(/\./g, '')}`}
+                  className="hover:text-warm-white transition-colors duration-300"
+                >
+                  {contact.cell}
                 </a>
               </p>
               <p>
@@ -96,18 +106,6 @@ function Footer() {
             © {new Date().getFullYear()} {siteInfo.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <a
-              href={contact.social.instagram}
-              className="text-mid-gray hover:text-warm-white transition-colors duration-300"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <rect x="2" y="2" width="20" height="20" rx="5" strokeWidth={1.5} />
-                <circle cx="12" cy="12" r="4" strokeWidth={1.5} />
-                <circle cx="18" cy="6" r="1" fill="currentColor" />
-              </svg>
-            </a>
             <a
               href={contact.social.linkedin}
               className="text-mid-gray hover:text-warm-white transition-colors duration-300"

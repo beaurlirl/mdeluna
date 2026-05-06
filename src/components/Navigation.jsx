@@ -79,11 +79,14 @@ function Navigation() {
           {/* Logo / Name */}
           <Link
             to="/"
-            className={`font-display text-base font-medium tracking-wide transition-colors duration-300 ${
+            className={`flex flex-col leading-tight transition-colors duration-300 ${
               useLightNav ? 'text-warm-white hover:text-light-gray' : 'text-charcoal hover:text-burgundy'
             }`}
           >
-            Michael De Luna, AIA
+            <span className="text-sm font-medium tracking-wide">
+              Michael De Luna, <span className="text-xs opacity-60 tracking-widest">AIA</span>
+            </span>
+            <span className="font-display text-xl font-light tracking-wide">Architect</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -100,7 +103,7 @@ function Navigation() {
               >
                 {link.dropdown === 'services' ? (
                   <button
-                    className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-300 ${
+                    className={`flex items-center gap-1.5 text-base font-medium transition-colors duration-300 ${
                       location.pathname.startsWith('/services') || location.pathname.startsWith('/projects')
                         ? 'text-burgundy'
                         : idleTextClass
@@ -131,7 +134,7 @@ function Navigation() {
                 ) : (
                   <Link
                     to={link.href}
-                    className={`text-sm font-medium transition-colors duration-300 ${
+                    className={`text-base font-medium transition-colors duration-300 ${
                       location.pathname === link.href
                         ? 'text-burgundy'
                         : idleTextClass
