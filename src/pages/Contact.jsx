@@ -2,8 +2,11 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { contact, siteInfo } from '../data/siteContent'
 
+// Sign up free at formspree.io → create a form → replace this with your endpoint
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'
+
 function Contact() {
-  const [submitted, setSubmitted] = useState(false)
+  const [formState, setFormState] = useState('idle') // 'idle' | 'loading' | 'success' | 'error'
 
   return (
     <div className="pt-20 lg:pt-28 pb-20 lg:pb-32 px-6 lg:px-12">
@@ -97,7 +100,7 @@ function Contact() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {submitted ? (
+            {formState === 'success' ? (
               <motion.div
                 className="flex flex-col justify-center h-full min-h-[400px]"
                 initial={{ opacity: 0, y: 20 }}
@@ -112,7 +115,7 @@ function Contact() {
                 <h3 className="font-display text-2xl font-light text-charcoal">Message sent.</h3>
                 <p className="mt-3 text-mid-gray">Thank you for reaching out. We'll be in touch shortly.</p>
                 <button
-                  onClick={() => setSubmitted(false)}
+                  onClick={() => setFormState('idle')}
                   className="mt-8 text-sm text-mid-gray hover:text-burgundy transition-colors duration-300 text-left"
                 >
                   Send another message →
@@ -121,9 +124,24 @@ function Contact() {
             ) : (
             <form
               className="space-y-6"
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault()
-                setSubmitted(true)
+                setFormState('loading')
+                try {
+                  const res = await fetch(FORMSPREE_ENDPOINT, {
+                    method: 'POST',
+                    body: new FormData(e.target),
+                    headers: { Accept: 'application/json' },
+                  })
+                  if (res.ok) {
+                    setFormState('success')
+                    e.target.reset()
+                  } else {
+                    setFormState('error')
+                  }
+                } catch {
+                  setFormState('error')
+                }
               }}
             >
               <div>
@@ -196,11 +214,19 @@ function Contact() {
                 />
               </div>
 
+              {formState === 'error' && (
+                <p className="text-sm text-burgundy">
+                  Something went wrong. Please try again or email us directly at{' '}
+                  <a href={`mailto:${contact.email}`} className="underline">{contact.email}</a>.
+                </p>
+              )}
+
               <button
                 type="submit"
-                className="w-full bg-charcoal text-warm-white font-medium text-sm tracking-wide py-4 rounded-full shadow-sm transition-all duration-300 hover:bg-burgundy hover:-translate-y-0.5 hover:shadow-md"
+                disabled={formState === 'loading'}
+                className="w-full bg-charcoal text-warm-white font-medium text-sm tracking-wide py-4 rounded-full shadow-sm transition-all duration-300 hover:bg-burgundy hover:-translate-y-0.5 hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
               >
-                Send Message
+                {formState === 'loading' ? 'Sending…' : 'Send Message'}
               </button>
             </form>
             )}

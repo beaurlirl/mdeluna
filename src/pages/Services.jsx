@@ -106,9 +106,6 @@ function Services() {
                   </div>
                 </div>
 
-                {index < services.length - 1 && (
-                  <div className="mt-12 lg:mt-16" />
-                )}
               </motion.div>
             ))}
           </div>

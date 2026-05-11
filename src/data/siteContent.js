@@ -1,7 +1,7 @@
 // Site content - Easy to update contact info and about content
 
 export const siteInfo = {
-  name: 'Michael De Luna, AIA, Architect',
+  name: 'Michael De Luna, AIA',
   title: 'Architect',
   tagline: 'Code / Zoning / Architecture / Filing',
   description: 'Full-service architecture firm in New York City. Expert in DOB filings, zoning analysis, and code compliance.',

@@ -1,7 +1,7 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { getProjectById, projects, categories } from '../data/projects'
-import { useEffect, useState, useCallback, useMemo } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 
 function ProjectDetail() {
   const { id } = useParams()
@@ -15,18 +15,20 @@ function ProjectDetail() {
     }
   }, [project, navigate])
 
-  const handleImageError = useCallback((imageKey) => {
+  const handleImageError = (imageKey) => {
     setImageError((prev) => ({ ...prev, [imageKey]: true }))
-  }, [])
+  }
 
-  const { category, nextProject, prevProject } = useMemo(() => {
-    if (!project) return { category: null, nextProject: null, prevProject: null }
+  const { category, nextProject, prevProject, galleryImages } = useMemo(() => {
+    if (!project) return { category: null, nextProject: null, prevProject: null, galleryImages: [] }
     const cat = categories.find((c) => c.id === project.category)
     const idx = projects.findIndex((p) => p.id === id)
+    const gallery = project.gallery.filter((img) => img !== project.coverImage)
     return {
       category: cat,
       nextProject: projects[(idx + 1) % projects.length],
       prevProject: projects[(idx - 1 + projects.length) % projects.length],
+      galleryImages: gallery,
     }
   }, [project, id])
 
@@ -104,40 +106,42 @@ function ProjectDetail() {
       </motion.div>
 
       {/* Gallery */}
-      <div className="mt-8 lg:mt-12 px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-            {project.gallery.map((image, index) => (
-              <motion.div
-                key={index}
-                className="aspect-[4/3] bg-light-gray overflow-hidden"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                {!imageError[`gallery-${index}`] ? (
-                  <img
-                    src={image}
-                    alt={`${project.title} - Image ${index + 1}`}
-                    className="w-full h-full object-cover"
-                    onError={() => handleImageError(`gallery-${index}`)}
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-mid-gray">
-                    <div className="text-center">
-                      <svg className="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      <p className="text-xs font-mono">{index + 1}.jpg</p>
+      {galleryImages.length > 0 && (
+        <div className="mt-8 lg:mt-12 px-6 lg:px-12">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+              {galleryImages.map((image, index) => (
+                <motion.div
+                  key={index}
+                  className="aspect-[4/3] bg-light-gray overflow-hidden"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
+                  {!imageError[`gallery-${index}`] ? (
+                    <img
+                      src={image}
+                      alt={`${project.title} - Image ${index + 1}`}
+                      className="w-full h-full object-cover"
+                      onError={() => handleImageError(`gallery-${index}`)}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-mid-gray">
+                      <div className="text-center">
+                        <svg className="w-12 h-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <p className="text-xs font-mono">{index + 1}.jpg</p>
+                      </div>
                     </div>
-                  </div>
-                )}
-              </motion.div>
-            ))}
+                  )}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Project Navigation */}
       <div className="mt-20 lg:mt-32 border-t border-light-gray">

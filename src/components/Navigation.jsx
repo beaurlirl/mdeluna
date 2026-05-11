@@ -79,14 +79,11 @@ function Navigation() {
           {/* Logo / Name */}
           <Link
             to="/"
-            className={`flex flex-col leading-tight transition-colors duration-300 ${
+            className={`font-display text-xl font-light tracking-wide transition-colors duration-300 ${
               useLightNav ? 'text-warm-white hover:text-light-gray' : 'text-charcoal hover:text-burgundy'
             }`}
           >
-            <span className="font-display text-xl font-light tracking-wide">
-              Michael De Luna, <span className="text-sm opacity-60 tracking-widest">AIA</span>
-            </span>
-            <span className="font-display text-xl font-light tracking-wide">Architect</span>
+            Michael De Luna, AIA, Architect
           </Link>
 
           {/* Desktop Navigation */}

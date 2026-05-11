@@ -10,12 +10,7 @@ const EXPEDITING_PROJECTS = [
   { src: '/jewishacademy1.png', label: 'BK Heights Jewish Academy', location: 'Brooklyn, NY' },
 ]
 
-const HERO_IMAGES = [
-  '/petrossian1.png',
-  '/petrossian2.png',
-  '/pizza1.png',
-  '/jewishacademy1.png',
-]
+const HERO_IMAGES = EXPEDITING_PROJECTS.map((p) => p.src)
 
 function Home() {
   const [heroIndex, setHeroIndex] = useState(0)
@@ -102,7 +97,7 @@ function Home() {
             className="mb-12 lg:mb-16"
           >
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-light text-charcoal">
-              Ready to Start Your Project?
+              Selected Work
             </h2>
             <p className="mt-4 text-mid-gray text-lg max-w-xl">
               From architecture and design to DOB filings and expediting — we handle every step.
