@@ -3,66 +3,68 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { categories } from '../data/projects'
 
+const ease = [0.2, 0.6, 0.2, 1]
+
 function ProjectCard({ project, index = 0 }) {
   const [imageError, setImageError] = useState(false)
   const category = categories.find((c) => c.id === project.category)
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      transition={{ duration: 0.18, delay: index * 0.04, ease }}
     >
-      <Link
-        to={`/projects/${project.id}`}
-        className="group block transition-transform duration-300 hover:-translate-y-1"
-      >
-        {/* Image */}
-        <div className="aspect-[4/3] bg-light-gray overflow-hidden relative rounded-lg shadow-sm">
+      <Link to={`/projects/${project.id}`} className="flex items-center gap-6 lg:gap-10 py-5 group">
+
+        {/* Thumbnail */}
+        <div className="w-20 h-16 lg:w-28 lg:h-20 flex-shrink-0 bg-paper-2 overflow-hidden">
           {!imageError ? (
             <img
               src={project.coverImage}
               alt={project.title}
               loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
               onError={() => setImageError(true)}
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-mid-gray">
-              <div className="text-center p-6">
-                <svg className="w-12 h-12 mx-auto mb-3 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <p className="text-xs font-mono">/public/projects/{project.id}/cover.jpg</p>
-              </div>
+            <div className="w-full h-full flex items-center justify-center">
+              <svg className="w-6 h-6 text-ink-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter">
+                <path strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
             </div>
           )}
-          
-          {/* Overlay on hover */}
-          <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/20 transition-colors duration-500" />
         </div>
 
-        {/* Content */}
-        <div className="mt-4">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h3 className="font-display text-xl lg:text-2xl text-charcoal group-hover:text-burgundy transition-colors duration-300">
-                {project.title}
-              </h3>
-              <p className="mt-1 text-sm text-mid-gray">
-                {category?.name} · {project.location}
-              </p>
-            </div>
-            <span className="text-sm text-mid-gray flex-shrink-0">
-              {project.year}
-            </span>
-          </div>
+        {/* Meta */}
+        <div className="flex-grow min-w-0">
+          <p className="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 mb-1">
+            {category?.name} · {project.location} · {project.year}
+          </p>
+          <h3 className="font-serif text-xl lg:text-2xl text-ink group-hover:text-red transition-colors duration-150 truncate">
+            {project.title}
+          </h3>
+          <p className="mt-1 text-sm text-ink-3 line-clamp-1 hidden md:block">{project.description}</p>
         </div>
+
+        {/* Type pill + arrow */}
+        <div className="flex-shrink-0 flex items-center gap-4 hidden sm:flex">
+          <span className="font-mono text-[0.5rem] tracking-[0.14em] uppercase border border-paper-3 text-ink-4 px-3 py-1 rounded-full">
+            {category?.name}
+          </span>
+          <svg
+            className="w-4 h-4 text-ink-4 group-hover:text-red transition-colors duration-150"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            strokeLinecap="square" strokeLinejoin="miter"
+          >
+            <path strokeWidth={1.5} d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </div>
+
       </Link>
-    </motion.article>
+    </motion.div>
   )
 }
 
 export default ProjectCard
-

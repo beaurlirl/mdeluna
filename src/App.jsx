@@ -13,15 +13,19 @@ function App() {
   return (
     <Router>
       <Layout>
-        <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-warm-white"><div className="animate-pulse text-mid-gray">Loading…</div></div>}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/projects/:id" element={<ProjectDetail />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
+        <Suspense fallback={
+          <div className="min-h-screen flex items-center justify-center bg-paper">
+            <span className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-ink-4">Loading…</span>
+          </div>
+        }>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:id" element={<ProjectDetail />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
         </Suspense>
       </Layout>
     </Router>

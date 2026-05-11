@@ -1,173 +1,140 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { categories, getProjectsByCategory, projects } from '../data/projects'
 import { services } from '../data/siteContent'
+
+const ease = [0.2, 0.6, 0.2, 1]
 
 function Navigation() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false)
+  const [servicesOpen, setServicesOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState(null)
   const dropdownRef = useRef(null)
-  const closeTimeoutRef = useRef(null)
+  const closeTimerRef = useRef(null)
   const location = useLocation()
-  const isHome = location.pathname === '/'
-  const useLightNav = isHome && !scrolled
-  const idleTextClass = useLightNav
-    ? 'text-warm-white hover:text-burgundy'
-    : 'text-charcoal hover:text-burgundy'
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
     setMobileMenuOpen(false)
-    setServicesDropdownOpen(false)
+    setServicesOpen(false)
     setActiveCategory(null)
   }, [location])
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setServicesDropdownOpen(false)
+    const onClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setServicesOpen(false)
         setActiveCategory(null)
       }
     }
-    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('mousedown', onClickOutside)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current)
+      document.removeEventListener('mousedown', onClickOutside)
+      if (closeTimerRef.current) clearTimeout(closeTimerRef.current)
     }
   }, [])
 
-  const clearCloseTimeout = () => {
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current)
-      closeTimeoutRef.current = null
-    }
+  const clearClose = () => {
+    if (closeTimerRef.current) { clearTimeout(closeTimerRef.current); closeTimerRef.current = null }
   }
 
-  const scheduleServicesClose = () => {
-    clearCloseTimeout()
-    closeTimeoutRef.current = setTimeout(() => {
-      setServicesDropdownOpen(false)
-    }, 250)
+  const scheduleClose = () => {
+    clearClose()
+    closeTimerRef.current = setTimeout(() => setServicesOpen(false), 220)
   }
 
-  const navLinks = [
-    { name: 'Services', href: '/services', dropdown: 'services' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
-  ]
+  const isActive = (href) =>
+    href === '/services'
+      ? location.pathname.startsWith('/services') || location.pathname.startsWith('/projects')
+      : location.pathname === href
+
+  const navLinkClass = (href) =>
+    `relative font-sans text-sm font-medium transition-colors duration-150 pb-0.5 ${
+      isActive(href)
+        ? 'text-red border-b-2 border-red'
+        : 'text-ink-2 hover:text-ink border-b-2 border-transparent'
+    }`
 
   return (
-    <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-warm-white/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
-      }`}
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="flex items-center justify-between h-20 lg:h-24">
+    <header className="fixed top-0 left-0 right-0 z-50">
+      {/* Filing strip */}
+      <div
+        className={`bg-ink overflow-hidden transition-all duration-200`}
+        style={{ height: scrolled ? 0 : undefined }}
+      >
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-2 flex justify-center lg:justify-between items-center">
+          <span className="font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4">
+            EST. 1994 · NEW YORK CITY · AIA · NCARB · NYS LIC. 024891
+          </span>
+          <span className="hidden lg:block font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4">
+            220 Congress St., Brooklyn
+          </span>
+        </div>
+      </div>
 
-          {/* Logo / Name */}
-          <Link
-            to="/"
-            className={`font-display text-xl font-light tracking-wide transition-colors duration-300 ${
-              useLightNav ? 'text-warm-white hover:text-light-gray' : 'text-charcoal hover:text-burgundy'
-            }`}
-          >
-            Michael De Luna, AIA, Architect
-          </Link>
+      {/* Main nav */}
+      <div className={`bg-paper border-b transition-colors duration-200 ${scrolled ? 'border-paper-3' : 'border-paper-2'}`}>
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
+          <div className="flex items-center justify-between h-16">
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-12" ref={dropdownRef}>
-            {navLinks.map((link) => (
+            <Link
+              to="/"
+              className="font-serif text-lg text-ink hover:text-red transition-colors duration-150 leading-tight"
+            >
+              Michael De Luna, AIA, Architect
+            </Link>
+
+            {/* Desktop nav */}
+            <nav className="hidden lg:flex items-center gap-10" ref={dropdownRef}>
               <div
-                key={link.name}
                 className="relative"
-                onMouseLeave={() => {
-                  if (link.dropdown === 'services') {
-                    scheduleServicesClose()
-                  }
-                }}
+                onMouseLeave={scheduleClose}
               >
-                {link.dropdown === 'services' ? (
-                  <button
-                    className={`flex items-center gap-1.5 text-base font-medium transition-colors duration-300 ${
-                      location.pathname.startsWith('/services') || location.pathname.startsWith('/projects')
-                        ? 'text-burgundy'
-                        : idleTextClass
-                    }`}
-                    onClick={() => {
-                      clearCloseTimeout()
-                      setServicesDropdownOpen(!servicesDropdownOpen)
-                      setActiveCategory(null)
-                    }}
-                    onMouseEnter={() => {
-                      clearCloseTimeout()
-                      setServicesDropdownOpen(true)
-                      setActiveCategory(null)
-                    }}
-                  >
-                    {link.name}
-                    <svg
-                      className={`w-3.5 h-3.5 transition-transform duration-300 ${
-                        servicesDropdownOpen ? 'rotate-180' : ''
-                      }`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                ) : (
-                  <Link
-                    to={link.href}
-                    className={`text-base font-medium transition-colors duration-300 ${
-                      location.pathname === link.href
-                        ? 'text-burgundy'
-                        : idleTextClass
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
-                )}
+                <button
+                  className={`relative font-sans text-sm font-medium transition-colors duration-150 pb-0.5 ${
+                    isActive('/services')
+                      ? 'text-red border-b-2 border-red'
+                      : 'text-ink-2 hover:text-ink border-b-2 border-transparent'
+                  }`}
+                  onClick={() => { clearClose(); setServicesOpen(!servicesOpen); setActiveCategory(null) }}
+                  onMouseEnter={() => { clearClose(); setServicesOpen(true); setActiveCategory(null) }}
+                >
+                  Services
+                </button>
 
-                {/* Services Dropdown */}
                 <AnimatePresence>
-                  {link.dropdown === 'services' && servicesDropdownOpen && (
+                  {servicesOpen && (
                     <motion.div
-                      className="absolute top-full right-0 mt-4 bg-warm-white/85 backdrop-blur-md shadow-xl border border-light-gray/60"
-                      initial={{ opacity: 0, y: 10 }}
+                      className="absolute top-full right-0 mt-3 bg-paper border border-paper-3 shadow-[0_4px_12px_rgba(20,17,15,0.06)]"
+                      initial={{ opacity: 0, y: 2 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                      onMouseEnter={clearCloseTimeout}
-                      onMouseLeave={scheduleServicesClose}
+                      exit={{ opacity: 0, y: 2 }}
+                      transition={{ duration: 0.15, ease }}
+                      onMouseEnter={clearClose}
+                      onMouseLeave={scheduleClose}
                     >
                       <div className="flex">
-                        {/* Architecture with Projects */}
-                        <div className="border-r border-light-gray">
+                        {/* Architecture column */}
+                        <div className="border-r border-paper-3">
                           <Link
                             to="/projects"
-                            className="block px-6 py-3 text-sm font-medium text-charcoal hover:text-burgundy hover:bg-light-gray/30 transition-colors duration-200 border-b border-light-gray"
+                            className="block px-5 py-2.5 font-mono text-[0.5625rem] tracking-[0.14em] uppercase text-ink-3 hover:text-red border-b border-paper-3 transition-colors duration-150"
                           >
                             Architecture
                           </Link>
                           <div className="flex">
-                            <div className="w-48 py-4">
+                            <div className="w-44 py-3">
                               <Link
                                 to="/projects"
-                                className={`block px-6 py-2 text-sm font-medium transition-colors duration-200 ${
-                                  !activeCategory ? 'text-burgundy bg-light-gray/30' : 'text-charcoal hover:text-burgundy hover:bg-light-gray/30'
+                                className={`block px-5 py-1.5 text-sm transition-colors duration-150 ${
+                                  !activeCategory ? 'text-red' : 'text-ink-2 hover:text-ink'
                                 }`}
                                 onMouseEnter={() => setActiveCategory(null)}
                               >
@@ -176,10 +143,8 @@ function Navigation() {
                               {categories.map((cat) => (
                                 <button
                                   key={cat.id}
-                                  className={`w-full text-left px-6 py-2 text-sm transition-colors duration-200 ${
-                                    activeCategory === cat.id
-                                      ? 'text-burgundy bg-light-gray/30'
-                                      : 'text-charcoal hover:text-burgundy hover:bg-light-gray/30'
+                                  className={`w-full text-left px-5 py-1.5 text-sm transition-colors duration-150 ${
+                                    activeCategory === cat.id ? 'text-red' : 'text-ink-2 hover:text-ink'
                                   }`}
                                   onMouseEnter={() => setActiveCategory(cat.id)}
                                 >
@@ -187,34 +152,35 @@ function Navigation() {
                                 </button>
                               ))}
                             </div>
-                            <div className="w-64 py-4 max-h-80 overflow-y-auto">
-                              {(activeCategory ? getProjectsByCategory(activeCategory) : projects).map((project) => (
+                            <div className="w-56 py-3 max-h-72 overflow-y-auto border-l border-paper-3">
+                              {(activeCategory ? getProjectsByCategory(activeCategory) : projects).map((p) => (
                                 <Link
-                                  key={project.id}
-                                  to={`/projects/${project.id}`}
-                                  className="block px-6 py-2 text-sm text-mid-gray hover:text-burgundy transition-colors duration-200"
+                                  key={p.id}
+                                  to={`/projects/${p.id}`}
+                                  className="block px-5 py-1.5 text-sm text-ink-3 hover:text-ink transition-colors duration-150"
                                 >
-                                  {project.title}
+                                  {p.title}
                                 </Link>
                               ))}
                             </div>
                           </div>
                         </div>
-                        {/* Expediting Services */}
-                        <div className="w-64 py-4">
+
+                        {/* Expediting column */}
+                        <div className="w-60 py-3">
                           <Link
                             to="/services"
-                            className="block px-6 py-3 text-sm font-medium text-charcoal hover:text-burgundy hover:bg-light-gray/30 transition-colors duration-200 border-b border-light-gray"
+                            className="block px-5 py-2.5 font-mono text-[0.5625rem] tracking-[0.14em] uppercase text-ink-3 hover:text-red border-b border-paper-3 transition-colors duration-150 mb-1"
                           >
                             Expediting & Filing
                           </Link>
-                          {services.map((service) => (
+                          {services.map((s) => (
                             <Link
-                              key={service.id}
-                              to={`/services#${service.id}`}
-                              className="block px-6 py-2 text-sm text-mid-gray hover:text-burgundy hover:bg-light-gray/30 transition-colors duration-200"
+                              key={s.id}
+                              to={`/services#${s.id}`}
+                              className="block px-5 py-1.5 text-sm text-ink-3 hover:text-ink transition-colors duration-150"
                             >
-                              {service.title}
+                              {s.title}
                             </Link>
                           ))}
                         </div>
@@ -223,114 +189,61 @@ function Navigation() {
                   )}
                 </AnimatePresence>
               </div>
-            ))}
-          </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden p-2 relative z-10"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            <svg
-              className={`w-6 h-6 ${useLightNav ? 'text-warm-white' : 'text-charcoal'}`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+              <Link to="/about"   className={navLinkClass('/about')}>About</Link>
+              <Link to="/contact" className={navLinkClass('/contact')}>Contact</Link>
+            </nav>
+
+            {/* Mobile toggle */}
+            <button
+              className="lg:hidden p-2 text-ink"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter">
+                {mobileMenuOpen
+                  ? <path strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+                  : <path strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />}
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="lg:hidden fixed inset-0 top-20 bg-warm-white z-40"
-            initial={{ opacity: 0, y: -20 }}
+            className="lg:hidden bg-paper border-b border-paper-3"
+            initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.18, ease }}
           >
-            <nav className="px-6 py-8 space-y-6">
-              <Link
-                to="/services"
-                className="block text-2xl font-light text-charcoal hover:text-burgundy transition-colors"
-              >
-                Services
-              </Link>
-              <div className="pl-4 space-y-3 border-l-2 border-light-gray">
-                <div>
-                  <Link
-                    to="/projects"
-                    className="text-sm font-medium text-charcoal hover:text-burgundy transition-colors"
-                  >
-                    Architecture
-                  </Link>
-                  <div className="mt-2 space-y-2 pl-4">
-                    {categories.map((cat) => (
-                      <div key={cat.id}>
-                        <span className="text-xs font-medium text-mid-gray">{cat.name}</span>
-                        <div className="mt-1 space-y-1">
-                          {getProjectsByCategory(cat.id).map((project) => (
-                            <Link
-                              key={project.id}
-                              to={`/projects/${project.id}`}
-                              className="block text-sm text-mid-gray hover:text-burgundy transition-colors"
-                            >
-                              {project.title}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
+            <nav className="max-w-screen-xl mx-auto px-6 py-6 space-y-5">
+              <Link to="/services" className="block text-xl font-serif text-ink hover:text-red transition-colors">Services</Link>
+              <div className="pl-4 border-l border-paper-3 space-y-3">
+                <Link to="/projects" className="block text-sm font-sans text-ink-2 hover:text-red transition-colors">Architecture — All Projects</Link>
+                {categories.map((cat) => (
+                  <div key={cat.id}>
+                    <span className="font-mono text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4">{cat.name}</span>
+                    <div className="mt-1.5 space-y-1">
+                      {getProjectsByCategory(cat.id).map((p) => (
+                        <Link key={p.id} to={`/projects/${p.id}`} className="block text-sm text-ink-3 hover:text-ink transition-colors">{p.title}</Link>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <Link
-                    to="/services"
-                    className="text-sm font-medium text-charcoal hover:text-burgundy transition-colors"
-                  >
-                    Expediting & Filing
-                  </Link>
-                  <div className="mt-2 space-y-2 pl-4">
-                    {services.map((service) => (
-                      <Link
-                        key={service.id}
-                        to={`/services#${service.id}`}
-                        className="block text-sm text-mid-gray hover:text-burgundy transition-colors"
-                      >
-                        {service.title}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
+                ))}
+                <Link to="/services" className="block text-sm font-sans text-ink-2 hover:text-red transition-colors">Expediting & Filing</Link>
               </div>
-              <Link
-                to="/about"
-                className="block text-2xl font-light text-charcoal hover:text-burgundy transition-colors"
-              >
-                About
-              </Link>
-              <Link
-                to="/contact"
-                className="block text-2xl font-light text-charcoal hover:text-burgundy transition-colors"
-              >
-                Contact
-              </Link>
+              <Link to="/about"   className="block text-xl font-serif text-ink hover:text-red transition-colors">About</Link>
+              <Link to="/contact" className="block text-xl font-serif text-ink hover:text-red transition-colors">Contact</Link>
             </nav>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   )
 }
 
 export default Navigation
-

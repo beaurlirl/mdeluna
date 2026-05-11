@@ -3,98 +3,96 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { projects, categories } from '../data/projects'
 import ProjectCard from '../components/ProjectCard'
 
+const ease = [0.2, 0.6, 0.2, 1]
+
 function Projects() {
   const [activeCategory, setActiveCategory] = useState('all')
 
-  const filteredProjects = useMemo(
+  const filtered = useMemo(
     () => (activeCategory === 'all' ? projects : projects.filter((p) => p.category === activeCategory)),
     [activeCategory]
   )
 
   return (
-    <div className="pt-20 lg:pt-28 pb-20 lg:pb-32 px-6 lg:px-12">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-light text-charcoal">
-            Projects
-          </h1>
-          <p className="mt-4 text-mid-gray text-lg max-w-2xl">
-            A selection of residential, commercial, and hospitality projects across New York City.
-          </p>
-        </motion.div>
+    <div className="pt-[100px]">
 
-        {/* Category Filter */}
-        <motion.div
-          className="mt-10 lg:mt-14 flex flex-wrap gap-3"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          <button
-            onClick={() => setActiveCategory('all')}
-            className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
-              activeCategory === 'all'
-                ? 'bg-charcoal text-warm-white shadow-sm'
-                : 'bg-transparent text-charcoal border border-light-gray hover:border-charcoal'
-            }`}
+      {/* Page header */}
+      <div className="bg-paper border-b border-paper-3">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-14 lg:py-20">
+          <motion.div
+            initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2, ease }}
           >
-            All
-          </button>
-          {categories.map((cat) => (
+            <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red mb-4">Projects</p>
+            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-ink leading-tight">
+              Architecture
+            </h1>
+            <p className="mt-4 font-serif italic text-lg text-ink-2 max-w-prose">
+              Residential, commercial, and hospitality projects across New York City.
+            </p>
+          </motion.div>
+
+          {/* Category filters */}
+          <motion.div
+            className="mt-10 flex flex-wrap gap-2"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 0.2, delay: 0.08, ease }}
+          >
             <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeCategory === cat.id
-                  ? 'bg-charcoal text-warm-white shadow-sm'
-                  : 'bg-transparent text-charcoal border border-light-gray hover:border-charcoal'
+              onClick={() => setActiveCategory('all')}
+              className={`font-mono text-[0.5625rem] tracking-[0.14em] uppercase px-4 py-2 rounded-full border transition-colors duration-150 ${
+                activeCategory === 'all'
+                  ? 'bg-ink text-paper border-ink'
+                  : 'bg-transparent text-ink-3 border-paper-3 hover:border-ink-3 hover:text-ink-2'
               }`}
             >
-              {cat.name}
+              All
             </button>
-          ))}
-        </motion.div>
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`font-mono text-[0.5625rem] tracking-[0.14em] uppercase px-4 py-2 rounded-full border transition-colors duration-150 ${
+                  activeCategory === cat.id
+                    ? 'bg-ink text-paper border-ink'
+                    : 'bg-transparent text-ink-3 border-paper-3 hover:border-ink-3 hover:text-ink-2'
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </motion.div>
+        </div>
+      </div>
 
-        {/* Projects Grid */}
-        <motion.div
-          className="mt-12 lg:mt-16"
-          layout
-        >
+      {/* Project list */}
+      <div className="bg-paper">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-10 lg:py-14">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCategory}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15, ease }}
             >
-              {filteredProjects.map((project, index) => (
-                <ProjectCard key={project.id} project={project} index={index} />
-              ))}
+              {filtered.length > 0 ? (
+                <div className="divide-y divide-paper-3 border-y border-paper-3">
+                  {filtered.map((project, i) => (
+                    <ProjectCard key={project.id} project={project} index={i} />
+                  ))}
+                </div>
+              ) : (
+                <p className="py-20 text-center font-mono text-[0.625rem] tracking-[0.16em] uppercase text-ink-4">
+                  No projects in this category yet.
+                </p>
+              )}
             </motion.div>
           </AnimatePresence>
-        </motion.div>
-
-        {/* Empty State */}
-        {filteredProjects.length === 0 && (
-          <motion.div
-            className="mt-20 text-center text-mid-gray"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <p>No projects in this category yet.</p>
-          </motion.div>
-        )}
+        </div>
       </div>
     </div>
   )
 }
 
 export default Projects
-

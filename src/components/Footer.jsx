@@ -1,125 +1,70 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
 import { contact, siteInfo } from '../data/siteContent'
 
 function Footer() {
   return (
-    <footer className="bg-charcoal text-warm-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-20">
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
+    <footer className="bg-paper-2 border-t border-paper-3">
+      <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-14 lg:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link to="/" className="inline-block text-warm-white text-lg font-medium tracking-wide">
-              {siteInfo.name}
+            <Link to="/" className="font-serif text-lg text-ink hover:text-red transition-colors duration-150">
+              {siteInfo.name}, Architect
             </Link>
-            <p className="mt-6 text-light-gray max-w-sm leading-relaxed">
-              {siteInfo.tagline}
+            <p className="mt-4 font-mono text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4 leading-relaxed">
+              Architecture · Zoning · Expediting<br />
+              New York City · Est. 1994
+            </p>
+            <p className="mt-6 text-sm text-ink-3 max-w-xs leading-relaxed">
+              Full-service architectural practice and DOB expediting across all five boroughs.
             </p>
           </div>
 
           {/* Navigation */}
           <div>
-            <h4 className="text-sm font-medium uppercase tracking-wide mb-6">
-              Navigation
-            </h4>
-            <nav className="space-y-3">
-              <Link
-                to="/projects"
-                className="block text-light-gray hover:text-warm-white transition-colors duration-300"
-              >
-                Projects
-              </Link>
-              <Link
-                to="/services"
-                className="block text-light-gray hover:text-warm-white transition-colors duration-300"
-              >
-                Services
-              </Link>
-              <Link
-                to="/about"
-                className="block text-light-gray hover:text-warm-white transition-colors duration-300"
-              >
-                About
-              </Link>
-              <Link
-                to="/contact"
-                className="block text-light-gray hover:text-warm-white transition-colors duration-300"
-              >
-                Contact
-              </Link>
+            <h4 className="font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-5">Navigation</h4>
+            <nav className="space-y-2.5">
+              {[
+                { label: 'Projects', to: '/projects' },
+                { label: 'Services', to: '/services' },
+                { label: 'About',    to: '/about' },
+                { label: 'Contact',  to: '/contact' },
+              ].map((l) => (
+                <Link key={l.to} to={l.to} className="block text-sm text-ink-3 hover:text-ink transition-colors duration-150">
+                  {l.label}
+                </Link>
+              ))}
             </nav>
           </div>
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-medium uppercase tracking-wide mb-6">
-              Contact
-            </h4>
-            <address className="not-italic space-y-3 text-light-gray">
+            <h4 className="font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-5">Contact</h4>
+            <address className="not-italic space-y-2 text-sm text-ink-3">
               <p>{contact.address.street}</p>
               <p>{contact.address.city}, {contact.address.state} {contact.address.zip}</p>
               <p className="pt-2">
-                <span className="text-xs opacity-60 uppercase tracking-wide mr-2">Work</span>
-                <a
-                  href={`tel:${contact.phone.replace(/\./g, '')}`}
-                  className="hover:text-warm-white transition-colors duration-300"
-                >
-                  {contact.phone}
-                </a>
+                <a href={`tel:${contact.phone.replace(/\./g, '')}`} className="hover:text-ink transition-colors duration-150">{contact.phone}</a>
+                <span className="text-ink-4 mx-1.5">·</span>
+                <a href={`tel:${contact.cell.replace(/\./g, '')}`} className="hover:text-ink transition-colors duration-150">{contact.cell}</a>
               </p>
               <p>
-                <span className="text-xs opacity-60 uppercase tracking-wide mr-2">Cell</span>
-                <a
-                  href={`tel:${contact.cell.replace(/\./g, '')}`}
-                  className="hover:text-warm-white transition-colors duration-300"
-                >
-                  {contact.cell}
-                </a>
-              </p>
-              <p>
-                <a
-                  href={`mailto:${contact.email}`}
-                  className="hover:text-warm-white transition-colors duration-300"
-                >
-                  {contact.email}
-                </a>
+                <a href={`mailto:${contact.email}`} className="hover:text-ink transition-colors duration-150">{contact.email}</a>
               </p>
             </address>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Bottom */}
-        <motion.div
-          className="mt-16 pt-8 border-t border-mid-gray/30 flex flex-col md:flex-row items-center justify-between gap-4"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <p className="text-sm text-mid-gray">
-            © {new Date().getFullYear()} {siteInfo.name}. All rights reserved.
+        {/* Bottom bar */}
+        <div className="mt-12 pt-6 border-t border-paper-3 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+          <p className="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
+            REG. № NYS-A-024891 · LICENSED ARCHITECT, STATE OF NEW YORK
           </p>
-          <div className="flex items-center gap-6">
-            <a
-              href={contact.social.linkedin}
-              className="text-mid-gray hover:text-warm-white transition-colors duration-300"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z" />
-                <rect x="2" y="9" width="4" height="12" strokeWidth={1.5} />
-                <circle cx="4" cy="4" r="2" strokeWidth={1.5} />
-              </svg>
-            </a>
-          </div>
-        </motion.div>
+          <p className="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
+            © {new Date().getFullYear()} {siteInfo.name}
+          </p>
+        </div>
       </div>
     </footer>
   )

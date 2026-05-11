@@ -140,6 +140,13 @@ export const consultingWork = [
   },
 ]
 
+export const stats = [
+  { value: '30+',    label: 'YEARS',    note: 'Licensed since 1994' },
+  { value: '1,800+', label: 'PROJECTS', note: 'Across all five boroughs' },
+  { value: '5',      label: 'BOROUGHS', note: 'Manhattan to Staten Island' },
+  { value: '1994',   label: 'EST.',      note: 'NYS Lic. № 024891' },
+]
+
 export const about = {
   headline: 'Designing New York Since 1993',
   intro: 'Michael De Luna, AIA, brings over three decades of experience to every project. As a licensed architect in New York State, Michael has developed expertise across residential, commercial, and hospitality sectors.',
