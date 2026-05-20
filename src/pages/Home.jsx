@@ -26,7 +26,7 @@ function Home() {
               </motion.p>
 
               <motion.h1
-                className="mt-5 font-serif text-6xl md:text-7xl lg:text-7xl xl:text-8xl text-ink leading-[1.0] tracking-tight"
+                className="mt-5 font-serif text-5xl md:text-6xl lg:text-6xl xl:text-7xl text-ink leading-[1.0] tracking-tight"
                 initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.22, delay: 0.05, ease }}
               >
@@ -70,7 +70,6 @@ function Home() {
                 transition={{ duration: 0.2, delay: 0.2, ease }}
               >
                 <p>Manhattan · Brooklyn · Queens · Bronx · Staten Is.</p>
-                <p>§ ZR · 2022 BC · RCNY · Alt-1 · Alt-2 · NB</p>
               </motion.div>
             </div>
 
@@ -110,7 +109,7 @@ function Home() {
               <span className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red">№ 01 · Services</span>
               <span className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-ink-4">Overview</span>
             </div>
-            <h2 className="font-serif text-4xl lg:text-5xl text-ink mt-5">Expediting & Filing</h2>
+            <h2 className="font-serif text-3xl lg:text-4xl text-ink mt-5">Expediting & Filing</h2>
           </motion.div>
 
           <div className="mt-10 lg:mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-paper-3">
@@ -165,7 +164,7 @@ function Home() {
                 <span className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red">№ 02 · Work</span>
                 <span className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-ink-4">Selected Projects</span>
               </div>
-              <h2 className="font-serif text-4xl lg:text-5xl text-ink mt-5">Selected Work</h2>
+              <h2 className="font-serif text-3xl lg:text-4xl text-ink mt-5">Selected Work</h2>
             </motion.div>
 
             <div className="mt-10 divide-y divide-paper-3">
@@ -223,9 +222,9 @@ function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
             <div>
               <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-ink-4 mb-4">
-                Ready to File?
+                Contact
               </p>
-              <h2 className="font-serif text-4xl lg:text-5xl text-paper leading-tight">
+              <h2 className="font-serif text-3xl lg:text-4xl text-paper leading-tight">
                 Start your project.
               </h2>
               <p className="mt-5 font-serif italic text-ink-3 text-lg max-w-prose">

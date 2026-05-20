@@ -15,7 +15,7 @@ html {
 body {
   font-family: 'Geist', system-ui, sans-serif;
   font-weight: 400;
-  background-color: #F4F0E6;
+  background-color: #FFFFFF;
   color: #14110F;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -74,9 +74,9 @@ img[src=""] {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #F4F0E6; }
-::-webkit-scrollbar-thumb { background: #E2DBC8; border-radius: 0; }
-::-webkit-scrollbar-thumb:hover { background: #9A9388; }
+::-webkit-scrollbar-track { background: #FFFFFF; }
+::-webkit-scrollbar-thumb { background: #E8E8E8; border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: #9E9E9E; }
 
 /* Focus styles */
 *:focus-visible {

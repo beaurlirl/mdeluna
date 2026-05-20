@@ -7,14 +7,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        paper:     '#F4F0E6',
-        vellum:    '#FBF8F0',
-        'paper-2': '#ECE6D7',
-        'paper-3': '#E2DBC8',
-        ink:       '#14110F',
-        'ink-2':   '#3C3833',
-        'ink-3':   '#6A655C',
-        'ink-4':   '#9A9388',
+        paper:     '#FFFFFF',
+        vellum:    '#F7F7F7',
+        'paper-2': '#F5F5F5',
+        'paper-3': '#E8E8E8',
+        ink:       '#111111',
+        'ink-2':   '#3A3A3A',
+        'ink-3':   '#666666',
+        'ink-4':   '#9E9E9E',
         red:       '#C8102E',
         'red-deep':'#8A0E20',
         'red-bright':'#E51938',

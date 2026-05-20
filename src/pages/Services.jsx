@@ -41,7 +41,7 @@ function Services() {
             transition={{ duration: 0.2, ease }}
           >
             <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red mb-4">Services</p>
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-ink leading-tight">
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-ink leading-tight">
               Expediting &<br />Filing Services
             </h1>
             <p className="mt-6 font-serif italic text-lg lg:text-xl text-ink-2 max-w-prose leading-relaxed">
@@ -60,7 +60,7 @@ function Services() {
             className="mb-12"
           >
             <SectionHead number="№ 01" label="Expediting" tag="DOB · LPC · FDNY · DOT" />
-            <h2 className="font-serif text-3xl lg:text-4xl text-ink mt-5">Services We Offer</h2>
+            <h2 className="font-serif text-2xl lg:text-3xl text-ink mt-5">Services We Offer</h2>
           </motion.div>
 
           <div className="space-y-0 border border-paper-3">
@@ -78,7 +78,7 @@ function Services() {
                   <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red mb-3">
                     {String(i + 1).padStart(2, '0')}
                   </p>
-                  <h3 className="font-serif text-2xl lg:text-3xl text-ink leading-snug">{s.title}</h3>
+                  <h3 className="font-serif text-xl lg:text-2xl text-ink leading-snug">{s.title}</h3>
                 </div>
 
                 {/* Details */}
@@ -107,7 +107,7 @@ function Services() {
             className="mb-12"
           >
             <SectionHead number="№ 02" label="Consulting" tag="Selected Projects" />
-            <h2 className="font-serif text-3xl lg:text-4xl text-ink mt-5">Consulting Work</h2>
+            <h2 className="font-serif text-2xl lg:text-3xl text-ink mt-5">Consulting Work</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-16">
@@ -140,7 +140,7 @@ function Services() {
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-16 lg:py-20">
           <div className="max-w-2xl">
             <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-ink-4 mb-4">Next Step</p>
-            <h3 className="font-serif text-3xl lg:text-4xl text-paper leading-tight">
+            <h3 className="font-serif text-2xl lg:text-3xl text-paper leading-tight">
               Ready to start your project?
             </h3>
             <p className="mt-4 font-serif italic text-ink-3 text-lg">

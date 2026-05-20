@@ -58,7 +58,7 @@ function ProjectDetail() {
                 <span className="font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-red">
                   {category?.name}
                 </span>
-                <h1 className="mt-2 font-serif text-4xl md:text-5xl lg:text-6xl text-ink leading-tight">
+                <h1 className="mt-2 font-serif text-3xl md:text-4xl lg:text-5xl text-ink leading-tight">
                   {project.title}
                 </h1>
               </div>

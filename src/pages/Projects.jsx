@@ -24,7 +24,7 @@ function Projects() {
             transition={{ duration: 0.2, ease }}
           >
             <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red mb-4">Projects</p>
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-ink leading-tight">
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-ink leading-tight">
               Architecture
             </h1>
             <p className="mt-4 font-serif italic text-lg text-ink-2 max-w-prose">

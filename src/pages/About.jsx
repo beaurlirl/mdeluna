@@ -16,7 +16,7 @@ function About() {
             transition={{ duration: 0.2, ease }}
           >
             <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red mb-4">About</p>
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-ink leading-tight">
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-ink leading-tight">
               {about.headline}
             </h1>
           </motion.div>

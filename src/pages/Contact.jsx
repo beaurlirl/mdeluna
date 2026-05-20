@@ -23,7 +23,7 @@ function Contact() {
             transition={{ duration: 0.2, ease }}
           >
             <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red mb-4">Contact</p>
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-ink leading-tight">
+            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-ink leading-tight">
               Start Your Project
             </h1>
             <p className="mt-5 font-serif italic text-lg lg:text-xl text-ink-2 max-w-prose leading-relaxed">
@@ -145,7 +145,7 @@ function Contact() {
                     <div>
                       <label htmlFor="project-type" className={labelClass}>Project Type</label>
                       <select id="project-type" name="project-type" className={inputClass}>
-                        <option value="">Select…</option>
+                        <option value="">Select</option>
                         <option value="residential">Residential</option>
                         <option value="commercial">Commercial</option>
                         <option value="hospitality">Hospitality</option>
