@@ -40,9 +40,9 @@ function Layout({ children }) {
       <motion.main
         className={`flex-grow site-header-offset ${isHome ? 'lg:overflow-hidden' : ''}`}
         key={location.pathname}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.18, ease: [0.2, 0.6, 0.2, 1] }}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.32, ease: [0.2, 0.6, 0.2, 1] }}
       >
         {breadcrumbs.length > 1 && (
           <div className="border-b border-paper-3 -mt-4 mb-2">
