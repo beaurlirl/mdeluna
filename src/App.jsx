@@ -15,7 +15,7 @@ function App() {
       <Layout>
         <Suspense fallback={
           <div className="min-h-screen flex items-center justify-center bg-paper">
-            <span className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-ink-4">Loading…</span>
+            <span className="font-sans text-[0.625rem] tracking-[0.16em] uppercase text-ink-4">Loading…</span>
           </div>
         }>
           <Routes>

@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Aileron';
+  src: url('/fonts/Aileron-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -10,10 +18,11 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: 'Geist', system-ui, sans-serif;
+  font-family: 'Aileron', system-ui, sans-serif;
   font-weight: 400;
   background-color: #FFFFFF;
   color: #14110F;
@@ -21,6 +30,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   line-height: 1.6;
+  overflow-x: hidden;
+}
+
+body.mobile-nav-open {
+  overflow: hidden;
+}
+
+/* Clears fixed header (filing strip + nav); adjust if header height changes */
+.site-header-offset {
+  padding-top: 6.5rem;
+}
+
+@media (min-width: 1024px) {
+  .site-header-offset {
+    padding-top: 6.75rem;
+  }
 }
 
 ::selection {
@@ -39,14 +64,14 @@ img[src=""] {
 
 /* Mono label utility — eyebrows, stamps, technical labels */
 .mono-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Aileron', sans-serif;
   font-size: 0.625rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .mono-label-sm {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Aileron', sans-serif;
   font-size: 0.5625rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -63,7 +88,7 @@ img[src=""] {
 
 /* Status stamps */
 .stamp {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Aileron', sans-serif;
   font-size: 0.5625rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -86,7 +111,7 @@ img[src=""] {
 
 /* Form elements */
 input, textarea, select {
-  font-family: 'Geist', system-ui, sans-serif;
+  font-family: 'Aileron', system-ui, sans-serif;
 }
 
 select {

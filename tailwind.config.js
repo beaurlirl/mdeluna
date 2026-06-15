@@ -21,12 +21,12 @@ export default {
         'red-wash':'#F2D8DC',
         approved:  '#2F6B3A',
         pending:   '#B07A1A',
+        accent:    '#2B3A2E',
+        'accent-light': '#E8EDE9',
+        stone:     '#C8C0B0',
       },
       fontFamily: {
-        sans:    ['Geist', 'system-ui', 'sans-serif'],
-        serif:   ['Instrument Serif', 'Georgia', 'serif'],
-        display: ['Instrument Serif', 'Georgia', 'serif'],
-        mono:    ['JetBrains Mono', 'Menlo', 'monospace'],
+        sans: ['Aileron', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         '7xl': ['4.5rem', { lineHeight: '1' }],

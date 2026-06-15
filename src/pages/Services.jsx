@@ -8,8 +8,8 @@ const ease = [0.2, 0.6, 0.2, 1]
 function SectionHead({ number, label, tag }) {
   return (
     <div className="flex items-baseline justify-between pb-4 border-b-[1.5px] border-ink">
-      <span className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red">{number} · {label}</span>
-      {tag && <span className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-ink-4">{tag}</span>}
+      <span className="font-sans text-[0.625rem] tracking-[0.16em] uppercase text-red">{number} · {label}</span>
+      {tag && <span className="font-sans text-[0.625rem] tracking-[0.16em] uppercase text-ink-4">{tag}</span>}
     </div>
   )
 }
@@ -31,7 +31,7 @@ function Services() {
   }, [location])
 
   return (
-    <div className="pt-[100px]">
+    <div>
 
       {/* Page header */}
       <div className="border-b border-paper-3 bg-paper">
@@ -40,11 +40,11 @@ function Services() {
             initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, ease }}
           >
-            <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red mb-4">Services</p>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-ink leading-tight">
+            <p className="font-sans text-[0.625rem] tracking-[0.16em] uppercase text-red mb-4">Services</p>
+            <h1 className="font-sans text-4xl md:text-5xl lg:text-6xl text-ink leading-tight">
               Expediting &<br />Filing Services
             </h1>
-            <p className="mt-6 font-serif italic text-lg lg:text-xl text-ink-2 max-w-prose leading-relaxed">
+            <p className="mt-6 font-sans italic text-lg lg:text-xl text-ink-2 max-w-prose leading-relaxed">
               From DOB application to certificate of occupancy — consulting expertise that guides approvals, permits, and filings start to finish.
             </p>
           </motion.div>
@@ -60,7 +60,7 @@ function Services() {
             className="mb-12"
           >
             <SectionHead number="№ 01" label="Expediting" tag="DOB · LPC · FDNY · DOT" />
-            <h2 className="font-serif text-2xl lg:text-3xl text-ink mt-5">Services We Offer</h2>
+            <h2 className="font-sans text-2xl lg:text-3xl text-ink mt-5">Services We Offer</h2>
           </motion.div>
 
           <div className="space-y-0 border border-paper-3">
@@ -75,10 +75,10 @@ function Services() {
               >
                 {/* Number + title */}
                 <div className="lg:col-span-4 p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-paper-3">
-                  <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red mb-3">
+                  <p className="font-sans text-[0.625rem] tracking-[0.16em] uppercase text-red mb-3">
                     {String(i + 1).padStart(2, '0')}
                   </p>
-                  <h3 className="font-serif text-xl lg:text-2xl text-ink leading-snug">{s.title}</h3>
+                  <h3 className="font-sans text-xl lg:text-2xl text-ink leading-snug">{s.title}</h3>
                 </div>
 
                 {/* Details */}
@@ -107,7 +107,7 @@ function Services() {
             className="mb-12"
           >
             <SectionHead number="№ 02" label="Consulting" tag="Selected Projects" />
-            <h2 className="font-serif text-2xl lg:text-3xl text-ink mt-5">Consulting Work</h2>
+            <h2 className="font-sans text-2xl lg:text-3xl text-ink mt-5">Consulting Work</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-16">
@@ -118,7 +118,7 @@ function Services() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.2, delay: i * 0.05, ease }}
               >
-                <h3 className="font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-3 pb-3 border-b border-paper-3 mb-4">
+                <h3 className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-3 pb-3 border-b border-paper-3 mb-4">
                   {section.title}
                 </h3>
                 <ul className="space-y-2">
@@ -139,11 +139,11 @@ function Services() {
       <div className="bg-ink border-t border-ink-2">
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-16 lg:py-20">
           <div className="max-w-2xl">
-            <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-ink-4 mb-4">Next Step</p>
-            <h3 className="font-serif text-2xl lg:text-3xl text-paper leading-tight">
+            <p className="font-sans text-[0.625rem] tracking-[0.16em] uppercase text-ink-4 mb-4">Next Step</p>
+            <h3 className="font-sans text-2xl lg:text-3xl text-paper leading-tight">
               Ready to start your project?
             </h3>
-            <p className="mt-4 font-serif italic text-ink-3 text-lg">
+            <p className="mt-4 font-sans italic text-ink-3 text-lg">
               Contact us for a consultation. We'll review your project and outline the approval path.
             </p>
             <Link

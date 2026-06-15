@@ -70,10 +70,10 @@ function Navigation() {
         style={{ height: scrolled ? 0 : undefined }}
       >
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-2 flex justify-center lg:justify-between items-center">
-          <span className="font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4">
+          <span className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4">
             EST. 1994 · NEW YORK CITY · AIA · NCARB · NYS LIC. 024891
           </span>
-          <span className="hidden lg:block font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4">
+          <span className="hidden lg:block font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4">
             220 Congress St., Brooklyn
           </span>
         </div>
@@ -86,7 +86,7 @@ function Navigation() {
 
             <Link
               to="/"
-              className="font-serif text-lg text-ink hover:text-red transition-colors duration-150 leading-tight"
+              className="font-sans text-lg text-ink hover:text-red transition-colors duration-150 leading-tight"
             >
               Michael De Luna, AIA, Architect
             </Link>
@@ -125,7 +125,7 @@ function Navigation() {
                         <div className="border-r border-paper-3">
                           <Link
                             to="/projects"
-                            className="block px-5 py-2.5 font-mono text-[0.5625rem] tracking-[0.14em] uppercase text-ink-3 hover:text-red border-b border-paper-3 transition-colors duration-150"
+                            className="block px-5 py-2.5 font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-3 hover:text-red border-b border-paper-3 transition-colors duration-150"
                           >
                             Architecture
                           </Link>
@@ -170,7 +170,7 @@ function Navigation() {
                         <div className="w-60 py-3">
                           <Link
                             to="/services"
-                            className="block px-5 py-2.5 font-mono text-[0.5625rem] tracking-[0.14em] uppercase text-ink-3 hover:text-red border-b border-paper-3 transition-colors duration-150 mb-1"
+                            className="block px-5 py-2.5 font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-3 hover:text-red border-b border-paper-3 transition-colors duration-150 mb-1"
                           >
                             Expediting & Filing
                           </Link>
@@ -221,12 +221,12 @@ function Navigation() {
             transition={{ duration: 0.18, ease }}
           >
             <nav className="max-w-screen-xl mx-auto px-6 py-6 space-y-5">
-              <Link to="/services" className="block text-xl font-serif text-ink hover:text-red transition-colors">Services</Link>
+              <Link to="/services" className="block text-xl font-sans text-ink hover:text-red transition-colors">Services</Link>
               <div className="pl-4 border-l border-paper-3 space-y-3">
                 <Link to="/projects" className="block text-sm font-sans text-ink-2 hover:text-red transition-colors">Architecture — All Projects</Link>
                 {categories.map((cat) => (
                   <div key={cat.id}>
-                    <span className="font-mono text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4">{cat.name}</span>
+                    <span className="font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4">{cat.name}</span>
                     <div className="mt-1.5 space-y-1">
                       {getProjectsByCategory(cat.id).map((p) => (
                         <Link key={p.id} to={`/projects/${p.id}`} className="block text-sm text-ink-3 hover:text-ink transition-colors">{p.title}</Link>
@@ -236,8 +236,8 @@ function Navigation() {
                 ))}
                 <Link to="/services" className="block text-sm font-sans text-ink-2 hover:text-red transition-colors">Expediting & Filing</Link>
               </div>
-              <Link to="/about"   className="block text-xl font-serif text-ink hover:text-red transition-colors">About</Link>
-              <Link to="/contact" className="block text-xl font-serif text-ink hover:text-red transition-colors">Contact</Link>
+              <Link to="/about"   className="block text-xl font-sans text-ink hover:text-red transition-colors">About</Link>
+              <Link to="/contact" className="block text-xl font-sans text-ink hover:text-red transition-colors">Contact</Link>
             </nav>
           </motion.div>
         )}

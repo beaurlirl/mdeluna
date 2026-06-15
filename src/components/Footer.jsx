@@ -9,10 +9,10 @@ function Footer() {
 
           {/* Brand */}
           <div className="lg:col-span-2">
-            <Link to="/" className="font-serif text-lg text-ink hover:text-red transition-colors duration-150">
+            <Link to="/" className="font-sans text-lg text-ink hover:text-red transition-colors duration-150">
               {siteInfo.name}, Architect
             </Link>
-            <p className="mt-4 font-mono text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4 leading-relaxed">
+            <p className="mt-4 font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4 leading-relaxed">
               Architecture · Zoning · Expediting<br />
               New York City · Est. 1994
             </p>
@@ -23,7 +23,7 @@ function Footer() {
 
           {/* Navigation */}
           <div>
-            <h4 className="font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-5">Navigation</h4>
+            <h4 className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-5">Navigation</h4>
             <nav className="space-y-2.5">
               {[
                 { label: 'Projects', to: '/projects' },
@@ -40,7 +40,7 @@ function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-5">Contact</h4>
+            <h4 className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-5">Contact</h4>
             <address className="not-italic space-y-2 text-sm text-ink-3">
               <p>{contact.address.street}</p>
               <p>{contact.address.city}, {contact.address.state} {contact.address.zip}</p>
@@ -58,10 +58,10 @@ function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-paper-3 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-          <p className="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
+          <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
             REG. № NYS-A-024891 · LICENSED ARCHITECT, STATE OF NEW YORK
           </p>
-          <p className="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
+          <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
             © {new Date().getFullYear()} {siteInfo.name}
           </p>
         </div>

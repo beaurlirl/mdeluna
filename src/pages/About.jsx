@@ -6,7 +6,7 @@ const ease = [0.2, 0.6, 0.2, 1]
 
 function About() {
   return (
-    <div className="pt-[100px]">
+    <div>
 
       {/* Page header */}
       <div className="bg-paper border-b border-paper-3">
@@ -15,8 +15,8 @@ function About() {
             initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, ease }}
           >
-            <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red mb-4">About</p>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-ink leading-tight">
+            <p className="font-sans text-[0.625rem] tracking-[0.16em] uppercase text-red mb-4">About</p>
+            <h1 className="font-sans text-4xl md:text-5xl lg:text-6xl text-ink leading-tight">
               {about.headline}
             </h1>
           </motion.div>
@@ -34,7 +34,7 @@ function About() {
               initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2, ease }}
             >
-              <p className="font-serif italic text-xl lg:text-2xl text-ink-2 leading-relaxed">
+              <p className="font-sans italic text-xl lg:text-2xl text-ink-2 leading-relaxed">
                 {about.intro}
               </p>
 
@@ -46,7 +46,7 @@ function About() {
 
               {/* Credentials */}
               <div className="mt-12 pt-8 border-t border-paper-3">
-                <h3 className="font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-5">
+                <h3 className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-5">
                   Credentials
                 </h3>
                 <ul className="space-y-2">
@@ -75,7 +75,7 @@ function About() {
               initial={{ opacity: 0 }} animate={{ opacity: 1 }}
               transition={{ duration: 0.22, delay: 0.1, ease }}
             >
-              <div className="sticky top-28">
+              <div className="lg:sticky lg:top-28">
                 <img
                   src="/mikelucidcartoon.png"
                   alt={siteInfo.name}
@@ -83,7 +83,7 @@ function About() {
                   style={{ filter: 'sepia(20%) saturate(0.7) brightness(0.97)' }}
                 />
                 <div className="mt-5 border-t border-paper-3 pt-4">
-                  <p className="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
+                  <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
                     Michael De Luna, AIA, Architect<br />
                     NYS Lic. № 024891 · Est. 1994
                   </p>

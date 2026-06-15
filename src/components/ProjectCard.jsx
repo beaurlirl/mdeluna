@@ -39,10 +39,10 @@ function ProjectCard({ project, index = 0 }) {
 
         {/* Meta */}
         <div className="flex-grow min-w-0">
-          <p className="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 mb-1">
+          <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 mb-1">
             {category?.name} · {project.location} · {project.year}
           </p>
-          <h3 className="font-serif text-xl lg:text-2xl text-ink group-hover:text-red transition-colors duration-150 truncate">
+          <h3 className="font-sans text-xl lg:text-2xl text-ink group-hover:text-red transition-colors duration-150 truncate">
             {project.title}
           </h3>
           <p className="mt-1 text-sm text-ink-3 line-clamp-1 hidden md:block">{project.description}</p>
@@ -50,7 +50,7 @@ function ProjectCard({ project, index = 0 }) {
 
         {/* Type pill + arrow */}
         <div className="flex-shrink-0 flex items-center gap-4 hidden sm:flex">
-          <span className="font-mono text-[0.5rem] tracking-[0.14em] uppercase border border-paper-3 text-ink-4 px-3 py-1 rounded-full">
+          <span className="font-sans text-[0.5rem] tracking-[0.14em] uppercase border border-paper-3 text-ink-4 px-3 py-1 rounded-full">
             {category?.name}
           </span>
           <svg

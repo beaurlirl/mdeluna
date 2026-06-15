@@ -7,10 +7,9 @@ import { projects } from '../data/projects'
 
 function Layout({ children }) {
   const location = useLocation()
+  const isHome = location.pathname === '/'
   const pathSegments = useMemo(() => location.pathname.split('/').filter(Boolean), [location.pathname])
   const projectId = pathSegments[1]
-  const isHome = location.pathname === '/'
-
   const project = useMemo(
     () => (location.pathname.startsWith('/projects/') ? projects.find((p) => p.id === projectId) : null),
     [location.pathname, projectId]
@@ -39,16 +38,16 @@ function Layout({ children }) {
     <div className="min-h-screen bg-paper flex flex-col">
       <Navigation />
       <motion.main
-        className="flex-grow"
+        className={`flex-grow site-header-offset ${isHome ? 'lg:overflow-hidden' : ''}`}
         key={location.pathname}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.18, ease: [0.2, 0.6, 0.2, 1] }}
       >
         {breadcrumbs.length > 1 && (
-          <div className="pt-[100px] border-b border-paper-3">
+          <div className="border-b border-paper-3 -mt-4 mb-2">
             <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
-              <nav className="flex items-center gap-2 py-3 font-mono text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4">
+              <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 py-3 font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4">
                 {breadcrumbs.map((crumb, i) => {
                   const isLast = i === breadcrumbs.length - 1
                   return (
@@ -68,7 +67,7 @@ function Layout({ children }) {
         )}
         {children}
       </motion.main>
-      <Footer />
+      {!isHome && <Footer />}
     </div>
   )
 }

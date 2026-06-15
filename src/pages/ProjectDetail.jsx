@@ -34,7 +34,7 @@ function ProjectDetail() {
   if (!project) return null
 
   return (
-    <div className="pt-[100px]">
+    <div>
 
       {/* Header */}
       <div className="bg-paper border-b border-paper-3">
@@ -43,32 +43,57 @@ function ProjectDetail() {
             initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, ease }}
           >
-            <Link
-              to="/projects"
-              className="inline-flex items-center gap-2 font-mono text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4 hover:text-red transition-colors duration-150 mb-8"
-            >
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter">
-                <path strokeWidth={1.5} d="M15 19l-7-7 7-7" />
-              </svg>
-              All Projects
-            </Link>
+            <div className="flex items-center justify-between mb-8">
+              <Link
+                to="/projects"
+                className="inline-flex items-center gap-2 font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-3 hover:text-red transition-colors duration-150"
+              >
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter">
+                  <path strokeWidth={1.5} d="M15 19l-7-7 7-7" />
+                </svg>
+                All Projects
+              </Link>
+
+              <div className="flex items-center gap-4">
+                <Link
+                  to={`/projects/${prevProject.id}`}
+                  aria-label={`Previous project: ${prevProject.title}`}
+                  title={prevProject.title}
+                  className="text-ink-3 hover:text-red transition-colors duration-150"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter">
+                    <path strokeWidth={1.5} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </Link>
+                <Link
+                  to={`/projects/${nextProject.id}`}
+                  aria-label={`Next project: ${nextProject.title}`}
+                  title={nextProject.title}
+                  className="text-ink-3 hover:text-red transition-colors duration-150"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter">
+                    <path strokeWidth={1.5} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+            </div>
 
             <div className="flex flex-wrap items-start justify-between gap-6">
               <div>
-                <span className="font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-red">
+                <span className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-red">
                   {category?.name}
                 </span>
-                <h1 className="mt-2 font-serif text-3xl md:text-4xl lg:text-5xl text-ink leading-tight">
+                <h1 className="mt-2 font-sans text-3xl md:text-4xl lg:text-5xl text-ink leading-tight">
                   {project.title}
                 </h1>
               </div>
-              <div className="text-right font-mono text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4 space-y-1">
+              <div className="text-right font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4 space-y-1">
                 <p>{project.location}</p>
                 <p>{project.year}</p>
               </div>
             </div>
 
-            <p className="mt-8 font-serif italic text-lg text-ink-2 max-w-prose leading-relaxed">
+            <p className="mt-8 font-sans italic text-lg text-ink-2 max-w-prose leading-relaxed">
               {project.description}
             </p>
           </motion.div>
@@ -88,6 +113,8 @@ function ProjectDetail() {
                 src={project.coverImage}
                 alt={project.title}
                 className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
                 onError={() => handleImageError('cover')}
               />
             ) : (
@@ -95,7 +122,7 @@ function ProjectDetail() {
                 <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter">
                   <path strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                <p className="font-mono text-[0.5625rem] tracking-[0.14em] uppercase">/public/projects/{project.id}/cover.jpg</p>
+                <p className="font-sans text-[0.5625rem] tracking-[0.14em] uppercase">/public/projects/{project.id}/cover.jpg</p>
               </div>
             )}
           </div>
@@ -124,7 +151,7 @@ function ProjectDetail() {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <p className="font-mono text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4">{i + 1}.jpg</p>
+                      <p className="font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4">{i + 1}.jpg</p>
                     </div>
                   )}
                 </motion.div>
@@ -139,14 +166,14 @@ function ProjectDetail() {
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-2 divide-x divide-paper-3">
             <Link to={`/projects/${prevProject.id}`} className="group py-10 pr-8">
-              <p className="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 mb-2">Previous</p>
-              <p className="font-serif text-xl lg:text-2xl text-ink group-hover:text-red transition-colors duration-150">
+              <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 mb-2">Previous</p>
+              <p className="font-sans text-xl lg:text-2xl text-ink group-hover:text-red transition-colors duration-150">
                 {prevProject.title}
               </p>
             </Link>
             <Link to={`/projects/${nextProject.id}`} className="group py-10 pl-8 text-right">
-              <p className="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 mb-2">Next</p>
-              <p className="font-serif text-xl lg:text-2xl text-ink group-hover:text-red transition-colors duration-150">
+              <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 mb-2">Next</p>
+              <p className="font-sans text-xl lg:text-2xl text-ink group-hover:text-red transition-colors duration-150">
                 {nextProject.title}
               </p>
             </Link>

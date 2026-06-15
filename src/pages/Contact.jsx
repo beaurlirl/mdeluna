@@ -7,13 +7,13 @@ const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'
 const ease = [0.2, 0.6, 0.2, 1]
 
 const inputClass = 'w-full px-4 py-3 bg-vellum border border-paper-3 rounded focus:border-ink focus:outline-none transition-colors duration-150 text-sm text-ink placeholder:text-ink-4'
-const labelClass = 'block font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-3 mb-2'
+const labelClass = 'block font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-3 mb-2'
 
 function Contact() {
   const [formState, setFormState] = useState('idle')
 
   return (
-    <div className="pt-[100px]">
+    <div>
 
       {/* Page header */}
       <div className="bg-paper border-b border-paper-3">
@@ -22,11 +22,11 @@ function Contact() {
             initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, ease }}
           >
-            <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red mb-4">Contact</p>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-ink leading-tight">
+            <p className="font-sans text-[0.625rem] tracking-[0.16em] uppercase text-red mb-4">Contact</p>
+            <h1 className="font-sans text-4xl md:text-5xl lg:text-6xl text-ink leading-tight">
               Start Your Project
             </h1>
-            <p className="mt-5 font-serif italic text-lg lg:text-xl text-ink-2 max-w-prose leading-relaxed">
+            <p className="mt-5 font-sans italic text-lg lg:text-xl text-ink-2 max-w-prose leading-relaxed">
               Ready to discuss your project? Get in touch and we'll outline the path forward.
             </p>
           </motion.div>
@@ -46,7 +46,7 @@ function Contact() {
             >
               <div className="space-y-8">
                 <div>
-                  <h3 className="font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-3">Office</h3>
+                  <h3 className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-3">Office</h3>
                   <address className="not-italic text-sm text-ink-2 leading-relaxed">
                     <p>{contact.address.street}</p>
                     <p>{contact.address.city}, {contact.address.state} {contact.address.zip}</p>
@@ -54,28 +54,28 @@ function Contact() {
                 </div>
 
                 <div>
-                  <h3 className="font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-3">Phone</h3>
+                  <h3 className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-3">Phone</h3>
                   <div className="space-y-1.5 text-sm text-ink-2">
                     <div className="flex items-center gap-3">
-                      <span className="font-mono text-[0.5rem] tracking-[0.12em] uppercase text-ink-4 w-8">Work</span>
+                      <span className="font-sans text-[0.5rem] tracking-[0.12em] uppercase text-ink-4 w-8">Work</span>
                       <a href={`tel:${contact.phone.replace(/\./g, '')}`} className="hover:text-red transition-colors duration-150">{contact.phone}</a>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="font-mono text-[0.5rem] tracking-[0.12em] uppercase text-ink-4 w-8">Cell</span>
+                      <span className="font-sans text-[0.5rem] tracking-[0.12em] uppercase text-ink-4 w-8">Cell</span>
                       <a href={`tel:${contact.cell.replace(/\./g, '')}`} className="hover:text-red transition-colors duration-150">{contact.cell}</a>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-3">Email</h3>
+                  <h3 className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-3">Email</h3>
                   <a href={`mailto:${contact.email}`} className="text-sm text-ink-2 hover:text-red transition-colors duration-150">
                     {contact.email}
                   </a>
                 </div>
 
                 <div className="pt-6 border-t border-paper-3">
-                  <p className="font-mono text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 leading-relaxed">
+                  <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 leading-relaxed">
                     NYS Lic. № 024891<br />
                     AIA · NCARB<br />
                     Est. 1994
@@ -98,11 +98,11 @@ function Contact() {
                     transition={{ duration: 0.2, ease }}
                   >
                     <span className="stamp text-approved self-start mb-6">Received</span>
-                    <h3 className="font-serif text-2xl text-ink">Message sent.</h3>
+                    <h3 className="font-sans text-2xl text-ink">Message sent.</h3>
                     <p className="mt-3 text-sm text-ink-3">Thank you for reaching out. We'll be in touch shortly.</p>
                     <button
                       onClick={() => setFormState('idle')}
-                      className="mt-8 font-mono text-[0.5625rem] tracking-[0.16em] uppercase text-ink-3 hover:text-red transition-colors duration-150 text-left"
+                      className="mt-8 font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-3 hover:text-red transition-colors duration-150 text-left"
                     >
                       Send another →
                     </button>

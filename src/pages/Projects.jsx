@@ -14,7 +14,7 @@ function Projects() {
   )
 
   return (
-    <div className="pt-[100px]">
+    <div>
 
       {/* Page header */}
       <div className="bg-paper border-b border-paper-3">
@@ -23,11 +23,11 @@ function Projects() {
             initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, ease }}
           >
-            <p className="font-mono text-[0.625rem] tracking-[0.16em] uppercase text-red mb-4">Projects</p>
-            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-ink leading-tight">
+            <p className="font-sans text-[0.625rem] tracking-[0.16em] uppercase text-red mb-4">Projects</p>
+            <h1 className="font-sans text-4xl md:text-5xl lg:text-6xl text-ink leading-tight">
               Architecture
             </h1>
-            <p className="mt-4 font-serif italic text-lg text-ink-2 max-w-prose">
+            <p className="mt-4 font-sans italic text-lg text-ink-2 max-w-prose">
               Residential, commercial, and hospitality projects across New York City.
             </p>
           </motion.div>
@@ -40,7 +40,7 @@ function Projects() {
           >
             <button
               onClick={() => setActiveCategory('all')}
-              className={`font-mono text-[0.5625rem] tracking-[0.14em] uppercase px-4 py-2 rounded-full border transition-colors duration-150 ${
+              className={`font-sans text-[0.5625rem] tracking-[0.14em] uppercase px-4 py-2 rounded-full border transition-colors duration-150 ${
                 activeCategory === 'all'
                   ? 'bg-ink text-paper border-ink'
                   : 'bg-transparent text-ink-3 border-paper-3 hover:border-ink-3 hover:text-ink-2'
@@ -52,7 +52,7 @@ function Projects() {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`font-mono text-[0.5625rem] tracking-[0.14em] uppercase px-4 py-2 rounded-full border transition-colors duration-150 ${
+                className={`font-sans text-[0.5625rem] tracking-[0.14em] uppercase px-4 py-2 rounded-full border transition-colors duration-150 ${
                   activeCategory === cat.id
                     ? 'bg-ink text-paper border-ink'
                     : 'bg-transparent text-ink-3 border-paper-3 hover:border-ink-3 hover:text-ink-2'
@@ -83,7 +83,7 @@ function Projects() {
                   ))}
                 </div>
               ) : (
-                <p className="py-20 text-center font-mono text-[0.625rem] tracking-[0.16em] uppercase text-ink-4">
+                <p className="py-20 text-center font-sans text-[0.625rem] tracking-[0.16em] uppercase text-ink-4">
                   No projects in this category yet.
                 </p>
               )}
