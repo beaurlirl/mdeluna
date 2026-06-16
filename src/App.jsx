@@ -8,6 +8,7 @@ const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
 const About = lazy(() => import('./pages/About'))
 const Services = lazy(() => import('./pages/Services'))
 const Contact = lazy(() => import('./pages/Contact'))
+const Architecture = lazy(() => import('./pages/architecture/Index'))
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         }>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/architecture" element={<Architecture />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/about" element={<About />} />

@@ -5,368 +5,470 @@
 
 ## Project Overview
 
-Rebuild mdeluna.com as a Next.js site hosted on Vercel. The current site is a Wix build and will be fully replaced. All existing content (services, about, project history, contact) is accurate and should be preserved but redesigned. Claude Code should read the existing codebase for structure and content references.
+This is an active Vite + React SPA — NOT Next.js. Do not suggest or implement Next.js patterns, App Router, SSR, or TypeScript. The codebase is plain `.jsx`.
 
 The client is **Michael De Luna, AIA** — a licensed architect in New York City since 1994. 30+ years of practice. Services span architecture, zoning, DOB filing/expediting, and code compliance. Primary clients are interior designers, contractors, and developers navigating NYC municipal approvals.
 
 The operator is **DBA Studio** (Beau Lawrence) — handling all web infrastructure, design, and brand execution.
 
+Repo: `github.com/beaurlirl/mdeluna` — branch `main`
+
 ---
 
-## Tech Stack
+## Tech Stack (actual)
 
-- **Framework:** Next.js (App Router)
-- **Styling:** Tailwind CSS
-- **CMS:** None required — static content, hardcoded
-- **Hosting:** Vercel
-- **Domain:** mdeluna.com (GoDaddy DNS, Vercel hosting)
+- **Framework:** Vite 5 + React 18 SPA
+- **Routing:** React Router DOM v7 (BrowserRouter, client-side only)
+- **Styling:** Tailwind CSS 3 (utility-first, no plugins)
+- **Animation:** Framer Motion 11
+- **Language:** Plain `.jsx` — no TypeScript
+- **Build:** `vite build` → `/dist`
+- **Dev:** `npm run dev`
+- **Hosting:** Vercel (not yet deployed — needs `vercel.json` with SPA rewrites)
+- **Domain:** mdeluna.com (GoDaddy DNS)
 - **Email:** michael@mdeluna.com (Google Workspace)
+- **No CMS, no SSR**
 
 ---
 
-## Typography
+## File Structure (actual)
 
-**Primary font family: Aileron**
-All type is set in Aileron. No serifs anywhere.
-
-Font file is local — do not import from Google Fonts or CDN. Referenced from `/public/fonts/Aileron-Regular.ttf`.
-
-Only the Regular (400) weight is loaded. Weight distinctions from the original NHG system are approximated with size, tracking, and browser-synthesized bold (`font-weight: 700`) rather than separate font files:
-- **Bold (synthetic 700)** — wordmark, hero headlines
-- **Regular, larger size** — section headers, nav
-- **Regular** — body copy, descriptions
-- **Regular, small size + wide tracking + uppercase** — labels, credentials, fine print
-
-Wordmark treatment:
 ```
-MICHAEL DE LUNA
-AIA · ARCHITECT · EST. 1994
+/
+├── index.html
+├── vite.config.js
+├── tailwind.config.js
+├── postcss.config.js
+├── CLAUDE.md
+├── .gitignore
+│
+├── src/
+│   ├── main.jsx
+│   ├── App.jsx                  ← Router + lazy-loaded routes + Suspense
+│   ├── index.css                ← @font-face Aileron, CSS vars, utilities
+│   │
+│   ├── components/
+│   │   ├── Layout.jsx           ← Fixed nav + motion.main page transition + breadcrumbs + footer
+│   │   ├── Navigation.jsx       ← Filing strip + wordmark + desktop dropdown + mobile menu
+│   │   ├── Footer.jsx           ← 4-col grid, hidden on homepage
+│   │   └── ProjectCard.jsx      ← Used in Projects.jsx
+│   │
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── Services.jsx
+│   │   ├── About.jsx
+│   │   ├── Projects.jsx
+│   │   ├── ProjectDetail.jsx
+│   │   └── Contact.jsx
+│   │
+│   └── data/
+│       ├── siteContent.js       ← siteInfo, contact, services[], consultingWork[], stats[], about{}
+│       └── projects.js          ← projects[], categories[], helper functions
+│
+├── public/
+│   ├── fonts/
+│   │   └── Aileron-Regular.ttf  ← Only font file
+│   ├── petrossian1.png          ← Homepage hero + Petrossian project cover
+│   ├── petrossian2.png          ← Petrossian gallery
+│   ├── pizza1.png               ← Shelter Pizza cover
+│   ├── jewishacademy1.png       ← BK Heights Jewish Academy cover
+│   ├── mikelucidcartoon.png     ← About page portrait
+│   ├── favicon.svg
+│   └── projects/                ← Only a README — no actual images yet
+│
+└── Neue Haas Grotesk copy/      ← UNTRACKED, unused — do not reference
 ```
-- Line 1: NHG 75 Bold, all caps, tracking -10
-- Line 2: NHG 45 Light, all caps, tracking +200, smaller size
+
+When adding new components, follow the existing pattern — `.jsx` in `src/components/`, data in `src/data/`.
 
 ---
 
-## Color Palette
+## Typography (actual)
 
-```
---color-black:     #0A0A0A   /* near black — primary text, nav bg */
---color-white:     #F5F2EC   /* warm off-white — backgrounds */
---color-stone:     #C8C0B0   /* warm mid gray — rules, dividers, secondary text */
---color-ink:       #1C1C1C   /* deep charcoal — body text on light bg */
---color-accent:    #2B3A2E   /* deep architectural green — CTAs, active states */
---color-accent-lt: #E8EDE9   /* light green tint — hover states, backgrounds */
-```
-
-No red. No blue. The palette should feel like a Zumthor building — warm, precise, material.
+- **One font:** Aileron Regular (400), loaded via `@font-face` in `index.css` from `/public/fonts/Aileron-Regular.ttf`
+- `font-family` in `tailwind.config.js`: `['Aileron', 'system-ui', 'sans-serif']`
+- No serif, no mono, no additional weights as separate files
+- Bold via synthetic `font-bold` (700) for headlines
+- Label/eyebrow text: `font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4`
+- Do NOT import from Google Fonts or any CDN
 
 ---
 
-## Site Structure
+## Color Palette (actual — from tailwind.config.js)
 
 ```
-/             → Home (hero only, no scroll)
-/services     → Full services page
-/about        → About Michael
-/projects     → Selected projects
-/contact      → Contact form
+paper:        #FFFFFF   ← page backgrounds
+vellum:       #F7F7F7   ← form backgrounds
+paper-2:      #F5F5F5   ← alternating section bg
+paper-3:      #E8E8E8   ← borders, dividers
+ink:          #111111   ← primary text, dark surfaces
+ink-2:        #3A3A3A   ← body text
+ink-3:        #666666   ← secondary text, nav links
+ink-4:        #9E9E9E   ← labels, captions, metadata
+red:          #C8102E   ← site accent (active nav, active service word, bullets, section labels)
+red-deep:     #8A0E20   ← button hover
+red-bright:   #E51938
+red-wash:     #F2D8DC
+approved:     #2F6B3A
+pending:      #B07A1A
+accent:       #2B3A2E   ← deep green (bullet dots on homepage headline)
+accent-light: #E8EDE9
+stone:        #C8C0B0
 ```
+
+Use these Tailwind tokens (e.g. `text-red`, `bg-ink`, `text-ink-3`) — do not hardcode hex values except `#C1272D` on homepage CTAs (user-specified, keep as-is).
 
 ---
 
-## Page-by-Page Specs
+## Global Header — Persistent Across All Pages
 
-### `/` — Home
+The header is the defining visual element. It appears identically on every page. It is implemented in `Navigation.jsx` and rendered inside `Layout.jsx`.
 
-**This page does not scroll.** It is a full-viewport hero. No footer visible on load. Everything fits within 100vh.
+### Header Structure
 
-Layout:
-- Top: Header/nav bar — fixed, full width
-- Center: Hero content — left aligned, vertically centered
-- Right: Hero image — full height, right half of viewport (CSS grid or absolute)
-- Bottom left: Borough strip — `MANHATTAN · BROOKLYN · QUEENS · BRONX · STATEN IS.`
+**Row 1 — Full-bleed wordmark + address**
+```
+Michael De Luna, AIA, Architect                    220 Congress Street, Suite 4F
+```
+- Aileron Bold (`font-bold`), very large — `clamp(2rem, 4.5vw, 4.5rem)`
+- Full width: name left-aligned, address right-aligned
+- White background (`bg-paper`), ink text (`text-ink`)
+- Display only — not a nav element, not a link (name links to `/`)
 
-Header bar contains:
-- Left: Wordmark (`MICHAEL DE LUNA` / credential line)
-- Right: Nav links — `Services` · `About` · `Contact`
-- Top credential ticker (optional, subtle): `EST. 1994 · AIA · NCARB · NYS LIC. 024891`
+**Row 2 — Service strip (active word rotates per route)**
+```
+Architecture   Code   Zoning   Filing
+```
+- Aileron Bold, same large size as Row 1 — visually one continuous typographic block
+- All four words on one line, generous spacing between them
+- Each word is a React Router `<Link>` to its section root
+- Active word = `text-red` based on current route:
+  - `/architecture/*` → **Architecture** red
+  - `/code/*` → **Code** red
+  - `/zoning/*` → **Zoning** red
+  - `/filing/*` → **Filing** red
+  - `/`, `/about`, `/contact` → all black, no active word
+- Inactive words: `text-ink`, hover `text-red`
+- Implement active detection via `useLocation()` + `pathname.startsWith()`
 
-Hero copy:
+**Row 3 — Secondary nav bar**
+- Thinner bar, `text-sm` (0.85rem), Aileron Regular
+- Separated from Row 2 by `border-b border-paper-3`
+- Left: `Home` · `About Us ▾` · `Portfolio ▾`
+- Right: `Expediting ▾` · `Code/Approval Information ▾` · `Resources ▾` · `Blog`
+- Far right: `Contact` button — `bg-ink text-paper px-4 py-1`
+- Dropdowns on hover — see Dropdown Menus section below
+- Close delay: 220ms (already implemented in Navigation.jsx for Services dropdown — match this pattern)
+
+**Row 4 — Breadcrumb (interior pages only)**
+- Rendered in `Layout.jsx` below the header, above page content
+- Color: `text-red`, small, Aileron Regular
+- Format: `Category › Sub-page name`
+- Not shown on `/` home page
+- Example: `Architecture › Residential Projects`
+
+---
+
+## Routing (actual + expanded)
+
+Current routes in `App.jsx` (lazy-loaded):
+```
+/           → Home.jsx
+/services   → Services.jsx
+/about      → About.jsx
+/projects   → Projects.jsx
+/projects/:id → ProjectDetail.jsx
+/contact    → Contact.jsx
+```
+
+**Expand to the following full route structure.** Add new routes in `App.jsx` following the existing `React.lazy` + `Suspense` pattern:
+
+```
+/                              → Home.jsx (no scroll, full viewport)
+
+/architecture                  → pages/architecture/Index.jsx
+/architecture/residential      → pages/architecture/Residential.jsx
+/architecture/commercial       → pages/architecture/Commercial.jsx
+/architecture/hospitality      → pages/architecture/Hospitality.jsx
+/architecture/landmark         → pages/architecture/Landmark.jsx
+/architecture/institutional    → pages/architecture/Institutional.jsx
+
+/code                          → pages/code/Index.jsx
+/code/apartment-approvals      → pages/code/ApartmentApprovals.jsx
+/code/equipment-use-permits    → pages/code/EquipmentUsePermits.jsx
+/code/certificates-occupancy   → pages/code/CertificatesOccupancy.jsx
+/code/restaurant-approvals     → pages/code/RestaurantApprovals.jsx
+/code/special-inspections      → pages/code/SpecialInspections.jsx
+/code/faq                      → pages/code/FAQ.jsx
+
+/zoning                        → pages/zoning/Index.jsx
+/zoning/analysis               → pages/zoning/Analysis.jsx
+/zoning/variances              → pages/zoning/Variances.jsx
+/zoning/landmarks              → pages/zoning/Landmarks.jsx
+
+/filing                        → pages/filing/Index.jsx
+/filing/dob                    → pages/filing/DOB.jsx
+/filing/lpc                    → pages/filing/LPC.jsx
+/filing/certificates           → pages/filing/Certificates.jsx
+/filing/code-zoning-consulting → pages/filing/CodeZoningConsulting.jsx
+
+/about                         → About.jsx (existing)
+/contact                       → Contact.jsx (existing)
+/resources                     → pages/Resources.jsx
+/blog                          → pages/Blog.jsx (placeholder)
+```
+
+The existing `/services` and `/projects` routes stay as-is during transition — do not remove them until the architecture sub-pages are fully built.
+
+---
+
+## Dropdown Menus
+
+Implement in `Navigation.jsx` following the existing Services dropdown pattern (hover open, 220ms close delay).
+
+### About Us ▾
+- About → `/about`
+- Contact → `/contact`
+
+### Portfolio ▾
+- Residential → `/architecture/residential`
+- Commercial → `/architecture/commercial`
+- Hospitality → `/architecture/hospitality`
+- Landmark → `/architecture/landmark`
+- Institutional → `/architecture/institutional`
+
+### Expediting ▾
+- NYC DOB Filings → `/filing/dob`
+- LPC Approvals → `/filing/lpc`
+- Certificates of Occupancy → `/filing/certificates`
+- Code and Zoning Consulting → `/filing/code-zoning-consulting`
+
+### Code/Approval Information ▾
+- Apartment Approvals → `/code/apartment-approvals`
+- Equipment Use Permits → `/code/equipment-use-permits`
+- Certificates of Occupancy → `/code/certificates-occupancy`
+- Restaurant Approvals → `/code/restaurant-approvals`
+- Special Inspections → `/code/special-inspections`
+- Frequently Asked Questions → `/code/faq`
+
+### Resources ▾
+- Links & References → `/resources`
+
+---
+
+## Page Specs
+
+### `/` — Home (Home.jsx)
+
+**No scroll on desktop.** `lg:h-[calc(100vh-6.75rem)] lg:overflow-hidden` — already implemented, keep it.
+
+Current layout is centered column with blurred Petrossian background. **Rebuild as split layout:**
+- Left half: headline + subhead + CTAs, vertically centered, left-aligned
+- Right half: `petrossian1.png`, full viewport height, `object-fit: cover`, no blur, no overlay
+- Remove the `scale-110 blur-sm bg-paper/60` treatment — image should be crisp and full-bleed on the right
+
+Hero headline:
 ```
 Architecture.
 Zoning.
 Expediting.
 ```
-Headline stack, NHG 75 Bold, large. No color variation — all `--color-black`. Remove the red accent from the current site entirely.
+`font-bold`, very large. All `text-ink`. Keep existing accent bullet dots (`text-accent`) between words if present.
 
-Subhead (NHG 55 Roman, italic optional):
-```
-Michael De Luna, AIA has guided DOB filings, code compliance,
-and architectural design across New York City since 1994 —
-from brownstone renovations to ground-up commercial buildings.
-```
+Hero subhead: keep existing copy from `siteContent.js`.
 
-CTAs:
-- `View Services →` (filled, --color-accent)
-- `Start a Project →` (outlined, --color-black)
+CTAs: Keep `#C1272D` filled + outlined — user-specified, do not change.
 
-Hero image: Use existing Petrossian Boutique photo. Position right side, full height, object-fit cover. Caption bottom right: `PETROSSIAN BOUTIQUE · MANHATTAN` in NHG 45 Light, small, `--color-stone`.
+Borough strip bottom left: `MANHATTAN · BROOKLYN · QUEENS · BRONX · STATEN IS.` — `text-ink-3`, small, wide tracking.
+
+Image caption bottom right: `PETROSSIAN BOUTIQUE · MANHATTAN` — `text-ink-4`, smallest size.
 
 ---
 
-### `/services` — Services
+### Architecture Sub-pages (`/architecture/*`)
 
-Four service categories. Each gets a full section with title, description, and a list of specific offerings.
+All follow same layout pattern:
 
----
+- Global header: **Architecture** highlighted `text-red` in Row 2
+- Breadcrumb: `Architecture › [Page Name]`
+- Section title bar: full-width `bg-[#4A4A4A] text-paper font-bold` — e.g. `Residential Projects`
+- Two-column content: project name list left (1/3), project photography right (2/3)
+- Project names are plain text; linked entries get `text-red underline`
 
-#### 1. Architecture
+**Residential project list:**
+- Bank Street Loft
+- Sutton Place Residence
+- Lispenard Penthouse
+- East 64th St Townhouse
+- Fifth Avenue Central Park
+- Park Avenue
+- Upper East Side Apartment *(linked → `/projects/upper-east-side`)*
 
-**Section header:** ARCHITECTURE
-**Description:**
-From programming through construction observation, Michael De Luna, AIA delivers complete architectural services for residential, commercial, and institutional clients across New York City. The firm maintains a diversified practice with particular depth in small-scale and landmark projects.
-
-**Services include:**
-- Schematic design and design development
-- Construction documents
-- Construction administration and observation
-- Interior architecture
-- Residential renovations and combinations
-- Commercial and restaurant build-outs
-- Landmark restoration
-- Institutional and school renovations
-
----
-
-#### 2. Zoning
-
-**Section header:** ZONING
-**Description:**
-New York City's zoning code is among the most complex in the world. Michael De Luna provides zoning analysis, variance applications, and compliance strategy for projects across all five boroughs — from pre-purchase due diligence to full land use applications.
-
-**Services include:**
-- Zoning lot analysis and FAR calculations
-- Use and bulk compliance review
-- Special permit applications
-- Variance applications (BSA)
-- Pre-purchase and pre-lease zoning review
-- Zoning text interpretation and code research
-- Landmark and historic district review (LPC)
+**Commercial, Hospitality, Landmark, Institutional:** Pull project names from `projects.js`. Add new entries to `projects.js` as needed — do not hardcode in page components.
 
 ---
 
-#### 3. Expediting & DOB Filing
+### Code Sub-pages (`/code/*`)
 
-**Section header:** EXPEDITING
-**Description:**
-Navigating the New York City Department of Buildings requires expertise, relationships, and persistence. Michael De Luna manages the full filing process — from initial application through approval — keeping projects moving and clients informed.
+All follow same layout:
 
-**Services include:**
-- NYC DOB plan examination and filing
-- Alt-1 and Alt-2 applications
-- New building applications
-- Certificate of Occupancy filings
-- Building Management approval coordination
-- NYC LPC filing and landmark approval
-- ADA compliance documentation
-- Construction code compliance review
-- Sign-off coordination and inspection scheduling
+- Global header: **Code** highlighted `text-red`
+- Breadcrumb: `Code/Approval Information › [Page Name]`
+- Section title bar: `bg-[#4A4A4A] text-paper font-bold`
+- Content: informational article text, `text-ink-2`, `leading-relaxed`, generous padding
+- Pull real content from the existing Wix site where available. Do NOT write placeholder text.
+- Include NYC code references verbatim (e.g. `27-105.4 and 1 RCNY 101-14 EXEMPTIONS FROM PERMIT REQUIREMENT`)
 
 ---
 
-#### 4. Code Compliance
+### Filing Sub-pages (`/filing/*`)
 
-**Section header:** CODE COMPLIANCE
-**Description:**
-Code compliance is not a checklist — it is a discipline. Michael De Luna applies 30 years of code knowledge to identify issues early, resolve conflicts proactively, and produce documentation that passes examination the first time.
-
-**Services include:**
-- NYC Building Code analysis
-- Energy code compliance (NYCECC)
-- Accessibility (ADA / Local Law 58)
-- Egress and life safety review
-- Construction document peer review
-- Existing conditions assessment
-- Compliance reporting for building management
+- Global header: **Filing** highlighted `text-red`
+- Breadcrumb: `Expediting & Filing › [Page Name]`
+- Same section title bar pattern
+- Content pulls from `services[]` and `consultingWork[]` in `siteContent.js`
 
 ---
 
-### `/about` — About
+### Zoning Sub-pages (`/zoning/*`)
 
-**Bio copy:**
+- Global header: **Zoning** highlighted `text-red`
+- Breadcrumb: `Zoning › [Page Name]`
+- Same section title bar pattern
+- Content from `siteContent.js` — add zoning entries if not present
 
-Michael De Luna, AIA founded his practice in 1994 after eight years at Beyer Blinder Belle Architects, Rothzied Kasierman Thomson, and Bee Architects — firms known for rigorous work on complex residential and institutional projects in New York City.
+---
 
-Over three decades, the practice has grown into a trusted resource for interior designers, developers, and contractors who need an experienced architect to shepherd their projects through New York City's regulatory environment. The firm is licensed in New York State (Lic. 024891), and Michael holds membership in the American Institute of Architects (AIA) and the National Council of Architectural Registration Boards (NCARB).
+### `/contact` — Contact (Contact.jsx)
 
-Notable project experience includes:
-- Petrossian Boutique, Manhattan
-- Shelter Pizza, New York
-- Restaurant and retail approvals citywide
-- Apartment renovations and combinations, Manhattan and Brooklyn
-- Landmark and historic district work
-- School and institutional renovations
+Keep existing layout (contact info left, Formspree form right).
 
-**Credentials block:**
-```
-AIA Member
-NCARB Certified
-NYS Licensed Architect — Lic. 024891
-City College of New York, B.Arch 1989
-Practice established 1994
+**Fix Formspree:** Replace `'YOUR_FORM_ID'` with actual endpoint — ask user for the Formspree ID before wiring up.
+
+**Add animated CTA button** (`StartProjectCTA.jsx`) — implement with Framer Motion:
+
+A single button labeled `Start your project`. On click it animates out (slides up + fades, like it's being "submitted upward") then navigates to `/contact` via React Router.
+
+Animation feel: smooth, locked-in, sturdy — not bouncy, not flashy. Think a heavy door closing with precision. Parameters:
+- On click: button translates `y: -8` + `opacity: 0` over `200ms`, ease `[0.4, 0, 0.2, 1]`
+- Navigation fires after animation completes (`onAnimationComplete` → `navigate('/contact')`)
+- No step-by-step reveal — single button, single motion, single destination
+
+Use `motion.button` with `useNavigate` from React Router. Keep the button style consistent with the site's existing CTA treatment (`bg-ink text-paper` or outlined, flat, no rounded corners).
+
+---
+
+### `/about` — About (About.jsx)
+
+**Replace placeholder bio copy** in `siteContent.js about{}` with real content:
+
+```js
+about: {
+  headline: "Thirty Years of Getting Projects Built",
+  intro: "Michael De Luna, AIA has practiced architecture in New York City since 1994.",
+  paragraphs: [
+    "Michael De Luna, AIA founded his practice in 1994 after eight years at Beyer Blinder Belle Architects, Rothzied Kasierman Thomson, and Bee Architects — firms known for rigorous work on complex residential and institutional projects in New York City.",
+    "Over three decades, the practice has grown into a trusted resource for interior designers, developers, and contractors who need an experienced architect to shepherd their projects through New York City's regulatory environment.",
+    "The firm is licensed in New York State (Lic. 024891), and Michael holds membership in the American Institute of Architects (AIA) and the National Council of Architectural Registration Boards (NCARB)."
+  ],
+  credentials: [
+    "AIA Member",
+    "NCARB Certified",
+    "NYS Licensed Architect — Lic. 024891",
+    "City College of New York, B.Arch",
+    "Practice established 1994"
+  ]
+}
 ```
 
+Keep existing 2-col layout (bio left, portrait right). Keep `mikelucidcartoon.png` with sepia filter.
+
 ---
 
-### `/contact` — Contact
+## Animated Page Transitions (existing — do not change)
 
-Simple, direct. No form required — just contact info displayed cleanly.
-
+`Layout.jsx` wraps all pages in:
+```jsx
+<motion.main
+  key={location.pathname}
+  initial={{ opacity: 0, y: 8 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.32, ease: [0.2, 0.6, 0.2, 1] }}
+>
 ```
-Michael De Luna, AIA, Architect
-118 E 28th Street, Room 305
-New York, NY 10016
+`window.scrollTo(0, 0)` fires on every route change. Keep this behavior on all new pages.
 
-T  212.696.4755
-M  917.405.7186
-E  michael@mdeluna.com
-W  mdeluna.com
+---
+
+## Data Files
+
+### `src/data/siteContent.js`
+- `siteInfo` — name, title, tagline
+- `contact` — address: 220 Congress St Suite 4F, Brooklyn NY 11201 · phone: 917.405.7186 · cell: 929.761.6640 · email: michael@mdeluna.com
+- `services[]` — 5 expediting categories with `details[]` arrays (real NYC DOB content — do not overwrite)
+- `consultingWork[]` — 3 consulting categories with real project address lists
+- `stats[]` — 30+ years, 1800+ projects, 5 boroughs, est. 1994
+- `about{}` — **needs real copy** (see About section above)
+
+### `src/data/projects.js`
+Current 7 projects:
+- ✅ Petrossian Boutique — images exist (`petrossian1.png`, `petrossian2.png`)
+- ✅ Shelter Pizza — image exists (`pizza1.png`)
+- ✅ BK Heights Jewish Academy — image exists (`jewishacademy1.png`)
+- ❌ West 186th St — image missing
+- ❌ East 81st St — image missing
+- ❌ Grey Bar & Restaurant — image missing
+- ❌ Ali Baba's Terrace — image missing
+
+For missing images: use a gray placeholder div with the project name, do NOT show broken img tags.
+
+---
+
+## Known Issues — Fix These
+
+1. **Missing project images** — `/public/projects/` is empty. Show named placeholder blocks for missing images, not broken img elements.
+2. **Formspree not wired** — `Contact.jsx` has `'YOUR_FORM_ID'` placeholder. Ask user for real ID before replacing.
+3. **No `vercel.json`** — React Router requires SPA rewrites for Vercel deployment. Create `vercel.json` in root:
+```json
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
 ```
-
-Optional: Simple mailto contact form (name, email, message, project type dropdown).
-
----
-
-## Reference Sites & Design Directives
-
-These four sites were selected as directional references. Claude Code should internalize the principles extracted from each — not copy them, but build from them.
+4. **About bio is placeholder** — update `siteContent.js about{}` with real copy (see above).
+5. **Unused files** — `mdnewheader.png` in `/public` and `Neue Haas Grotesk copy/` in root are unused. Do not reference them. Safe to delete.
+6. **`public/projects/` README** — placeholder directory, images needed from client.
 
 ---
 
-### 1. yazdanistudio.com — *Restraint and scale*
+## Design Principles
 
-**What it does:** Full-viewport locked homepage. No traditional scroll on load. Large architectural photography fills the screen. Type is small, precise, and floating against the image — it does not compete with the photography. Studio name is understated. Transitions feel considered, not decorative.
-
-**Directives for mdeluna.com:**
-- The homepage is a single viewport. No scroll. This is non-negotiable.
-- The Petrossian image should fill the right half of the screen at full viewport height — not a contained box, not rounded, not shadowed. Edge to edge on its side.
-- The wordmark and nav should feel like they're resting on top of the image, not contained in a separate header box. Keep nav background transparent or near-transparent on the hero.
-- Type scale contrast is the design: the headline (`Architecture. Zoning. Expediting.`) is large; everything else is small. Nothing in between.
-- White space on the left side of the hero is intentional — do not fill it.
-
----
-
-### 2. vaulk.com — *Technical authority and numbered structure*
-
-**What it does:** Dark background, white type, opens with a loading sequence. Headlines are tight, uppercase, wide-tracked. Services and specs are presented with numbered prefixes (`001`, `002`, `003`). The tone is institutional and precise — reads like a technical document, not a brochure. Copy is short and definitive.
-
-**Directives for mdeluna.com:**
-- On the Services page, present the four service categories with numbered prefixes: `01 — ARCHITECTURE`, `02 — ZONING`, `03 — EXPEDITING`, `04 — CODE COMPLIANCE`
-- Section labels should be uppercase, wide-tracked, small — `NHG 45 Light, letter-spacing: 0.2em`
-- Service item lists should feel like specs, not bullets. Use a thin rule or em dash separator instead of bullet points.
-- Copy should be short and declarative. No sentences longer than two clauses. No filler.
-- Consider a subtle page-load transition on the homepage — even a simple fade-in over 400ms signals intentionality.
-
----
-
-### 3. 333southwabash.com — *Total commitment to a single visual identity*
-
-**What it does:** The entire brand is built around one thing — the red façade of the building. Every design decision serves that one visual. Navigation disappears until needed. Photography is full-bleed and cinematic. Nothing dilutes the core identity.
-
-**Directives for mdeluna.com:**
-- Pick one thing and commit to it. For Michael, that thing is the Petrossian Boutique image — warm brick, institutional weight, real NYC project. That image should anchor the homepage completely.
-- The `--color-accent` deep green should appear sparingly — only on the primary CTA button and active nav state. Everywhere else is black and off-white.
-- No decorative elements, no icons, no illustration. The credential line (`AIA · NCARB · EST. 1994`) is the only graphic accent.
-- The site should feel like it was designed around the photography, not the other way around.
-
----
-
-### 4. aircenter.space — *Communication through omission*
-
-**What it does:** A minimal site in the architecture/space sector. Communicates seriousness through what it leaves out. Precise grid, deep negative space, type that earns its placement.
-
-**Directives for mdeluna.com:**
-- Every element on the page must justify its presence. If it doesn't add information or create necessary structure, remove it.
-- The footer on interior pages should be minimal: wordmark left, `michael@mdeluna.com` center or right, license number small. Nothing else.
-- Padding and margin should be generous — at minimum `80px` vertical padding on desktop sections, `48px` on mobile.
-- The nav should have three links maximum. `Services · About · Contact`. No dropdown, no hamburger on desktop.
-- Do not add a hero image to interior pages (Services, About, Contact). Let the type and grid carry them.
-
----
-
-
-
-1. **No scroll on home.** The homepage is a single viewport. Period.
-2. **No red.** Remove all instances of the current crimson accent. Use `--color-accent` (deep green) or `--color-black` instead.
-3. **No italic body copy** unless used sparingly for the hero subhead only.
-4. **Generous whitespace.** Let the typography breathe. Don't fill space.
-5. **Photography does the work.** The Petrossian image is strong — let it be large.
-6. **No gradients, no shadows, no rounded corners.** Flat, precise, architectural.
-7. **Mobile responsive** — services and about pages stack cleanly on mobile. Home hero reflows with image above copy on small screens.
-8. **Performance** — no unnecessary JS. Static where possible. Image optimization via Next.js `<Image>`.
-
----
-
-## Logo / Wordmark
-
-The wordmark is typographic only — no icon or symbol. Rendered in code using Aileron, not an image file.
-
-```
-MICHAEL DE LUNA
-AIA · ARCHITECT · EST. 1994
-```
-
-On dark backgrounds: `--color-white`
-On light backgrounds: `--color-black`
-
-For favicon: `MDL` monogram, Aileron bold (synthetic), black on white, square crop.
-
----
-
-## File Structure
-
-```
-/app
-  /page.tsx              → Home (hero)
-  /services/page.tsx     → Services
-  /about/page.tsx        → About
-  /projects/page.tsx     → Projects (placeholder, future)
-  /contact/page.tsx      → Contact
-  /layout.tsx            → Root layout, fonts, nav
-  /globals.css           → CSS variables, base styles
-
-/components
-  /Nav.tsx               → Header/nav bar
-  /Wordmark.tsx          → Logo lockup component
-  /HeroSection.tsx       → Home hero
-  /ServiceBlock.tsx      → Reusable service section
-  /Footer.tsx            → Minimal footer
-
-/public
-  /fonts/                → Aileron local font file
-  /images/               → Project photography
-
-/CLAUDE.md               → This file
-```
-
----
-
-## Content Notes for Claude Code
-
-- All services content above is accurate and approved. Use it verbatim.
-- Do not invent project names, credentials, or contact details.
-- The address 220 Congress Street, Suite 4F, Brooklyn, NY 11201 is the current office — confirmed correct, keep as-is.
-- NYS License number is 024891 — verify this is displayed accurately wherever credentials appear.
-- Do not add placeholder lorem ipsum anywhere. If content is missing, note it with a `<!-- TODO -->` comment.
+1. **Global header is sacred.** Same structure on every page. Only the active red service word changes.
+2. **The two-row wordmark is the brand.** Row 1: `Michael De Luna, AIA, Architect` + address. Row 2: `Architecture Code Zoning Filing`. No separate logomark.
+3. **Red (`text-red`, `#C8102E`) = active state only** in the service strip and breadcrumbs. CTAs use `#C1272D` (user-specified, keep as-is).
+4. **Section title bars** — full-width `bg-[#4A4A4A] text-paper font-bold` on all portfolio and code sub-pages.
+5. **Project lists left, photography right** — all portfolio pages.
+6. **No scroll on home** — `lg:overflow-hidden` on the hero container.
+7. **No gradients, no shadows, no rounded corners** — flat, precise, architectural.
+8. **Mobile** — header collapses to hamburger. Service strip stacks. Project lists stack above photography.
+9. **Do not add Co-Authored-By: Claude to commits.**
 
 ---
 
 ## Brand Voice
 
 - **Direct.** No marketing fluff. Michael doesn't sell — he informs.
-- **Institutional.** 30 years of practice. The copy should feel earned, not aspirational.
+- **Institutional.** 30 years of practice. Copy should feel earned, not aspirational.
 - **Precise.** Specific services, specific credentials, specific boroughs. No vague language.
-- **Not cold.** There's warmth in the work — restaurants, boutiques, people's homes. Let that show.
+- **Not cold.** Warmth in the work — restaurants, boutiques, people's homes.
+
+---
+
+## Reference Sites
+
+- **yazdanistudio.com** — full-viewport hero, type-over-image, restraint
+- **vaulk.com** — numbered structure, technical authority, institutional tone
+- **333southwabash.com** — total commitment to single visual identity
+- **aircenter.space** — communication through omission, negative space
 
 ---
 

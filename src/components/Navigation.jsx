@@ -1,247 +1,321 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { categories, getProjectsByCategory, projects } from '../data/projects'
-import { services } from '../data/siteContent'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
+const Chevron = () => (
+  <svg className="w-2.5 h-2.5 ml-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter">
+    <path strokeWidth={2} d="M19 9l-7 7-7-7" />
+  </svg>
+)
+
+const dropdownItems = {
+  about: [
+    { label: 'About', to: '/about' },
+    { label: 'Contact', to: '/contact' },
+  ],
+  portfolio: [
+    { label: 'Residential', to: '/architecture/residential' },
+    { label: 'Commercial', to: '/architecture/commercial' },
+    { label: 'Hospitality', to: '/architecture/hospitality' },
+    { label: 'Landmark', to: '/architecture/landmark' },
+    { label: 'Institutional', to: '/architecture/institutional' },
+  ],
+  expediting: [
+    { label: 'NYC DOB Filings', to: '/filing/dob' },
+    { label: 'LPC Approvals', to: '/filing/lpc' },
+    { label: 'Certificates of Occupancy', to: '/filing/certificates' },
+    { label: 'Code and Zoning Consulting', to: '/filing/code-zoning-consulting' },
+  ],
+  code: [
+    { label: 'Apartment Approvals', to: '/code/apartment-approvals' },
+    { label: 'Equipment Use Permits', to: '/code/equipment-use-permits' },
+    { label: 'Certificates of Occupancy', to: '/code/certificates-occupancy' },
+    { label: 'Restaurant Approvals', to: '/code/restaurant-approvals' },
+    { label: 'Special Inspections', to: '/code/special-inspections' },
+    { label: 'Frequently Asked Questions', to: '/code/faq' },
+  ],
+  resources: [
+    { label: 'Links & References', to: '/resources' },
+  ],
+}
+
+function DropdownMenu({ items, align = 'left' }) {
+  return (
+    <motion.div
+      className={`absolute top-full mt-0 bg-paper border border-paper-3 z-50 min-w-[180px] ${align === 'right' ? 'right-0' : 'left-0'}`}
+      initial={{ opacity: 0, y: 3 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 3 }}
+      transition={{ duration: 0.12, ease }}
+    >
+      {items.map((item) => (
+        <Link
+          key={item.to}
+          to={item.to}
+          className="block px-4 py-2 text-sm text-ink-3 hover:text-ink hover:bg-paper-2 transition-colors duration-150 whitespace-nowrap"
+        >
+          {item.label}
+        </Link>
+      ))}
+    </motion.div>
+  )
+}
+
 function Navigation() {
-  const [scrolled, setScrolled] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [servicesOpen, setServicesOpen] = useState(false)
-  const [activeCategory, setActiveCategory] = useState(null)
-  const dropdownRef = useRef(null)
-  const closeTimerRef = useRef(null)
+  const [activeDropdown, setActiveDropdown] = useState(null)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileExpanded, setMobileExpanded] = useState(null)
+  const headerRef = useRef(null)
+  const navRef = useRef(null)
   const location = useLocation()
 
+  // Track header height → CSS custom property for .site-header-offset
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    if (!headerRef.current) return
+    const update = () => {
+      document.documentElement.style.setProperty(
+        '--header-height',
+        headerRef.current.offsetHeight + 'px'
+      )
+    }
+    update()
+    const ro = new ResizeObserver(update)
+    ro.observe(headerRef.current)
+    return () => ro.disconnect()
   }, [])
 
+  // Close on route change
   useEffect(() => {
-    setMobileMenuOpen(false)
-    setServicesOpen(false)
-    setActiveCategory(null)
+    setActiveDropdown(null)
+    setMobileOpen(false)
+    setMobileExpanded(null)
   }, [location])
 
+  // Close dropdown on outside click
   useEffect(() => {
-    const onClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setServicesOpen(false)
-        setActiveCategory(null)
+    const handler = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setActiveDropdown(null)
       }
     }
-    document.addEventListener('mousedown', onClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', onClickOutside)
-      if (closeTimerRef.current) clearTimeout(closeTimerRef.current)
-    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  const clearClose = () => {
-    if (closeTimerRef.current) { clearTimeout(closeTimerRef.current); closeTimerRef.current = null }
+  const path = location.pathname
+  const isArchitecture = path.startsWith('/architecture')
+  const isCode = path.startsWith('/code')
+  const isZoning = path.startsWith('/zoning')
+  const isFiling = path.startsWith('/filing')
+  const isServiceSection = isArchitecture || isCode || isZoning || isFiling
+
+  // "Architect" is red on home and neutral pages; service word takes red when in a section
+  const architectRed = !isServiceSection
+
+  const serviceWord = (section, to) => {
+    const active =
+      (section === 'architecture' && isArchitecture) ||
+      (section === 'code' && isCode) ||
+      (section === 'zoning' && isZoning) ||
+      (section === 'filing' && isFiling)
+    return (
+      <Link
+        to={to}
+        className={`font-bold leading-none transition-colors duration-150 ${
+          active ? 'text-red' : 'text-ink hover:text-red'
+        }`}
+      >
+        {section.charAt(0).toUpperCase() + section.slice(1)}
+      </Link>
+    )
   }
 
-  const scheduleClose = () => {
-    clearClose()
-    closeTimerRef.current = setTimeout(() => setServicesOpen(false), 220)
+  // Row 3 active state per section
+  const row3Active = (key) => {
+    if (key === 'portfolio') return isArchitecture
+    if (key === 'expediting') return isFiling
+    if (key === 'code') return isCode
+    if (key === 'about') return path === '/about' || path === '/contact'
+    if (key === 'resources') return path.startsWith('/resources')
+    return false
   }
 
-  const isActive = (href) =>
-    href === '/services'
-      ? location.pathname.startsWith('/services') || location.pathname.startsWith('/projects')
-      : location.pathname === href
+  const toggleDropdown = (key) =>
+    setActiveDropdown((prev) => (prev === key ? null : key))
 
-  const navLinkClass = (href) =>
-    `relative font-sans text-sm font-medium transition-colors duration-150 pb-0.5 ${
-      isActive(href)
-        ? 'text-red border-b-2 border-red'
-        : 'text-ink-2 hover:text-ink border-b-2 border-transparent'
-    }`
+  const row3Btn = (key, label, align = 'left') => (
+    <div className="relative" key={key}>
+      <button
+        onClick={() => toggleDropdown(key)}
+        className={`flex items-center gap-0.5 text-sm transition-colors duration-150 ${
+          row3Active(key) || activeDropdown === key
+            ? 'text-ink'
+            : 'text-ink-3 hover:text-ink'
+        }`}
+      >
+        {label}
+        <Chevron />
+      </button>
+      <AnimatePresence>
+        {activeDropdown === key && (
+          <DropdownMenu items={dropdownItems[key]} align={align} />
+        )}
+      </AnimatePresence>
+    </div>
+  )
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
-      {/* Filing strip */}
-      <div
-        className={`bg-ink overflow-hidden transition-all duration-200`}
-        style={{ height: scrolled ? 0 : undefined }}
-      >
-        <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-2 flex justify-center lg:justify-between items-center">
-          <span className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4">
-            EST. 1994 · NEW YORK CITY · AIA · NCARB · NYS LIC. 024891
+    <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50 bg-paper border-b border-paper-3">
+
+      <div className="px-6 lg:px-12 pt-3 pb-1">
+        {/* Row 1 — Wordmark */}
+        <Link to="/" className="inline-block leading-none">
+          <span className="font-bold text-[clamp(2rem,5.3vw,5.3rem)] leading-[1.05] text-ink">
+            Michael De Luna, AIA,{' '}
           </span>
-          <span className="hidden lg:block font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4">
-            220 Congress St., Brooklyn
+          <span
+            className={`font-bold text-[clamp(2rem,5.3vw,5.3rem)] leading-[1.05] transition-colors duration-150 ${
+              architectRed ? 'text-red' : 'text-ink'
+            }`}
+          >
+            Architect
           </span>
+        </Link>
+
+        {/* Row 2 — Service words */}
+        <div
+          ref={navRef}
+          className="flex items-baseline gap-4 lg:gap-8 mt-0.5 text-[clamp(1.4rem,3.6vw,3.6rem)]"
+        >
+          {serviceWord('architecture', '/architecture')}
+          {serviceWord('code', '/code')}
+          {serviceWord('zoning', '/zoning')}
+          {serviceWord('filing', '/filing')}
         </div>
       </div>
 
-      {/* Main nav */}
-      <div className={`bg-paper border-b transition-colors duration-200 ${scrolled ? 'border-paper-3' : 'border-paper-2'}`}>
-        <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
-          <div className="flex items-center justify-between h-16">
+      {/* Row 3 — Secondary nav */}
+      <div className="border-t border-paper-3 px-6 lg:px-12">
 
-            <Link
-              to="/"
-              className="font-sans text-lg text-ink hover:text-red transition-colors duration-150 leading-tight"
-            >
-              Michael De Luna, AIA, Architect
+        {/* Desktop */}
+        <div className="hidden lg:flex items-center justify-between h-9">
+          {/* Left */}
+          <div className="flex items-center gap-6">
+            <Link to="/" className="text-sm text-ink-3 hover:text-ink transition-colors duration-150">
+              Home
             </Link>
+            {row3Btn('about', 'About Us')}
+            {row3Btn('portfolio', 'Portfolio')}
+          </div>
 
-            {/* Desktop nav */}
-            <nav className="hidden lg:flex items-center gap-10" ref={dropdownRef}>
-              <div
-                className="relative"
-                onMouseLeave={scheduleClose}
-              >
-                <button
-                  className={`relative font-sans text-sm font-medium transition-colors duration-150 pb-0.5 ${
-                    isActive('/services')
-                      ? 'text-red border-b-2 border-red'
-                      : 'text-ink-2 hover:text-ink border-b-2 border-transparent'
-                  }`}
-                  onClick={() => { clearClose(); setServicesOpen(!servicesOpen); setActiveCategory(null) }}
-                  onMouseEnter={() => { clearClose(); setServicesOpen(true); setActiveCategory(null) }}
-                >
-                  Services
-                </button>
-
-                <AnimatePresence>
-                  {servicesOpen && (
-                    <motion.div
-                      className="absolute top-full right-0 mt-3 bg-paper border border-paper-3 shadow-[0_4px_12px_rgba(20,17,15,0.06)]"
-                      initial={{ opacity: 0, y: 2 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 2 }}
-                      transition={{ duration: 0.15, ease }}
-                      onMouseEnter={clearClose}
-                      onMouseLeave={scheduleClose}
-                    >
-                      <div className="flex">
-                        {/* Architecture column */}
-                        <div className="border-r border-paper-3">
-                          <Link
-                            to="/projects"
-                            className="block px-5 py-2.5 font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-3 hover:text-red border-b border-paper-3 transition-colors duration-150"
-                          >
-                            Architecture
-                          </Link>
-                          <div className="flex">
-                            <div className="w-44 py-3">
-                              <Link
-                                to="/projects"
-                                className={`block px-5 py-1.5 text-sm transition-colors duration-150 ${
-                                  !activeCategory ? 'text-red' : 'text-ink-2 hover:text-ink'
-                                }`}
-                                onMouseEnter={() => setActiveCategory(null)}
-                              >
-                                All Projects
-                              </Link>
-                              {categories.map((cat) => (
-                                <button
-                                  key={cat.id}
-                                  className={`w-full text-left px-5 py-1.5 text-sm transition-colors duration-150 ${
-                                    activeCategory === cat.id ? 'text-red' : 'text-ink-2 hover:text-ink'
-                                  }`}
-                                  onMouseEnter={() => setActiveCategory(cat.id)}
-                                >
-                                  {cat.name}
-                                </button>
-                              ))}
-                            </div>
-                            <div className="w-56 py-3 max-h-72 overflow-y-auto border-l border-paper-3">
-                              {(activeCategory ? getProjectsByCategory(activeCategory) : projects).map((p) => (
-                                <Link
-                                  key={p.id}
-                                  to={`/projects/${p.id}`}
-                                  className="block px-5 py-1.5 text-sm text-ink-3 hover:text-ink transition-colors duration-150"
-                                >
-                                  {p.title}
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Expediting column */}
-                        <div className="w-60 py-3">
-                          <Link
-                            to="/services"
-                            className="block px-5 py-2.5 font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-3 hover:text-red border-b border-paper-3 transition-colors duration-150 mb-1"
-                          >
-                            Expediting & Filing
-                          </Link>
-                          {services.map((s) => (
-                            <Link
-                              key={s.id}
-                              to={`/services#${s.id}`}
-                              className="block px-5 py-1.5 text-sm text-ink-3 hover:text-ink transition-colors duration-150"
-                            >
-                              {s.title}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              <Link to="/about"   className={navLinkClass('/about')}>About</Link>
-              <Link to="/contact" className={navLinkClass('/contact')}>Contact</Link>
-            </nav>
-
-            {/* Mobile toggle */}
-            <button
-              className="lg:hidden p-2 text-ink"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
+          {/* Right */}
+          <div className="flex items-center gap-6">
+            {row3Btn('expediting', 'Expediting', 'right')}
+            {row3Btn('code', 'Code/approval information', 'right')}
+            {row3Btn('resources', 'Resources', 'right')}
+            <Link to="/blog" className="text-sm text-ink-3 hover:text-ink transition-colors duration-150">
+              Blog
+            </Link>
+            <Link
+              to="/contact"
+              className="bg-ink text-paper text-sm px-4 py-1 hover:bg-ink-2 transition-colors duration-150"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter">
-                {mobileMenuOpen
-                  ? <path strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-                  : <path strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />}
-              </svg>
-            </button>
+              Contact
+            </Link>
           </div>
         </div>
+
+        {/* Mobile toggle */}
+        <div className="lg:hidden flex items-center justify-end h-9">
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="p-1 text-ink"
+            aria-label="Toggle menu"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter">
+              {mobileOpen
+                ? <path strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+                : <path strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />}
+            </svg>
+          </button>
+        </div>
+
       </div>
 
       {/* Mobile menu */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {mobileOpen && (
           <motion.div
-            className="lg:hidden bg-paper border-b border-paper-3"
+            className="lg:hidden bg-paper border-t border-paper-3 overflow-y-auto max-h-[70vh]"
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.18, ease }}
           >
-            <nav className="max-w-screen-xl mx-auto px-6 py-6 space-y-5">
-              <Link to="/services" className="block text-xl font-sans text-ink hover:text-red transition-colors">Services</Link>
-              <div className="pl-4 border-l border-paper-3 space-y-3">
-                <Link to="/projects" className="block text-sm font-sans text-ink-2 hover:text-red transition-colors">Architecture — All Projects</Link>
-                {categories.map((cat) => (
-                  <div key={cat.id}>
-                    <span className="font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4">{cat.name}</span>
-                    <div className="mt-1.5 space-y-1">
-                      {getProjectsByCategory(cat.id).map((p) => (
-                        <Link key={p.id} to={`/projects/${p.id}`} className="block text-sm text-ink-3 hover:text-ink transition-colors">{p.title}</Link>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-                <Link to="/services" className="block text-sm font-sans text-ink-2 hover:text-red transition-colors">Expediting & Filing</Link>
-              </div>
-              <Link to="/about"   className="block text-xl font-sans text-ink hover:text-red transition-colors">About</Link>
-              <Link to="/contact" className="block text-xl font-sans text-ink hover:text-red transition-colors">Contact</Link>
-            </nav>
+            <div className="px-6 py-5 space-y-1">
+              <Link to="/" className="block py-2 text-sm text-ink-3 hover:text-ink border-b border-paper-3">
+                Home
+              </Link>
+
+              {[
+                { key: 'about',      label: 'About Us' },
+                { key: 'portfolio',  label: 'Portfolio' },
+                { key: 'expediting', label: 'Expediting' },
+                { key: 'code',       label: 'Code/approval information' },
+                { key: 'resources',  label: 'Resources' },
+              ].map(({ key, label }) => (
+                <div key={key} className="border-b border-paper-3">
+                  <button
+                    onClick={() => setMobileExpanded((p) => (p === key ? null : key))}
+                    className="w-full flex items-center justify-between py-2 text-sm text-ink-3 hover:text-ink"
+                  >
+                    {label}
+                    <svg
+                      className={`w-3 h-3 transition-transform duration-150 ${mobileExpanded === key ? 'rotate-180' : ''}`}
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter"
+                    >
+                      <path strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  <AnimatePresence>
+                    {mobileExpanded === key && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.15, ease }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pl-4 pb-3 space-y-2 border-l border-paper-3 ml-1">
+                          {dropdownItems[key].map((item) => (
+                            <Link
+                              key={item.to}
+                              to={item.to}
+                              className="block text-sm text-ink-3 hover:text-ink transition-colors py-0.5"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+
+              <Link to="/blog" className="block py-2 text-sm text-ink-3 hover:text-ink border-b border-paper-3">
+                Blog
+              </Link>
+              <Link to="/contact" className="inline-block mt-3 bg-ink text-paper text-sm px-5 py-2">
+                Contact
+              </Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
+
     </header>
   )
 }

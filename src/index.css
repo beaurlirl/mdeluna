@@ -37,15 +37,9 @@ body.mobile-nav-open {
   overflow: hidden;
 }
 
-/* Clears fixed header (filing strip + nav); adjust if header height changes */
+/* Tracks actual header height — set via ResizeObserver in Navigation.jsx */
 .site-header-offset {
-  padding-top: 6.5rem;
-}
-
-@media (min-width: 1024px) {
-  .site-header-offset {
-    padding-top: 6.75rem;
-  }
+  padding-top: var(--header-height, 9rem);
 }
 
 ::selection {

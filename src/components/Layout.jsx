@@ -23,6 +23,10 @@ function Layout({ children }) {
       if (project) items.push({ name: project.title, href: location.pathname })
       return items
     }
+    if (location.pathname.startsWith('/architecture')) return [...items, { name: 'Architecture', href: '/architecture' }]
+    if (location.pathname.startsWith('/code'))     return [...items, { name: 'Code/Approval Information', href: '/code' }]
+    if (location.pathname.startsWith('/zoning'))   return [...items, { name: 'Zoning', href: '/zoning' }]
+    if (location.pathname.startsWith('/filing'))   return [...items, { name: 'Expediting & Filing', href: '/filing' }]
     if (location.pathname.startsWith('/services')) return [...items, { name: 'Services', href: '/services' }]
     if (location.pathname.startsWith('/about'))    return [...items, { name: 'About', href: '/about' }]
     if (location.pathname.startsWith('/contact'))  return [...items, { name: 'Contact', href: '/contact' }]
@@ -45,7 +49,7 @@ function Layout({ children }) {
         transition={{ duration: 0.32, ease: [0.2, 0.6, 0.2, 1] }}
       >
         {breadcrumbs.length > 1 && (
-          <div className="border-b border-paper-3 -mt-4 mb-2">
+          <div className="border-b border-paper-3 mb-2">
             <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
               <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 py-3 font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4">
                 {breadcrumbs.map((crumb, i) => {
