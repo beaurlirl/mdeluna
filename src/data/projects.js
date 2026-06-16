@@ -107,9 +107,11 @@ export const projects = [
 ]
 
 export const categories = [
-  { id: 'residential', name: 'Residential', description: 'Private residences and apartment renovations' },
-  { id: 'commercial', name: 'Commercial', description: 'Retail, office, and institutional spaces' },
-  { id: 'hospitality', name: 'Hospitality', description: 'Restaurants, bars, and entertainment venues' },
+  { id: 'residential',   name: 'Residential',   description: 'Private residences and apartment renovations' },
+  { id: 'commercial',    name: 'Commercial',     description: 'Retail, office, and institutional spaces' },
+  { id: 'hospitality',   name: 'Hospitality',    description: 'Restaurants, bars, and entertainment venues' },
+  { id: 'landmark',      name: 'Landmark',       description: 'Landmarked buildings and LPC work' },
+  { id: 'institutional', name: 'Institutional',  description: 'Educational, civic, and cultural institutions' },
 ]
 
 export const getProjectsByCategory = (category) => {
