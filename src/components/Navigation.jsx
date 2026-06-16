@@ -16,25 +16,27 @@ const dropdownItems = {
     { label: 'Contact', to: '/contact' },
   ],
   portfolio: [
-    { label: 'Residential', to: '/architecture/residential' },
-    { label: 'Commercial', to: '/architecture/commercial' },
-    { label: 'Hospitality', to: '/architecture/hospitality' },
-    { label: 'Landmark', to: '/architecture/landmark' },
-    { label: 'Institutional', to: '/architecture/institutional' },
+    { label: 'Residential', to: '/architecture?category=residential' },
+    { label: 'Commercial', to: '/architecture?category=commercial' },
+    { label: 'Hospitality', to: '/architecture?category=hospitality' },
+    { label: 'Landmark', to: '/architecture?category=landmark' },
+    { label: 'Institutional', to: '/architecture?category=institutional' },
   ],
   expediting: [
-    { label: 'NYC DOB Filings', to: '/filing/dob' },
-    { label: 'LPC Approvals', to: '/filing/lpc' },
-    { label: 'Certificates of Occupancy', to: '/filing/certificates' },
-    { label: 'Code and Zoning Consulting', to: '/filing/code-zoning-consulting' },
+    { label: 'All Services', to: '/filing' },
+    { label: 'Approvals & Building Dept', to: '/filing#approvals' },
+    { label: 'Work Permits', to: '/filing#work-permits' },
+    { label: 'LPC Services', to: '/filing#landmarks' },
+    { label: 'Certificates of Occupancy', to: '/filing#occupancy-fire' },
+    { label: 'OTCR & DOT Permits', to: '/filing#otcr-dot' },
   ],
   code: [
-    { label: 'Apartment Approvals', to: '/code/apartment-approvals' },
-    { label: 'Equipment Use Permits', to: '/code/equipment-use-permits' },
-    { label: 'Certificates of Occupancy', to: '/code/certificates-occupancy' },
-    { label: 'Restaurant Approvals', to: '/code/restaurant-approvals' },
-    { label: 'Special Inspections', to: '/code/special-inspections' },
-    { label: 'Frequently Asked Questions', to: '/code/faq' },
+    { label: 'All Services', to: '/code' },
+    { label: 'Special Inspections', to: '/code#special-inspections' },
+    { label: 'Apartment Approvals', to: '/code#apartment-approvals' },
+    { label: 'Equipment Use Permits', to: '/code#equipment-permits' },
+    { label: 'Restaurant Approvals', to: '/code#restaurant-approvals' },
+    { label: 'Certificates of Occupancy', to: '/code#certificates-occupancy' },
   ],
   resources: [
     { label: 'Links & References', to: '/resources' },
@@ -68,7 +70,6 @@ function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileExpanded, setMobileExpanded] = useState(null)
   const headerRef = useRef(null)
-  const navRef = useRef(null)
   const location = useLocation()
 
   // Track header height → CSS custom property for .site-header-offset
@@ -96,7 +97,7 @@ function Navigation() {
   // Close dropdown on outside click
   useEffect(() => {
     const handler = (e) => {
-      if (navRef.current && !navRef.current.contains(e.target)) {
+      if (headerRef.current && !headerRef.current.contains(e.target)) {
         setActiveDropdown(null)
       }
     }
@@ -169,7 +170,7 @@ function Navigation() {
   return (
     <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50 bg-paper border-b border-paper-3">
 
-      <div className="px-6 lg:px-12 pt-3 pb-1">
+      <div className="px-6 lg:px-12 pt-3 pb-5">
         {/* Row 1 — Wordmark */}
         <Link to="/" className="inline-block leading-none">
           <span className="font-bold text-[clamp(2rem,5.3vw,5.3rem)] leading-[1.05] text-ink">
@@ -185,10 +186,7 @@ function Navigation() {
         </Link>
 
         {/* Row 2 — Service words */}
-        <div
-          ref={navRef}
-          className="flex items-baseline gap-4 lg:gap-8 mt-0.5 text-[clamp(1.4rem,3.6vw,3.6rem)]"
-        >
+        <div className="flex items-baseline gap-4 lg:gap-8 mt-0.5 text-[clamp(1.4rem,3.6vw,3.6rem)]">
           {serviceWord('architecture', '/architecture')}
           {serviceWord('code', '/code')}
           {serviceWord('zoning', '/zoning')}
@@ -197,7 +195,7 @@ function Navigation() {
       </div>
 
       {/* Row 3 — Secondary nav */}
-      <div className="border-t border-paper-3 px-6 lg:px-12">
+      <div className="border-t border-ink-4 px-6 lg:px-12">
 
         {/* Desktop */}
         <div className="hidden lg:flex items-center justify-between h-9">

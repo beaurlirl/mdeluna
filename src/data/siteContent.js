@@ -140,6 +140,103 @@ export const consultingWork = [
   },
 ]
 
+export const consultingProjects = [
+  { id: 'posner-office',      title: "Dr. Posner's Office",          address: '308 East 38th Street',           borough: 'Manhattan'       },
+  { id: 'city-center',        title: 'City Center',                  address: '133 West 55th Street',           borough: 'Manhattan'       },
+  { id: 'cornerstone',        title: 'Cornerstone Housing',          address: 'Madison & Putnam Street',        borough: 'Brooklyn'        },
+  { id: 'dean-wolf-loft',     title: 'Dean Wolf Loft',               address: '40 Hudson Street',               borough: 'Manhattan'       },
+  { id: 'our-lady-loreto',    title: 'Our Lady of Loreto',           address: '1509 Bergen Street',             borough: 'Brooklyn'        },
+  { id: '1630-dean',          title: '1630 Dean Street',             address: '1630 Dean Street',               borough: 'Brooklyn'        },
+  { id: '249-16th',           title: '249 & 251 16th Street',        address: '249 & 251 16th Street',          borough: 'Brooklyn'        },
+  { id: 'big-apple-circus',   title: 'Big Apple Circus',             address: 'All Boroughs',                   borough: 'Citywide'        },
+  { id: 'apg',                title: 'Automated Parking Garage',     address: 'APG',                            borough: 'Manhattan'       },
+  { id: 'schermerhorn',       title: '70–76 Schermerhorn Street',    address: '70–76 Schermerhorn Street',      borough: 'Brooklyn'        },
+  { id: '21-31st-astoria',    title: '21-21 31st Street',            address: '21-21 31st Street',              borough: 'Queens'          },
+  { id: '100-varick',         title: '100 Varick Street',            address: '100 Varick Street (SOHO Tower)', borough: 'Manhattan'       },
+  { id: '1508-coney-island',  title: '1508 Coney Island Avenue',     address: '1508 Coney Island Avenue',       borough: 'Brooklyn'        },
+  { id: '215-28th',           title: '215 & 225 West 28th Street',   address: '215 & 225 West 28th Street',     borough: 'Manhattan'       },
+]
+
+export const codeServices = [
+  {
+    id: 'special-inspections',
+    title: 'Special Inspections',
+    description: 'NYC DOB requires special inspections for structural, mechanical, and fire-protection work. We coordinate with approved agencies and file all required inspection reports.',
+    items: [
+      'Structural Steel — Welding and Bolting',
+      'Concrete — Mix Design, Placement, and Curing',
+      'Masonry — Mortar Mix and Placement',
+      'Soils and Foundations',
+      'Sprinkler Systems',
+      'Fire-Stopping and Fire-Blocking',
+      'Mechanical Systems',
+      'Elevator and Escalator',
+      'Energy Code Compliance',
+      'Special Inspections for Demolition',
+    ],
+  },
+  {
+    id: 'apartment-approvals',
+    title: 'Apartment Approvals',
+    description: 'Residential alteration approvals for co-ops, condos, and rental buildings — from initial scope review through final sign-off.',
+    items: [
+      'Co-op and Condo Board Submissions',
+      'Alteration Type 1 — Change of Use or Egress',
+      'Alteration Type 2 — Interior Renovations',
+      'Structural Alterations and Underpinning',
+      'Plumbing and Mechanical Filings',
+      'Landmark Buildings — Certificates of No Effect',
+      'Letter of Completion',
+      'TCO and CO Procurement',
+    ],
+  },
+  {
+    id: 'equipment-permits',
+    title: 'Equipment Use Permits',
+    description: 'Permits required for cranes, hoists, derricks, supported scaffolds, and all major construction equipment operating in New York City.',
+    items: [
+      'Crane Permits (CD1)',
+      'Hoist and Derrick Permits',
+      'Supported Scaffold Permits',
+      'Sidewalk Shed and Fence Permits',
+      'Construction Equipment Renewals',
+      'OTCR Equipment Filings',
+      'After-Hours Variances',
+    ],
+  },
+  {
+    id: 'restaurant-approvals',
+    title: 'Restaurant & Food Service Approvals',
+    description: 'Full-service approval coordination for restaurant build-outs, including DOB, FDNY, and Board of Health requirements.',
+    items: [
+      'DOB Change of Use — A2 Assembly',
+      'Public Assembly Permits (over 74 persons)',
+      'FDNY Ansul System Approvals',
+      'Fire Alarm System Filings',
+      'Grease Duct and Hood Filings',
+      'Emergency Action Plans',
+      'NYC Health Department Coordination',
+      'Outdoor Dining (Sidewalk Café) Permits',
+      'Exhaust and Ventilation Filings',
+    ],
+  },
+  {
+    id: 'certificates-occupancy',
+    title: 'Certificates of Occupancy',
+    description: 'Procurement of Temporary and Final Certificates of Occupancy, TCO renewals, and all divisional sign-offs required for project close-out.',
+    items: [
+      'Temporary Certificate of Occupancy (TCO)',
+      'TCO Renewals',
+      'Final Certificate of Occupancy',
+      'Divisional Sign-Offs — All Trades',
+      'Objection Resolution',
+      'Post Approval Amendments (PAA)',
+      'Letter of Completion (LOC)',
+      'Buildings Information System (BIS) Coordination',
+    ],
+  },
+]
+
 export const stats = [
   { value: '30+',    label: 'YEARS',    note: 'Licensed since 1994' },
   { value: '1,800+', label: 'PROJECTS', note: 'Across all five boroughs' },

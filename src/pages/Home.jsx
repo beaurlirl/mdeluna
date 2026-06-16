@@ -30,7 +30,7 @@ function Home() {
           transition={{ duration: 0.4, delay: 0.15, ease }}
         >
           <Link
-            to="/services"
+            to="/filing"
             className="bg-[#C1272D] text-paper text-sm font-sans font-medium px-6 py-3.5 min-h-11 inline-flex items-center hover:bg-ink transition-colors duration-150"
           >
             View Services →

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { projects, categories } from '../../data/projects'
 
@@ -15,11 +15,26 @@ const flashImages = [
 const FLASH_HOLD = 480
 const FLASH_FADE = 220
 
+const knownImages = new Set([
+  '/petrossian1.png', '/petrossian2.png', '/pizza1.png', '/jewishacademy1.png',
+])
+
 function ArchitectureIndex() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const categoryParam = searchParams.get('category')
+
+  // Skip flash if arriving via a category link
   const [imageIndex, setImageIndex] = useState(0)
-  const [phase, setPhase] = useState('flashing')
-  const [activeCategory, setActiveCategory] = useState(null)
+  const [phase, setPhase] = useState(categoryParam ? 'list' : 'flashing')
+  const [activeCategory, setActiveCategory] = useState(categoryParam || null)
   const [selectedProject, setSelectedProject] = useState(null)
+
+  // Sync active category when URL param changes (e.g. clicking a different dropdown item while already on the page)
+  useEffect(() => {
+    setActiveCategory(categoryParam || null)
+    setSelectedProject(null)
+    if (categoryParam) setPhase('list')
+  }, [categoryParam])
 
   useEffect(() => {
     if (phase !== 'flashing') return
@@ -35,17 +50,24 @@ function ArchitectureIndex() {
     ? projects.filter((p) => p.category === activeCategory)
     : projects
 
-  const selectedImages = selectedProject
-    ? selectedProject.gallery.filter((img) => {
-        // Only show images we know exist (avoid broken img tags)
-        return flashImages.includes(img) || img.startsWith('/petrossian') || img.startsWith('/pizza') || img.startsWith('/jewishacademy')
-      })
+  const visibleImages = selectedProject
+    ? selectedProject.gallery.filter((img) => knownImages.has(img))
     : []
+
+  const handleCategoryClick = (catId) => {
+    setSelectedProject(null)
+    if (catId === null) {
+      setSearchParams({})
+      setActiveCategory(null)
+    } else {
+      setSearchParams({ category: catId })
+      setActiveCategory(catId)
+    }
+  }
 
   return (
     <div>
-
-      {/* Flash — small centered window */}
+      {/* Flash sequence */}
       <AnimatePresence>
         {phase === 'flashing' && (
           <motion.div
@@ -79,79 +101,80 @@ function ArchitectureIndex() {
         )}
       </AnimatePresence>
 
-      {/* Main content */}
+      {/* Split layout — locked left, scrollable right */}
       <AnimatePresence>
         {phase === 'list' && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.15, ease }}
-            className="max-w-screen-xl mx-auto px-6 lg:px-12 pt-5 pb-10"
+            transition={{ duration: 0.5, ease }}
+            className="flex"
+            style={{ height: 'calc(100vh - var(--header-height, 9rem))' }}
           >
 
-            {/* Micro category filter */}
-            <div className="flex items-center gap-8 mb-5 pb-3 border-b border-paper-3">
-              <button
-                onClick={() => { setActiveCategory(null); setSelectedProject(null) }}
-                className={`text-sm transition-colors duration-150 ${
-                  !activeCategory ? 'text-ink border-b border-ink pb-0.5' : 'text-ink-3 hover:text-ink'
-                }`}
-              >
-                All
-              </button>
-              {categories.map((cat) => (
+            {/* Left panel — locked */}
+            <div className="w-2/5 lg:w-[38%] flex flex-col border-r border-paper-3 overflow-hidden">
+
+              {/* Category filter */}
+              <div className="flex items-center gap-6 px-6 lg:px-10 pt-5 pb-3 border-b border-paper-3 flex-shrink-0">
                 <button
-                  key={cat.id}
-                  onClick={() => { setActiveCategory(cat.id); setSelectedProject(null) }}
+                  onClick={() => handleCategoryClick(null)}
                   className={`text-sm transition-colors duration-150 ${
-                    activeCategory === cat.id
-                      ? 'text-ink border-b border-ink pb-0.5'
-                      : 'text-ink-3 hover:text-ink'
+                    !activeCategory ? 'text-ink border-b border-ink pb-0.5' : 'text-ink-3 hover:text-ink'
                   }`}
                 >
-                  {cat.name}
+                  All
                 </button>
-              ))}
-            </div>
-
-            {/* Two-column layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-
-              {/* Left — project list */}
-              <div className="lg:col-span-5">
-                {filtered.map((project, i) => (
-                  <motion.button
-                    key={project.id}
-                    initial={{ opacity: 0, y: 2 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.2 + i * 0.07, ease }}
-                    onClick={() => setSelectedProject(
-                      selectedProject?.id === project.id ? null : project
-                    )}
-                    className={`w-full text-left flex items-baseline gap-5 border-b border-paper-3 py-2.5 px-2 -mx-2 transition-colors duration-150 group ${
-                      selectedProject?.id === project.id
-                        ? 'bg-paper-2'
-                        : 'hover:bg-paper-2'
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => handleCategoryClick(cat.id)}
+                    className={`text-sm transition-colors duration-150 ${
+                      activeCategory === cat.id
+                        ? 'text-ink border-b border-ink pb-0.5'
+                        : 'text-ink-3 hover:text-ink'
                     }`}
                   >
-                    <span className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 w-10 flex-shrink-0">
-                      {project.year}
-                    </span>
-                    <span className={`font-sans text-base lg:text-lg flex-grow transition-colors duration-150 ${
-                      selectedProject?.id === project.id
-                        ? 'text-red'
-                        : 'text-ink group-hover:text-red'
-                    }`}>
-                      {project.title}
-                    </span>
-                    <span className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 flex-shrink-0 hidden sm:block">
-                      {project.location}
-                    </span>
-                  </motion.button>
+                    {cat.name}
+                  </button>
                 ))}
+              </div>
+
+              {/* Project list */}
+              <div className="flex-1 overflow-y-auto px-6 lg:px-10 py-2">
+                {filtered.length > 0 ? (
+                  filtered.map((project, i) => (
+                    <motion.button
+                      key={project.id}
+                      initial={{ opacity: 0, y: 2 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: i * 0.06, ease }}
+                      onClick={() => setSelectedProject(
+                        selectedProject?.id === project.id ? null : project
+                      )}
+                      className={`w-full text-left flex items-baseline gap-4 border-b border-paper-3 py-2 px-2 -mx-2 transition-colors duration-150 group ${
+                        selectedProject?.id === project.id ? 'bg-paper-2' : 'hover:bg-paper-2'
+                      }`}
+                    >
+                      <span className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 w-10 flex-shrink-0">
+                        {project.year}
+                      </span>
+                      <span className={`font-sans text-sm lg:text-base flex-grow transition-colors duration-150 ${
+                        selectedProject?.id === project.id ? 'text-red' : 'text-ink group-hover:text-red'
+                      }`}>
+                        {project.title}
+                      </span>
+                      <span className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 flex-shrink-0 hidden sm:block">
+                        {project.location}
+                      </span>
+                    </motion.button>
+                  ))
+                ) : (
+                  <p className="text-sm text-ink-4 py-6">No projects in this category yet.</p>
+                )}
 
                 {selectedProject && (
-                  <div className="mt-5 pt-1">
+                  <div className="mt-4 pt-1">
                     <Link
                       to={`/projects/${selectedProject.id}`}
                       className="text-sm text-ink-3 hover:text-ink transition-colors duration-150"
@@ -161,63 +184,65 @@ function ArchitectureIndex() {
                   </div>
                 )}
               </div>
-
-              {/* Right — images for selected project */}
-              <div className="lg:col-span-7 flex flex-col items-end gap-3">
-                <AnimatePresence mode="wait">
-                  {selectedProject ? (
-                    <motion.div
-                      key={selectedProject.id}
-                      className="w-full flex flex-col items-end gap-3"
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3, ease }}
-                    >
-                      {selectedImages.length > 0 ? (
-                        selectedImages.map((img, i) => (
-                          <motion.img
-                            key={img}
-                            src={img}
-                            alt={`${selectedProject.title} — ${i + 1}`}
-                            className="w-full max-w-md lg:max-w-lg object-cover"
-                            style={{ aspectRatio: '4/3' }}
-                            initial={{ opacity: 0, y: 4 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.25, delay: i * 0.08, ease }}
-                          />
-                        ))
-                      ) : (
-                        <div className="w-full max-w-md lg:max-w-lg bg-paper-2 border border-paper-3 flex items-center justify-center" style={{ aspectRatio: '4/3' }}>
-                          <span className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
-                            {selectedProject.title}
-                          </span>
-                        </div>
-                      )}
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="empty"
-                      className="w-full max-w-md lg:max-w-lg bg-paper-2 border border-paper-3 flex items-center justify-center"
-                      style={{ aspectRatio: '4/3' }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2, ease }}
-                    >
-                      <span className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
-                        Select a project
-                      </span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
             </div>
+
+            {/* Right panel — scrollable */}
+            <div className="flex-1 overflow-y-auto p-8 flex flex-col gap-4">
+              <AnimatePresence mode="wait">
+                {selectedProject ? (
+                  <motion.div
+                    key={selectedProject.id}
+                    className="flex flex-col gap-4"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3, ease }}
+                  >
+                    {visibleImages.length > 0 ? (
+                      visibleImages.map((img, i) => (
+                        <motion.img
+                          key={img}
+                          src={img}
+                          alt={`${selectedProject.title} — ${i + 1}`}
+                          className="w-full object-cover"
+                          style={{ aspectRatio: '4/3' }}
+                          initial={{ opacity: 0, y: 4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.25, delay: i * 0.08, ease }}
+                        />
+                      ))
+                    ) : (
+                      <div
+                        className="w-full bg-paper-2 border border-paper-3 flex items-center justify-center"
+                        style={{ aspectRatio: '4/3' }}
+                      >
+                        <span className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
+                          {selectedProject.title}
+                        </span>
+                      </div>
+                    )}
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="empty"
+                    className="w-full bg-paper-2 border border-paper-3 flex items-center justify-center"
+                    style={{ aspectRatio: '4/3' }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2, ease }}
+                  >
+                    <span className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
+                      Select a project
+                    </span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
           </motion.div>
         )}
       </AnimatePresence>
-
     </div>
   )
 }
