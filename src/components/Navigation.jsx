@@ -19,8 +19,6 @@ const dropdownItems = {
     { label: 'Residential', to: '/architecture?category=residential' },
     { label: 'Commercial', to: '/architecture?category=commercial' },
     { label: 'Hospitality', to: '/architecture?category=hospitality' },
-    { label: 'Landmark', to: '/architecture?category=landmark' },
-    { label: 'Institutional', to: '/architecture?category=institutional' },
   ],
   expediting: [
     { label: 'All Services', to: '/filing' },
