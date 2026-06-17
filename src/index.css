@@ -91,6 +91,10 @@ img[src=""] {
   display: inline-block;
 }
 
+/* Hides scrollbar for swipeable mobile rows (category pills, etc.) */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
+
 /* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #FFFFFF; }

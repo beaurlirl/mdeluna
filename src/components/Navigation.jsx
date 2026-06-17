@@ -184,7 +184,7 @@ function Navigation() {
         </Link>
 
         {/* Row 2 — Service words */}
-        <div className="flex items-baseline gap-4 lg:gap-8 mt-0.5 text-[clamp(1.4rem,3.6vw,3.6rem)]">
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 sm:gap-x-4 lg:gap-x-8 mt-0.5 text-[clamp(1.15rem,3.6vw,3.6rem)] pr-1">
           {serviceWord('architecture', '/architecture')}
           {serviceWord('code', '/code')}
           {serviceWord('zoning', '/zoning')}

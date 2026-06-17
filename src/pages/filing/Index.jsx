@@ -26,9 +26,13 @@ function FilingIndex() {
         const container = scrollerRef.current
         if (!el || !container) return
         const elTop = el.getBoundingClientRect().top
-        const containerTop = container.getBoundingClientRect().top
-        const target = container.scrollTop + (elTop - containerTop) - 16
-        container.scrollTo({ top: target, behavior: 'smooth' })
+        if (container.scrollHeight > container.clientHeight + 4) {
+          const containerTop = container.getBoundingClientRect().top
+          const target = container.scrollTop + (elTop - containerTop) - 16
+          container.scrollTo({ top: target, behavior: 'smooth' })
+        } else {
+          window.scrollTo({ top: window.scrollY + elTop - 16, behavior: 'smooth' })
+        }
       }, 60)
     }
   }
@@ -39,20 +43,17 @@ function FilingIndex() {
   }
 
   return (
-    <div
-      className="flex"
-      style={{ height: 'calc(100vh - var(--header-height, 9rem))' }}
-    >
+    <div className="flex flex-col lg:flex-row lg:h-[calc(100vh-var(--header-height,9rem))]">
 
-      {/* ── Left panel — locked ── */}
-      <div className="w-2/5 lg:w-[38%] flex flex-col border-r border-paper-3 overflow-hidden">
+      {/* ── Left panel — locked on desktop, flows on mobile ── */}
+      <div className="w-full lg:w-[38%] flex flex-col border-r border-paper-3 lg:overflow-hidden">
 
         <div className="px-6 lg:px-10 pt-5 pb-4 border-b border-paper-3 flex-shrink-0">
           <p className="font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-red mb-1">Expediting & Filing</p>
           <h1 className="font-sans text-xl font-bold text-ink leading-tight">NYC DOB Services</h1>
         </div>
 
-        <div ref={scrollerRef} className="flex-1 overflow-y-auto px-6 lg:px-10 py-2">
+        <div ref={scrollerRef} className="lg:flex-1 lg:overflow-y-auto px-6 lg:px-10 py-2">
 
           {/* Service categories — same visual treatment as jobs row */}
           {services.map((s, i) => (
@@ -143,7 +144,7 @@ function FilingIndex() {
       </div>
 
       {/* ── Right panel — scrollable ── */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="w-full lg:flex-1 lg:overflow-y-auto">
         <AnimatePresence mode="wait">
 
           {selectedService !== null && (

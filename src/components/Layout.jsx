@@ -7,7 +7,8 @@ import Footer from './Footer'
 function Layout({ children }) {
   const location = useLocation()
   const isHome = location.pathname === '/'
-  const isLocked = isHome || location.pathname === '/architecture' || location.pathname === '/filing'
+  const isSplitPage = location.pathname === '/architecture' || location.pathname === '/filing'
+  const isLocked = isHome || isSplitPage
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -25,7 +26,7 @@ function Layout({ children }) {
       >
         {children}
       </motion.main>
-      {!isLocked && <Footer />}
+      {!isHome && (isSplitPage ? <div className="lg:hidden"><Footer /></div> : <Footer />)}
     </div>
   )
 }

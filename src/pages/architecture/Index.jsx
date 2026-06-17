@@ -108,18 +108,17 @@ function ArchitectureIndex() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, ease }}
-            className="flex"
-            style={{ height: 'calc(100vh - var(--header-height, 9rem))' }}
+            className="flex flex-col lg:flex-row lg:h-[calc(100vh-var(--header-height,9rem))]"
           >
 
-            {/* Left panel — locked */}
-            <div className="w-2/5 lg:w-[38%] flex flex-col border-r border-paper-3 overflow-hidden">
+            {/* Left panel — locked on desktop, flows on mobile */}
+            <div className="w-full lg:w-[38%] flex flex-col border-r border-paper-3 lg:overflow-hidden">
 
               {/* Category filter */}
-              <div className="flex items-center gap-6 px-6 lg:px-10 pt-5 pb-3 border-b border-paper-3 flex-shrink-0">
+              <div className="flex items-center gap-6 px-6 lg:px-10 pt-5 pb-3 border-b border-paper-3 flex-shrink-0 overflow-x-auto scrollbar-hide">
                 <button
                   onClick={() => handleCategoryClick(null)}
-                  className={`text-sm transition-colors duration-150 ${
+                  className={`text-sm whitespace-nowrap transition-colors duration-150 ${
                     !activeCategory ? 'text-ink border-b border-ink pb-0.5' : 'text-ink-3 hover:text-ink'
                   }`}
                 >
@@ -129,7 +128,7 @@ function ArchitectureIndex() {
                   <button
                     key={cat.id}
                     onClick={() => handleCategoryClick(cat.id)}
-                    className={`text-sm transition-colors duration-150 ${
+                    className={`text-sm whitespace-nowrap transition-colors duration-150 ${
                       activeCategory === cat.id
                         ? 'text-ink border-b border-ink pb-0.5'
                         : 'text-ink-3 hover:text-ink'
@@ -141,7 +140,7 @@ function ArchitectureIndex() {
               </div>
 
               {/* Project list */}
-              <div className="flex-1 overflow-y-auto px-6 lg:px-10 py-2">
+              <div className="lg:flex-1 lg:overflow-y-auto px-6 lg:px-10 py-2">
                 {filtered.length > 0 ? (
                   filtered.map((project, i) => (
                     <motion.button
@@ -187,7 +186,7 @@ function ArchitectureIndex() {
             </div>
 
             {/* Right panel — scrollable */}
-            <div className="flex-1 overflow-y-auto p-8 flex flex-col gap-4">
+            <div className="w-full lg:flex-1 lg:overflow-y-auto p-6 lg:p-8 flex flex-col gap-4">
               <AnimatePresence mode="wait">
                 {selectedProject ? (
                   <motion.div
