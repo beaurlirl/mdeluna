@@ -55,28 +55,6 @@ function FilingIndex() {
 
         <div ref={scrollerRef} className="lg:flex-1 lg:overflow-y-auto px-6 lg:px-10 py-2">
 
-          {/* Service categories — same visual treatment as jobs row */}
-          {services.map((s, i) => (
-            <button
-              key={s.id}
-              onClick={() => handleServiceClick(i)}
-              className={`w-full text-left flex items-start gap-4 border-b border-paper-3 py-3 px-2 -mx-2 transition-colors duration-150 group ${
-                selectedService === i ? 'bg-paper-2' : 'hover:bg-paper-2'
-              }`}
-            >
-              <span className={`font-sans font-bold text-xl leading-none mt-0.5 w-6 flex-shrink-0 transition-colors duration-150 ${
-                selectedService === i ? 'text-red' : 'text-ink-4 group-hover:text-red'
-              }`}>
-                {s.letter}
-              </span>
-              <span className={`font-sans text-sm lg:text-base leading-snug transition-colors duration-150 ${
-                selectedService === i ? 'text-red' : 'text-ink group-hover:text-red'
-              }`}>
-                {s.title}
-              </span>
-            </button>
-          ))}
-
           {/* ── Selected Expediting Jobs — same weight as service rows ── */}
           <div ref={jobsRowRef}>
             <button
@@ -136,6 +114,28 @@ function FilingIndex() {
             </AnimatePresence>
           </div>
 
+          {/* Service categories — same visual treatment as jobs row */}
+          {services.map((s, i) => (
+            <button
+              key={s.id}
+              onClick={() => handleServiceClick(i)}
+              className={`w-full text-left flex items-start gap-4 border-b border-paper-3 py-3 px-2 -mx-2 transition-colors duration-150 group ${
+                selectedService === i ? 'bg-paper-2' : 'hover:bg-paper-2'
+              }`}
+            >
+              <span className={`font-sans font-bold text-xl leading-none mt-0.5 w-6 flex-shrink-0 transition-colors duration-150 ${
+                selectedService === i ? 'text-red' : 'text-ink-4 group-hover:text-red'
+              }`}>
+                {s.letter}
+              </span>
+              <span className={`font-sans text-sm lg:text-base leading-snug transition-colors duration-150 ${
+                selectedService === i ? 'text-red' : 'text-ink group-hover:text-red'
+              }`}>
+                {s.title}
+              </span>
+            </button>
+          ))}
+
         </div>
 
         <div className="border-t border-paper-3 px-6 lg:px-10 py-3 flex-shrink-0">
@@ -167,7 +167,7 @@ function FilingIndex() {
                     className="flex items-start gap-4 py-3 border-b border-paper-3 last:border-b-0"
                   >
                     <span className="text-red flex-shrink-0 font-bold mt-0.5">·</span>
-                    <span className="font-sans text-sm lg:text-base text-ink-2 leading-snug">{detail}</span>
+                    <span className="font-sans text-base lg:text-lg text-ink-2 leading-snug">{detail}</span>
                   </motion.li>
                 ))}
               </ul>

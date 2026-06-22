@@ -21,20 +21,18 @@ const dropdownItems = {
     { label: 'Hospitality', to: '/architecture?category=hospitality' },
   ],
   expediting: [
-    { label: 'All Services', to: '/filing' },
+    { label: 'All Expediting Services', to: '/filing' },
     { label: 'Approvals & Building Dept', to: '/filing#approvals' },
     { label: 'Work Permits', to: '/filing#work-permits' },
     { label: 'LPC Services', to: '/filing#landmarks' },
-    { label: 'Certificates of Occupancy', to: '/filing#occupancy-fire' },
+    { label: 'Certificates of Occupancy (Filing)', to: '/filing#occupancy-fire' },
     { label: 'OTCR & DOT Permits', to: '/filing#otcr-dot' },
-  ],
-  code: [
-    { label: 'All Services', to: '/code' },
+    { label: 'All Code/Approval Information', to: '/code' },
     { label: 'Special Inspections', to: '/code#special-inspections' },
     { label: 'Apartment Approvals', to: '/code#apartment-approvals' },
     { label: 'Equipment Use Permits', to: '/code#equipment-permits' },
     { label: 'Restaurant Approvals', to: '/code#restaurant-approvals' },
-    { label: 'Certificates of Occupancy', to: '/code#certificates-occupancy' },
+    { label: 'Certificates of Occupancy (Code)', to: '/code#certificates-occupancy' },
   ],
   resources: [
     { label: 'Links & References', to: '/resources' },
@@ -134,8 +132,7 @@ function Navigation() {
   // Row 3 active state per section
   const row3Active = (key) => {
     if (key === 'portfolio') return isArchitecture
-    if (key === 'expediting') return isFiling
-    if (key === 'code') return isCode
+    if (key === 'expediting') return isFiling || isCode
     if (key === 'about') return path === '/about' || path === '/contact'
     if (key === 'resources') return path.startsWith('/resources')
     return false
@@ -196,31 +193,23 @@ function Navigation() {
       <div className="border-t border-ink-4 px-6 lg:px-12">
 
         {/* Desktop */}
-        <div className="hidden lg:flex items-center justify-between h-9">
-          {/* Left */}
-          <div className="flex items-center gap-6">
-            <Link to="/" className="text-sm text-ink-3 hover:text-ink transition-colors duration-150">
-              Home
-            </Link>
-            {row3Btn('about', 'About Us')}
-            {row3Btn('portfolio', 'Portfolio')}
-          </div>
-
-          {/* Right */}
-          <div className="flex items-center gap-6">
-            {row3Btn('expediting', 'Expediting', 'right')}
-            {row3Btn('code', 'Code/approval information', 'right')}
-            {row3Btn('resources', 'Resources', 'right')}
-            <Link to="/blog" className="text-sm text-ink-3 hover:text-ink transition-colors duration-150">
-              Blog
-            </Link>
-            <Link
-              to="/contact"
-              className="bg-ink text-paper text-sm px-4 py-1 hover:bg-ink-2 transition-colors duration-150"
-            >
-              Contact
-            </Link>
-          </div>
+        <div className="hidden lg:flex items-center justify-end h-9 gap-6">
+          <Link to="/" className="text-sm text-ink-3 hover:text-ink transition-colors duration-150">
+            Home
+          </Link>
+          {row3Btn('about', 'About Us', 'right')}
+          {row3Btn('portfolio', 'Portfolio', 'right')}
+          {row3Btn('expediting', 'Municipal Filing', 'right')}
+          {row3Btn('resources', 'Resources', 'right')}
+          <Link to="/blog" className="text-sm text-ink-3 hover:text-ink transition-colors duration-150">
+            Blog
+          </Link>
+          <Link
+            to="/contact"
+            className="bg-ink text-paper text-sm px-4 py-1 hover:bg-ink-2 transition-colors duration-150"
+          >
+            Contact
+          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -258,8 +247,7 @@ function Navigation() {
               {[
                 { key: 'about',      label: 'About Us' },
                 { key: 'portfolio',  label: 'Portfolio' },
-                { key: 'expediting', label: 'Expediting' },
-                { key: 'code',       label: 'Code/approval information' },
+                { key: 'expediting', label: 'Municipal Filing' },
                 { key: 'resources',  label: 'Resources' },
               ].map(({ key, label }) => (
                 <div key={key} className="border-b border-paper-3">

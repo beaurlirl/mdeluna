@@ -47,7 +47,7 @@ function Contact() {
               <div className="space-y-8">
                 <div>
                   <h3 className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-3">Office</h3>
-                  <address className="not-italic text-sm text-ink-2 leading-relaxed">
+                  <address className="not-italic text-base text-ink-2 leading-relaxed">
                     <p>{contact.address.street}</p>
                     <p>{contact.address.city}, {contact.address.state} {contact.address.zip}</p>
                   </address>
@@ -55,7 +55,7 @@ function Contact() {
 
                 <div>
                   <h3 className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-3">Phone</h3>
-                  <div className="space-y-1.5 text-sm text-ink-2">
+                  <div className="space-y-1.5 text-base text-ink-2">
                     <div className="flex items-center gap-3">
                       <span className="font-sans text-[0.5rem] tracking-[0.12em] uppercase text-ink-4 w-8">Work</span>
                       <a href={`tel:${contact.phone.replace(/\./g, '')}`} className="hover:text-red transition-colors duration-150">{contact.phone}</a>
@@ -69,7 +69,7 @@ function Contact() {
 
                 <div>
                   <h3 className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-3">Email</h3>
-                  <a href={`mailto:${contact.email}`} className="text-sm text-ink-2 hover:text-red transition-colors duration-150">
+                  <a href={`mailto:${contact.email}`} className="text-base text-ink-2 hover:text-red transition-colors duration-150">
                     {contact.email}
                   </a>
                 </div>
@@ -77,7 +77,8 @@ function Contact() {
                 <div className="pt-6 border-t border-paper-3">
                   <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 leading-relaxed">
                     NYS Lic. № 024891<br />
-                    AIA · NCARB<br />
+                    SIA № 008232<br />
+                    AIA<br />
                     Est. 1994
                   </p>
                 </div>

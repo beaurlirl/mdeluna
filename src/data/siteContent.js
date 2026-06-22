@@ -253,8 +253,9 @@ export const about = {
     'From brownstone renovations to ground-up commercial buildings, our portfolio reflects a commitment to design excellence and client service.',
   ],
   credentials: [
-    'Licensed Architect, New York State',
-    'Member, American Institute of Architects',
+    'Licensed Architect, New York State — Lic. № 024891',
+    'Member, American Institute of Architects (AIA)',
+    'Special Inspector Agency — SIA № 008232',
   ],
 }
 

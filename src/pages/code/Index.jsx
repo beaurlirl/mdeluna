@@ -70,7 +70,7 @@ function CodeIndex() {
                 <h2 className="font-sans text-xl lg:text-2xl font-bold text-ink leading-snug mb-4">
                   {section.title}
                 </h2>
-                <p className="font-sans text-sm text-ink-3 leading-relaxed">
+                <p className="font-sans text-base text-ink-3 leading-relaxed">
                   {section.description}
                 </p>
               </div>
@@ -88,7 +88,7 @@ function CodeIndex() {
                       className="flex items-start gap-3 py-2.5 border-b border-paper-3 last:border-b-0"
                     >
                       <span className="text-red flex-shrink-0 font-bold mt-0.5">·</span>
-                      <span className="font-sans text-sm text-ink-2 leading-snug">{item}</span>
+                      <span className="font-sans text-base text-ink-2 leading-snug">{item}</span>
                     </motion.li>
                   ))}
                 </ul>

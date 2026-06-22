@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { about, siteInfo } from '../data/siteContent'
+import { about } from '../data/siteContent'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
@@ -51,7 +51,7 @@ function About() {
                 </h3>
                 <ul className="space-y-2">
                   {about.credentials.map((c, i) => (
-                    <li key={i} className="flex items-center gap-3 text-sm text-ink-2">
+                    <li key={i} className="flex items-center gap-3 text-base text-ink-2">
                       <span className="text-red">·</span>
                       {c}
                     </li>
@@ -76,16 +76,18 @@ function About() {
               transition={{ duration: 0.22, delay: 0.1, ease }}
             >
               <div className="lg:sticky lg:top-28">
-                <img
-                  src="/mikelucidcartoon.png"
-                  alt={siteInfo.name}
-                  className="w-full h-auto object-contain"
-                  style={{ filter: 'sepia(20%) saturate(0.7) brightness(0.97)' }}
-                />
+                <div
+                  className="w-full bg-paper-2 border border-paper-3 flex items-center justify-center"
+                  style={{ aspectRatio: '3/4' }}
+                >
+                  <span className="font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-4">
+                    Portrait Photo
+                  </span>
+                </div>
                 <div className="mt-5 border-t border-paper-3 pt-4">
                   <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
                     Michael De Luna, AIA, Architect<br />
-                    NYS Lic. № 024891 · Est. 1994
+                    NYS Lic. № 024891 · SIA № 008232 · Est. 1994
                   </p>
                 </div>
               </div>

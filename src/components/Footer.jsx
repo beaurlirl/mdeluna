@@ -59,7 +59,7 @@ function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-paper-3 flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
           <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
-            REG. № NYS-A-024891 · LICENSED ARCHITECT, STATE OF NEW YORK
+            REG. № NYS-A-024891 · SIA № 008232 · LICENSED ARCHITECT, STATE OF NEW YORK
           </p>
           <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
             © {new Date().getFullYear()} {siteInfo.name}
