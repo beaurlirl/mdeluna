@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { contact } from '../data/siteContent'
 
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID'
+const CONTACT_ENDPOINT = '/api/contact'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
@@ -115,10 +115,11 @@ function Contact() {
                       e.preventDefault()
                       setFormState('loading')
                       try {
-                        const res = await fetch(FORMSPREE_ENDPOINT, {
+                        const data = Object.fromEntries(new FormData(e.target))
+                        const res = await fetch(CONTACT_ENDPOINT, {
                           method: 'POST',
-                          body: new FormData(e.target),
-                          headers: { Accept: 'application/json' },
+                          body: JSON.stringify(data),
+                          headers: { 'Content-Type': 'application/json' },
                         })
                         if (res.ok) { setFormState('success'); e.target.reset() }
                         else setFormState('error')
