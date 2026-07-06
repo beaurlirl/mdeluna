@@ -15,9 +15,35 @@ const flashImages = [
 const FLASH_HOLD = 480
 const FLASH_FADE = 220
 
-const knownImages = new Set([
-  '/petrossian1.png', '/petrossian2.png', '/pizza1.png', '/jewishacademy1.png',
-])
+function GalleryImage({ src, alt, fallbackLabel, delay }) {
+  const [errored, setErrored] = useState(false)
+
+  if (errored) {
+    return (
+      <div
+        className="w-full bg-paper-2 border border-paper-3 flex items-center justify-center"
+        style={{ aspectRatio: '4/3' }}
+      >
+        <span className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">
+          {fallbackLabel}
+        </span>
+      </div>
+    )
+  }
+
+  return (
+    <motion.img
+      src={src}
+      alt={alt}
+      className="w-full object-cover"
+      style={{ aspectRatio: '4/3' }}
+      initial={{ opacity: 0, y: 4 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, delay, ease }}
+      onError={() => setErrored(true)}
+    />
+  )
+}
 
 function ArchitectureIndex() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -50,9 +76,7 @@ function ArchitectureIndex() {
     ? projects.filter((p) => p.category === activeCategory)
     : projects
 
-  const visibleImages = selectedProject
-    ? selectedProject.gallery.filter((img) => knownImages.has(img))
-    : []
+  const visibleImages = selectedProject ? selectedProject.gallery : []
 
   const handleCategoryClick = (catId) => {
     setSelectedProject(null)
@@ -199,15 +223,12 @@ function ArchitectureIndex() {
                   >
                     {visibleImages.length > 0 ? (
                       visibleImages.map((img, i) => (
-                        <motion.img
+                        <GalleryImage
                           key={img}
                           src={img}
                           alt={`${selectedProject.title} — ${i + 1}`}
-                          className="w-full object-cover"
-                          style={{ aspectRatio: '4/3' }}
-                          initial={{ opacity: 0, y: 4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.25, delay: i * 0.08, ease }}
+                          fallbackLabel={selectedProject.title}
+                          delay={i * 0.08}
                         />
                       ))
                     ) : (
