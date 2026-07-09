@@ -31,13 +31,13 @@ function Home() {
         >
           <Link
             to="/filing"
-            className="bg-[#C1272D] text-paper text-base lg:text-lg font-sans font-medium px-7 py-4 min-h-11 inline-flex items-center hover:bg-ink transition-colors duration-150"
+            className="bg-[#6B1629] text-paper text-base lg:text-lg font-sans font-medium px-7 py-4 min-h-11 inline-flex items-center hover:bg-ink transition-colors duration-150"
           >
             View Services →
           </Link>
           <Link
             to="/contact"
-            className="border border-[#C1272D] text-[#C1272D] text-base lg:text-lg font-sans font-medium px-7 py-4 min-h-11 inline-flex items-center hover:bg-[#C1272D] hover:text-paper transition-colors duration-150"
+            className="border border-[#6B1629] text-[#6B1629] text-base lg:text-lg font-sans font-medium px-7 py-4 min-h-11 inline-flex items-center hover:bg-[#6B1629] hover:text-paper transition-colors duration-150"
           >
             Start a Project →
           </Link>
