@@ -17,6 +17,7 @@ const FLASH_FADE = 220
 
 function GalleryImage({ src, alt, fallbackLabel, delay }) {
   const [errored, setErrored] = useState(false)
+  const [loaded, setLoaded] = useState(false)
 
   if (errored) {
     return (
@@ -35,11 +36,14 @@ function GalleryImage({ src, alt, fallbackLabel, delay }) {
     <motion.img
       src={src}
       alt={alt}
+      loading="lazy"
+      decoding="async"
       className="w-full object-cover"
       style={{ aspectRatio: '4/3' }}
       initial={{ opacity: 0, y: 4 }}
-      animate={{ opacity: 1, y: 0 }}
+      animate={{ opacity: loaded ? 1 : 0, y: 0 }}
       transition={{ duration: 0.25, delay, ease }}
+      onLoad={() => setLoaded(true)}
       onError={() => setErrored(true)}
     />
   )
@@ -54,6 +58,16 @@ function ArchitectureIndex() {
   const [phase, setPhase] = useState(categoryParam ? 'list' : 'flashing')
   const [activeCategory, setActiveCategory] = useState(categoryParam || null)
   const [selectedProject, setSelectedProject] = useState(null)
+
+  // Preload flash images up front — without this, a slow mobile connection
+  // shows a blank gap each time the crossfade swaps to an image that hasn't
+  // finished downloading yet, which reads as a glitch.
+  useEffect(() => {
+    flashImages.forEach((src) => {
+      const img = new Image()
+      img.src = src
+    })
+  }, [])
 
   // Sync active category when URL param changes (e.g. clicking a different dropdown item while already on the page)
   useEffect(() => {
@@ -95,8 +109,7 @@ function ArchitectureIndex() {
       <AnimatePresence>
         {phase === 'flashing' && (
           <motion.div
-            className="flex items-center justify-center"
-            style={{ minHeight: 'calc(100vh - var(--header-height, 9rem))' }}
+            className="flex items-center justify-center min-h-viewport-header"
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6, ease }}
           >

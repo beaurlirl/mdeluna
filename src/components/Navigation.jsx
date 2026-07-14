@@ -34,9 +34,6 @@ const dropdownItems = {
     { label: 'Restaurant Approvals', to: '/code#restaurant-approvals' },
     { label: 'Certificates of Occupancy (Code)', to: '/code#certificates-occupancy' },
   ],
-  resources: [
-    { label: 'Links & References', to: '/resources' },
-  ],
 }
 
 function DropdownMenu({ items, align = 'left' }) {
@@ -90,6 +87,12 @@ function Navigation() {
     setMobileExpanded(null)
   }, [location])
 
+  // Lock background scroll while the mobile menu is open
+  useEffect(() => {
+    document.body.classList.toggle('mobile-nav-open', mobileOpen)
+    return () => document.body.classList.remove('mobile-nav-open')
+  }, [mobileOpen])
+
   // Close dropdown on outside click
   useEffect(() => {
     const handler = (e) => {
@@ -134,7 +137,6 @@ function Navigation() {
     if (key === 'portfolio') return isArchitecture
     if (key === 'expediting') return isFiling || isCode
     if (key === 'about') return path === '/about' || path === '/contact'
-    if (key === 'resources') return path.startsWith('/resources')
     return false
   }
 
@@ -200,10 +202,6 @@ function Navigation() {
           {row3Btn('about', 'About Us', 'right')}
           {row3Btn('portfolio', 'Portfolio', 'right')}
           {row3Btn('expediting', 'Municipal Filing', 'right')}
-          {row3Btn('resources', 'Resources', 'right')}
-          <Link to="/blog" className="text-sm text-ink-3 hover:text-ink transition-colors duration-150">
-            Blog
-          </Link>
           <Link
             to="/contact"
             className="bg-ink text-paper text-sm px-4 py-1 hover:bg-ink-2 transition-colors duration-150"
@@ -248,7 +246,6 @@ function Navigation() {
                 { key: 'about',      label: 'About Us' },
                 { key: 'portfolio',  label: 'Portfolio' },
                 { key: 'expediting', label: 'Municipal Filing' },
-                { key: 'resources',  label: 'Resources' },
               ].map(({ key, label }) => (
                 <div key={key} className="border-b border-paper-3">
                   <button
@@ -289,9 +286,6 @@ function Navigation() {
                 </div>
               ))}
 
-              <Link to="/blog" className="block py-2 text-sm text-ink-3 hover:text-ink border-b border-paper-3">
-                Blog
-              </Link>
               <Link to="/contact" className="inline-block mt-3 bg-ink text-paper text-sm px-5 py-2">
                 Contact
               </Link>

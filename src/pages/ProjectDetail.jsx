@@ -10,6 +10,7 @@ function ProjectDetail() {
   const navigate = useNavigate()
   const project = getProjectById(id)
   const [imageError, setImageError] = useState({})
+  const [imageLoaded, setImageLoaded] = useState({})
 
   useEffect(() => {
     if (!project) navigate('/projects')
@@ -17,6 +18,10 @@ function ProjectDetail() {
 
   const handleImageError = (key) => {
     setImageError((prev) => ({ ...prev, [key]: true }))
+  }
+
+  const handleImageLoad = (key) => {
+    setImageLoaded((prev) => ({ ...prev, [key]: true }))
   }
 
   const { category, nextProject, prevProject, galleryImages } = useMemo(() => {
@@ -112,9 +117,12 @@ function ProjectDetail() {
               <img
                 src={project.coverImage}
                 alt={project.title}
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover transition-opacity duration-300 ${
+                  imageLoaded['cover'] ? 'opacity-100' : 'opacity-0'
+                }`}
                 loading="lazy"
                 decoding="async"
+                onLoad={() => handleImageLoad('cover')}
                 onError={() => handleImageError('cover')}
               />
             ) : (
@@ -146,7 +154,12 @@ function ProjectDetail() {
                     <img
                       src={img}
                       alt={`${project.title} — ${i + 1}`}
-                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      className={`w-full h-full object-cover transition-opacity duration-300 ${
+                        imageLoaded[`g${i}`] ? 'opacity-100' : 'opacity-0'
+                      }`}
+                      onLoad={() => handleImageLoad(`g${i}`)}
                       onError={() => handleImageError(`g${i}`)}
                     />
                   ) : (

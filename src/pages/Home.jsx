@@ -5,10 +5,7 @@ const ease = [0.2, 0.6, 0.2, 1]
 
 function Home() {
   return (
-    <section
-      className="relative bg-paper overflow-hidden"
-      style={{ height: 'calc(100vh - var(--header-height, 9rem))' }}
-    >
+    <section className="relative bg-paper overflow-hidden h-viewport-header">
 
       {/* Background image */}
       <div className="absolute inset-0">

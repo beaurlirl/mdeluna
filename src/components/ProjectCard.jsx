@@ -7,6 +7,7 @@ const ease = [0.2, 0.6, 0.2, 1]
 
 function ProjectCard({ project, index = 0 }) {
   const [imageError, setImageError] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false)
   const category = categories.find((c) => c.id === project.category)
 
   return (
@@ -25,7 +26,11 @@ function ProjectCard({ project, index = 0 }) {
               src={project.coverImage}
               alt={project.title}
               loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
+              decoding="async"
+              className={`w-full h-full object-cover transition-[opacity,transform] duration-200 group-hover:scale-105 ${
+                imageLoaded ? 'opacity-100' : 'opacity-0'
+              }`}
+              onLoad={() => setImageLoaded(true)}
               onError={() => setImageError(true)}
             />
           ) : (
