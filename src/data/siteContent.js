@@ -143,17 +143,17 @@ export const consultingWork = [
 export const consultingProjects = [
   { id: 'posner-office',      title: "Dr. Posner's Office",          address: '308 East 38th Street',           borough: 'Manhattan'       },
   { id: 'city-center',        title: 'City Center',                  address: '133 West 55th Street',           borough: 'Manhattan'       },
-  { id: 'cornerstone',        title: 'Cornerstone Housing',          address: 'Madison & Putnam Street',        borough: 'Brooklyn'        },
+  { id: 'cornerstone',        title: 'Cornerstone Housing',          address: 'Madison & Putnam Street',        borough: 'Brooklyn',    image: '/expediting/cornerstone.webp'       },
   { id: 'dean-wolf-loft',     title: 'Dean Wolf Loft',               address: '40 Hudson Street',               borough: 'Manhattan'       },
-  { id: 'our-lady-loreto',    title: 'Our Lady of Loreto',           address: '1509 Bergen Street',             borough: 'Brooklyn'        },
+  { id: 'our-lady-loreto',    title: 'Our Lady of Loreto',           address: '1509 Bergen Street',             borough: 'Brooklyn',    image: '/expediting/our-lady-loreto.webp'   },
   { id: '1630-dean',          title: '1630 Dean Street',             address: '1630 Dean Street',               borough: 'Brooklyn'        },
   { id: '249-16th',           title: '249 & 251 16th Street',        address: '249 & 251 16th Street',          borough: 'Brooklyn'        },
-  { id: 'big-apple-circus',   title: 'Big Apple Circus',             address: 'All Boroughs',                   borough: 'Citywide'        },
+  { id: 'big-apple-circus',   title: 'Big Apple Circus',             address: 'All Boroughs',                   borough: 'Citywide',    image: '/expediting/big-apple-circus.webp'  },
   { id: 'apg',                title: 'Automated Parking Garage',     address: 'APG',                            borough: 'Manhattan'       },
   { id: 'schermerhorn',       title: '70–76 Schermerhorn Street',    address: '70–76 Schermerhorn Street',      borough: 'Brooklyn'        },
   { id: '21-31st-astoria',    title: '21-21 31st Street',            address: '21-21 31st Street',              borough: 'Queens'          },
   { id: '100-varick',         title: '100 Varick Street',            address: '100 Varick Street (SOHO Tower)', borough: 'Manhattan'       },
-  { id: '1508-coney-island',  title: '1508 Coney Island Avenue',     address: '1508 Coney Island Avenue',       borough: 'Brooklyn'        },
+  { id: '1508-coney-island',  title: '1508 Coney Island Avenue',     address: '1508 Coney Island Avenue',       borough: 'Brooklyn',    image: '/expediting/1508-coney-island.webp' },
   { id: '215-28th',           title: '215 & 225 West 28th Street',   address: '215 & 225 West 28th Street',     borough: 'Manhattan'       },
 ]
 

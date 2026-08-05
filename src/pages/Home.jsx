@@ -1,18 +1,32 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { projects } from '../data/projects'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
-const heroImages = [
-  { src: '/petrossian1.png', alt: 'Petrossian Boutique — Manhattan, NY' },
-  { src: '/pizza1.png', alt: 'Shelter Pizza' },
-  { src: '/jewishacademy1.png', alt: 'BK Heights Jewish Academy' },
-  { src: '/petrossian2.png', alt: 'Petrossian Boutique — Manhattan, NY' },
+// One cover photo per project, capped at 10 so the homepage doesn't get image-heavy.
+// Featured projects lead; the rest fill in behind them.
+const GALLERY_PROJECT_IDS = [
+  'petrossian-boutique',
+  'east-81st-street',
+  'shelter-pizza',
+  'grey-bar-restaurant',
+  'west-186th-street',
+  'bk-heights-jewish-academy',
+  'gulluoglu',
+  'chickie-pigs',
+  'petite-abeille',
+  't-poutine',
 ]
 
-const HERO_HOLD = 4200
-const HERO_FADE = 1400
+const heroImages = GALLERY_PROJECT_IDS
+  .map((id) => projects.find((p) => p.id === id))
+  .filter(Boolean)
+  .map((p) => ({ src: p.coverImage, alt: p.title }))
+
+const HERO_HOLD = 5600
+const HERO_FADE = 2200
 
 function HeroSlideshow() {
   const [index, setIndex] = useState(0)

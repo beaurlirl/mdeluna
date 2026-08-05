@@ -124,13 +124,15 @@ function Navigation() {
       <Link
         to={to}
         className={`font-bold leading-none transition-colors duration-150 ${
-          active ? 'text-red' : 'text-ink hover:text-red'
-        }`}
+          section === 'architecture' ? 'italic' : ''
+        } ${active ? 'text-red' : 'text-ink hover:text-red'}`}
       >
         {section.charAt(0).toUpperCase() + section.slice(1)}
       </Link>
     )
   }
+
+  const bullet = <span className="text-accent leading-none select-none" aria-hidden="true">&bull;</span>
 
   // Row 3 active state per section
   const row3Active = (key) => {
@@ -185,8 +187,11 @@ function Navigation() {
         {/* Row 2 — Service words */}
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 sm:gap-x-4 lg:gap-x-8 mt-0.5 text-[clamp(1.15rem,3.6vw,3.6rem)] pr-1">
           {serviceWord('architecture', '/architecture')}
+          {bullet}
           {serviceWord('code', '/code')}
+          {bullet}
           {serviceWord('zoning', '/zoning')}
+          {bullet}
           {serviceWord('filing', '/filing')}
         </div>
       </div>

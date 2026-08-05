@@ -44,12 +44,19 @@ function ArchitectureIndex() {
   const categoryParam = searchParams.get('category')
 
   const [activeCategory, setActiveCategory] = useState(categoryParam || null)
-  const [selectedProject, setSelectedProject] = useState(null)
+  const [selectedProject, setSelectedProject] = useState(() => {
+    const cat = categoryParam || null
+    const list = cat ? projects.filter((p) => p.category === cat) : projects
+    return list[0] || null
+  })
 
-  // Sync active category when URL param changes (e.g. clicking a different dropdown item while already on the page)
+  // Sync active category when URL param changes (e.g. clicking a different dropdown item while already on the page),
+  // and default the gallery to that category's first project so images show without a click.
   useEffect(() => {
-    setActiveCategory(categoryParam || null)
-    setSelectedProject(null)
+    const cat = categoryParam || null
+    setActiveCategory(cat)
+    const list = cat ? projects.filter((p) => p.category === cat) : projects
+    setSelectedProject(list[0] || null)
   }, [categoryParam])
 
   const filtered = activeCategory
@@ -59,14 +66,7 @@ function ArchitectureIndex() {
   const visibleImages = selectedProject ? selectedProject.gallery : []
 
   const handleCategoryClick = (catId) => {
-    setSelectedProject(null)
-    if (catId === null) {
-      setSearchParams({})
-      setActiveCategory(null)
-    } else {
-      setSearchParams({ category: catId })
-      setActiveCategory(catId)
-    }
+    setSearchParams(catId === null ? {} : { category: catId })
   }
 
   return (

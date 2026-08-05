@@ -185,10 +185,20 @@ function FilingIndex() {
               <h2 className="font-sans text-xl lg:text-2xl font-bold text-ink leading-tight">{selectedProject.title}</h2>
               <p className="font-sans text-sm text-ink-4 mb-2">{selectedProject.address} · {selectedProject.borough}</p>
               <div
-                className="w-full bg-paper-2 border border-paper-3 flex items-center justify-center"
+                className="w-full bg-paper-2 border border-paper-3 flex items-center justify-center overflow-hidden"
                 style={{ aspectRatio: '4/3' }}
               >
-                <span className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">{selectedProject.title}</span>
+                {selectedProject.image ? (
+                  <img
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">{selectedProject.title}</span>
+                )}
               </div>
             </motion.div>
           )}

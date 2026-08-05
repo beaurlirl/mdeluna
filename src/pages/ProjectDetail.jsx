@@ -101,6 +101,17 @@ function ProjectDetail() {
             <p className="mt-8 font-sans italic text-lg text-ink-2 max-w-prose leading-relaxed">
               {project.description}
             </p>
+
+            {project.team?.length > 0 && (
+              <div className="mt-8 flex flex-wrap gap-x-10 gap-y-2">
+                {project.team.map(({ role, name }) => (
+                  <div key={role}>
+                    <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4">{role}</p>
+                    <p className="font-sans text-sm text-ink-2">{name}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </motion.div>
         </div>
       </div>
