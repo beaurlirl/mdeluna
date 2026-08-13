@@ -1,16 +1,37 @@
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { getProjectById, projects, categories } from '../data/projects'
 import { useEffect, useState, useMemo } from 'react'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
+// Puffy, pill-shaped prev/next control — bigger tap target than a bare icon
+function NavArrow({ to, state, direction, label, title }) {
+  return (
+    <Link
+      to={to}
+      state={state}
+      aria-label={label}
+      title={title}
+      className="w-9 h-9 rounded-full bg-paper-2 border border-paper-3 flex items-center justify-center text-ink-3 hover:bg-red hover:border-red hover:text-paper transition-colors duration-150"
+    >
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+        <path strokeWidth={2} d={direction === 'prev' ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7'} />
+      </svg>
+    </Link>
+  )
+}
+
 function ProjectDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
   const project = getProjectById(id)
   const [imageError, setImageError] = useState({})
   const [imageLoaded, setImageLoaded] = useState({})
+
+  // Direction of travel (1 = next, -1 = prev, 0 = direct link/refresh) drives the slide-in
+  const slideDir = location.state?.dir ?? 0
 
   useEffect(() => {
     if (!project) navigate('/projects')
@@ -38,19 +59,37 @@ function ProjectDetail() {
 
   if (!project) return null
 
+  const goPrev = () => navigate(`/projects/${prevProject.id}`, { state: { dir: -1 } })
+  const goNext = () => navigate(`/projects/${nextProject.id}`, { state: { dir: 1 } })
+
+  const handleDragEnd = (_e, info) => {
+    const SWIPE_THRESHOLD = 90
+    if (info.offset.x <= -SWIPE_THRESHOLD) goNext()
+    else if (info.offset.x >= SWIPE_THRESHOLD) goPrev()
+  }
+
   return (
-    <div>
+    <motion.div
+      key={project.id}
+      initial={{ opacity: 0, x: slideDir * 48 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.4, ease }}
+      drag="x"
+      dragConstraints={{ left: 0, right: 0 }}
+      dragElastic={0.15}
+      onDragEnd={handleDragEnd}
+    >
 
       {/* Header */}
       <div className="bg-paper border-b border-paper-3">
-        <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-14 lg:py-20">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-8 lg:py-10">
           <motion.div
             initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, ease }}
           >
             <div className="flex items-center justify-between mb-8">
               <Link
-                to="/projects"
+                to={`/architecture?category=${project.category}`}
                 className="inline-flex items-center gap-2 font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-ink-3 hover:text-red transition-colors duration-150"
               >
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter">
@@ -59,27 +98,21 @@ function ProjectDetail() {
                 All Projects
               </Link>
 
-              <div className="flex items-center gap-4">
-                <Link
+              <div className="flex items-center gap-3">
+                <NavArrow
                   to={`/projects/${prevProject.id}`}
-                  aria-label={`Previous project: ${prevProject.title}`}
+                  state={{ dir: -1 }}
+                  direction="prev"
+                  label={`Previous project: ${prevProject.title}`}
                   title={prevProject.title}
-                  className="text-ink-3 hover:text-red transition-colors duration-150"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter">
-                    <path strokeWidth={1.5} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </Link>
-                <Link
+                />
+                <NavArrow
                   to={`/projects/${nextProject.id}`}
-                  aria-label={`Next project: ${nextProject.title}`}
+                  state={{ dir: 1 }}
+                  direction="next"
+                  label={`Next project: ${nextProject.title}`}
                   title={nextProject.title}
-                  className="text-ink-3 hover:text-red transition-colors duration-150"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeLinecap="square" strokeLinejoin="miter">
-                    <path strokeWidth={1.5} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
+                />
               </div>
             </div>
 
@@ -189,13 +222,13 @@ function ProjectDetail() {
       <div className="bg-paper border-t border-paper-3">
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-2 divide-x divide-paper-3">
-            <Link to={`/projects/${prevProject.id}`} className="group py-10 pr-8">
+            <Link to={`/projects/${prevProject.id}`} state={{ dir: -1 }} className="group py-10 pr-8">
               <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 mb-2">Previous</p>
               <p className="font-sans text-xl lg:text-2xl text-ink group-hover:text-red transition-colors duration-150">
                 {prevProject.title}
               </p>
             </Link>
-            <Link to={`/projects/${nextProject.id}`} className="group py-10 pl-8 text-right">
+            <Link to={`/projects/${nextProject.id}`} state={{ dir: 1 }} className="group py-10 pl-8 text-right">
               <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 mb-2">Next</p>
               <p className="font-sans text-xl lg:text-2xl text-ink group-hover:text-red transition-colors duration-150">
                 {nextProject.title}
@@ -205,7 +238,7 @@ function ProjectDetail() {
         </div>
       </div>
 
-    </div>
+    </motion.div>
   )
 }
 

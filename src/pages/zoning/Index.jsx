@@ -1,27 +1,10 @@
-import { useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Link, useLocation } from 'react-router-dom'
-import { codeServices } from '../../data/siteContent'
+import { Link } from 'react-router-dom'
+import { zoningServices } from '../../data/siteContent'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
-function CodeIndex() {
-  const location = useLocation()
-
-  useEffect(() => {
-    if (!location.hash) return
-    const id = location.hash.slice(1)
-    const timer = setTimeout(() => {
-      const el = document.getElementById(id)
-      if (!el) return
-      const headerHeight = parseFloat(
-        getComputedStyle(document.documentElement).getPropertyValue('--header-height')
-      ) || 144
-      window.scrollTo({ top: el.offsetTop - headerHeight - 24, behavior: 'smooth' })
-    }, 120)
-    return () => clearTimeout(timer)
-  }, [location.hash])
-
+function ZoningIndex() {
   return (
     <div>
 
@@ -33,21 +16,21 @@ function CodeIndex() {
             transition={{ duration: 0.25, ease }}
           >
             <p className="font-sans text-[0.5625rem] tracking-[0.14em] uppercase text-red mb-3">
-              Code / Approval Information
+              Zoning
             </p>
             <h1 className="font-sans text-3xl lg:text-5xl font-bold text-ink leading-tight">
-              Code Compliance &<br />Approval Services
+              Zoning Analysis &<br />Land Use Strategy
             </h1>
             <p className="mt-5 font-sans text-base lg:text-lg text-ink-2 max-w-2xl leading-relaxed">
-              Thirty years navigating the New York City Building Code, Zoning Resolution, and the agencies that enforce them. The following outlines the approvals and code-compliance services this office provides.
+              Every project sits on a zoning lot before it sits on a site. We read the Zoning Resolution against the lot, establish what's buildable, and chart the path — as-of-right or through variance — to get there.
             </p>
           </motion.div>
         </div>
       </div>
 
-      {/* Service sections */}
+      {/* Zoning service sections */}
       <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-12 lg:py-20 space-y-16 lg:space-y-24">
-        {codeServices.map((section, i) => (
+        {zoningServices.map((section, i) => (
           <motion.div
             key={section.id}
             id={section.id}
@@ -108,10 +91,10 @@ function CodeIndex() {
                 Next Step
               </p>
               <h3 className="font-sans text-xl lg:text-2xl font-bold text-ink leading-tight">
-                Questions about your project?
+                Not sure what your lot allows?
               </h3>
               <p className="mt-2 font-sans text-sm text-ink-3 max-w-prose">
-                Every project is different. Contact us to discuss the approval path for yours.
+                Send us the address and we'll tell you where the zoning envelope stands before you spend a dollar on design.
               </p>
             </div>
             <div className="flex gap-4 flex-shrink-0">
@@ -136,4 +119,4 @@ function CodeIndex() {
   )
 }
 
-export default CodeIndex
+export default ZoningIndex

@@ -237,6 +237,74 @@ export const codeServices = [
   },
 ]
 
+// DRAFT — standard NYC zoning-consulting service categories, written as a starting point.
+// Not pulled from client-provided copy; review and edit before treating as final.
+export const zoningServices = [
+  {
+    id: 'analysis',
+    title: 'Zoning Analysis',
+    description: 'Every project begins with a clear read of what the zoning lot allows. We prepare detailed zoning analyses that establish buildable envelope, permitted use, and compliance strategy before design begins.',
+    items: [
+      'Floor Area Ratio (FAR) Calculations',
+      'Lot Coverage and Open Space Requirements',
+      'Yard, Setback, and Sky Exposure Plane Analysis',
+      'Height and Setback Regulations',
+      'Use Group Determination',
+      'Zoning District Research and Map Verification',
+      'Parking and Loading Requirements',
+    ],
+  },
+  {
+    id: 'variances',
+    title: 'Variances & Special Permits',
+    description: 'When a project falls outside as-of-right zoning, we prepare and present applications to the Board of Standards and Appeals and other reviewing bodies to secure the relief a project needs.',
+    items: [
+      'Board of Standards and Appeals (BSA) Variance Applications',
+      'Special Permit Applications',
+      'Hardship and Practical Difficulty Findings',
+      'Use and Bulk Variances',
+      'Public Hearing Preparation and Representation',
+      'City Planning Commission (CPC) Coordination',
+    ],
+  },
+  {
+    id: 'landmarks-overlay',
+    title: 'Landmark & Historic District Zoning',
+    description: "Projects within historic districts or on individual landmarks answer to both the Zoning Resolution and the Landmarks Preservation Commission. We coordinate the two so a project's zoning envelope and its historic review move together.",
+    items: [
+      'Historic District Zoning Compliance',
+      'Contextual Zoning Overlay Analysis',
+      'Individual Landmark Zoning Coordination',
+      'Certificate of Appropriateness Coordination with LPC',
+      'Special Purpose District Requirements',
+    ],
+  },
+  {
+    id: 'lot-mergers-air-rights',
+    title: 'Zoning Lot Mergers & Air Rights',
+    description: 'Assembling development rights across tax lots requires precise zoning lot documentation. We prepare the zoning lot analyses and agreements that make air-rights transfers and lot mergers possible.',
+    items: [
+      'Zoning Lot Development Agreements (ZLDA)',
+      'Zoning Lot Mergers and Subdivisions',
+      'Transfer of Development Rights (TDR)',
+      'Tax Lot and Zoning Lot Reconciliation',
+      'Declaration of Zoning Lot Restrictions',
+    ],
+  },
+  {
+    id: 'non-conforming-compliance',
+    title: 'Non-Conforming Use & Compliance',
+    description: 'Buildings and uses that predate current zoning need a clear compliance path to renovate, expand, or change hands. We document non-conforming status and align it with Certificate of Occupancy filings.',
+    items: [
+      'Non-Conforming Use Documentation',
+      'Non-Complying Bulk Analysis',
+      'Continuation and Restoration of Non-Conforming Use',
+      'Zoning Compliance for Certificate of Occupancy',
+      'Legalization of Existing Conditions',
+    ],
+  },
+]
+
 export const stats = [
   { value: '30+',    label: 'YEARS',    note: 'Licensed since 1994' },
   { value: '1,800+', label: 'PROJECTS', note: 'Across all five boroughs' },

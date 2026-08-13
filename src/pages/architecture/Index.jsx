@@ -2,8 +2,27 @@ import { useState, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { projects, categories } from '../../data/projects'
+import { consultingProjects } from '../../data/siteContent'
 
 const ease = [0.2, 0.6, 0.2, 1]
+const EXPEDITING_ID = 'expediting'
+
+// Expediting jobs live in siteContent.js with a different shape than projects.js —
+// normalize to what the list/gallery UI expects (gallery array, no detail page).
+const toExpeditingItem = (p) => ({
+  id: `expediting-${p.id}`,
+  title: p.title,
+  year: '',
+  location: p.borough,
+  category: EXPEDITING_ID,
+  gallery: p.image ? [p.image] : [],
+  isExpediting: true,
+})
+
+const getListForCategory = (cat) => {
+  if (cat === EXPEDITING_ID) return consultingProjects.map(toExpeditingItem)
+  return cat ? projects.filter((p) => p.category === cat) : projects
+}
 
 function GalleryImage({ src, alt, fallbackLabel, delay }) {
   const [errored, setErrored] = useState(false)
@@ -45,8 +64,7 @@ function ArchitectureIndex() {
 
   const [activeCategory, setActiveCategory] = useState(categoryParam || null)
   const [selectedProject, setSelectedProject] = useState(() => {
-    const cat = categoryParam || null
-    const list = cat ? projects.filter((p) => p.category === cat) : projects
+    const list = getListForCategory(categoryParam || null)
     return list[0] || null
   })
 
@@ -55,13 +73,11 @@ function ArchitectureIndex() {
   useEffect(() => {
     const cat = categoryParam || null
     setActiveCategory(cat)
-    const list = cat ? projects.filter((p) => p.category === cat) : projects
+    const list = getListForCategory(cat)
     setSelectedProject(list[0] || null)
   }, [categoryParam])
 
-  const filtered = activeCategory
-    ? projects.filter((p) => p.category === activeCategory)
-    : projects
+  const filtered = getListForCategory(activeCategory)
 
   const visibleImages = selectedProject ? selectedProject.gallery : []
 
@@ -88,10 +104,10 @@ function ArchitectureIndex() {
         >
 
           {/* Category filter */}
-          <div className="flex items-center gap-6 px-6 lg:px-10 pt-5 pb-3 border-b border-paper-3 flex-shrink-0 overflow-x-auto scrollbar-hide">
+          <div className="flex items-center gap-4 px-6 lg:px-10 pt-3 pb-2 border-b border-paper-3 flex-shrink-0 overflow-x-auto scrollbar-hide">
             <button
               onClick={() => handleCategoryClick(null)}
-              className={`text-sm whitespace-nowrap transition-colors duration-150 ${
+              className={`text-[0.6875rem] whitespace-nowrap transition-colors duration-150 ${
                 !activeCategory ? 'text-ink border-b border-ink pb-0.5' : 'text-ink-3 hover:text-ink'
               }`}
             >
@@ -101,7 +117,7 @@ function ArchitectureIndex() {
               <button
                 key={cat.id}
                 onClick={() => handleCategoryClick(cat.id)}
-                className={`text-sm whitespace-nowrap transition-colors duration-150 ${
+                className={`text-[0.6875rem] whitespace-nowrap transition-colors duration-150 ${
                   activeCategory === cat.id
                     ? 'text-ink border-b border-ink pb-0.5'
                     : 'text-ink-3 hover:text-ink'
@@ -110,10 +126,21 @@ function ArchitectureIndex() {
                 {cat.name}
               </button>
             ))}
+            <button
+              onClick={() => handleCategoryClick(EXPEDITING_ID)}
+              className={`text-[0.6875rem] whitespace-nowrap transition-colors duration-150 ${
+                activeCategory === EXPEDITING_ID
+                  ? 'text-red border-b border-red pb-0.5'
+                  : 'text-ink-3 hover:text-red'
+              }`}
+            >
+              Expediting
+            </button>
           </div>
 
-          {/* Project list */}
-          <div className="lg:flex-1 lg:overflow-y-auto px-6 lg:px-10 py-2">
+          {/* Project list — capped height on mobile so it's a locked, scrollable box rather than
+              pushing the preview panel far down the page; desktop keeps its own independent scroll. */}
+          <div className="max-h-[176px] overflow-y-auto lg:max-h-none lg:flex-1 lg:overflow-y-auto px-6 lg:px-10 py-2">
             {filtered.length > 0 ? (
               filtered.map((project, i) => (
                 <motion.button
@@ -145,7 +172,7 @@ function ArchitectureIndex() {
               <p className="text-sm text-ink-4 py-6">No projects in this category yet.</p>
             )}
 
-            {selectedProject && (
+            {selectedProject && !selectedProject.isExpediting && (
               <div className="mt-4 pt-1">
                 <Link
                   to={`/projects/${selectedProject.id}`}
@@ -158,7 +185,7 @@ function ArchitectureIndex() {
           </div>
         </motion.div>
 
-        {/* Right panel — scrollable */}
+        {/* Right panel — scrollable. Sits directly below the (now height-capped) list on mobile, so the selected job's photo is visible without scrolling past the whole list. */}
         <div className="w-full lg:flex-1 lg:overflow-y-auto p-6 lg:p-8 flex flex-col gap-4">
           <AnimatePresence mode="wait">
             {selectedProject ? (

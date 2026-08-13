@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { projects } from '../data/projects'
@@ -30,6 +30,7 @@ const HERO_FADE = 2200
 
 function HeroSlideshow() {
   const [index, setIndex] = useState(0)
+  const isFirstRender = useRef(true)
 
   // Preload so the crossfade never shows a gap on a slow connection
   useEffect(() => {
@@ -43,6 +44,7 @@ function HeroSlideshow() {
     const t = setTimeout(() => {
       setIndex((i) => (i + 1) % heroImages.length)
     }, HERO_HOLD)
+    isFirstRender.current = false
     return () => clearTimeout(t)
   }, [index])
 
@@ -54,14 +56,15 @@ function HeroSlideshow() {
           src={heroImages[index].src}
           alt={heroImages[index].alt}
           loading="eager"
-          className="absolute inset-0 w-full h-full object-cover scale-110 blur-sm"
-          initial={{ opacity: 0 }}
+          fetchpriority={index === 0 ? 'high' : undefined}
+          className="absolute inset-0 w-full h-full object-cover scale-105 blur-[2px]"
+          initial={isFirstRender.current ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: HERO_FADE / 1000, ease }}
         />
       </AnimatePresence>
-      <div className="absolute inset-0 bg-paper/60" />
+      <div className="absolute inset-0 bg-paper/30" />
     </div>
   )
 }
@@ -74,7 +77,7 @@ function Home() {
       <HeroSlideshow />
 
       {/* Content */}
-      <div className="relative lg:h-full max-w-screen-xl mx-auto px-6 lg:px-12 flex flex-col items-center justify-center text-center gap-6 lg:gap-8 py-16">
+      <div className="relative h-full max-w-screen-xl mx-auto px-6 lg:px-12 flex flex-col items-center justify-center text-center gap-6 lg:gap-8 py-16">
 
         <motion.div
           className="flex flex-wrap justify-center gap-4"
@@ -82,7 +85,7 @@ function Home() {
           transition={{ duration: 0.4, delay: 0.15, ease }}
         >
           <Link
-            to="/filing"
+            to="/architecture"
             className="bg-[#6B1629] text-paper text-base lg:text-lg font-sans font-medium px-7 py-4 min-h-11 inline-flex items-center hover:bg-ink transition-colors duration-150"
           >
             View Services →

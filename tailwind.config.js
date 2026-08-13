@@ -10,7 +10,7 @@ export default {
         paper:     '#FFFFFF',
         vellum:    '#F7F7F7',
         'paper-2': '#F5F5F5',
-        'paper-3': '#E8E8E8',
+        'paper-3': '#C9C9C9',
         ink:       '#111111',
         'ink-2':   '#3A3A3A',
         'ink-3':   '#666666',

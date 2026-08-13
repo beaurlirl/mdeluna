@@ -105,10 +105,13 @@ function Navigation() {
   }, [])
 
   const path = location.pathname
-  const isArchitecture = path.startsWith('/architecture')
+  // The Architecture page's "Expediting" tab shows filing/expediting work in-place —
+  // while it's selected the header should read as Filing, not Architecture.
+  const onExpeditingTab = path === '/architecture' && new URLSearchParams(location.search).get('category') === 'expediting'
+  const isArchitecture = path.startsWith('/architecture') && !onExpeditingTab
   const isCode = path.startsWith('/code')
   const isZoning = path.startsWith('/zoning')
-  const isFiling = path.startsWith('/filing')
+  const isFiling = path.startsWith('/filing') || onExpeditingTab
   const isServiceSection = isArchitecture || isCode || isZoning || isFiling
 
   // "Architect" is red on home and neutral pages; service word takes red when in a section
@@ -169,14 +172,14 @@ function Navigation() {
   return (
     <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50 bg-paper border-b border-paper-3">
 
-      <div className="px-6 lg:px-12 pt-3 pb-5">
+      <div className="px-6 lg:px-12 pt-2 pb-3">
         {/* Row 1 — Wordmark */}
         <Link to="/" className="inline-block leading-none">
-          <span className="font-bold text-[clamp(2rem,5.3vw,5.3rem)] leading-[1.05] text-ink">
+          <span className="font-bold text-[clamp(1.25rem,3.3vw,3.3rem)] leading-[1.05] text-ink">
             Michael De Luna, AIA,{' '}
           </span>
           <span
-            className={`font-bold text-[clamp(2rem,5.3vw,5.3rem)] leading-[1.05] transition-colors duration-150 ${
+            className={`font-bold text-[clamp(1.25rem,3.3vw,3.3rem)] leading-[1.05] transition-colors duration-150 ${
               architectRed ? 'text-red' : 'text-ink'
             }`}
           >
@@ -185,7 +188,7 @@ function Navigation() {
         </Link>
 
         {/* Row 2 — Service words */}
-        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 sm:gap-x-4 lg:gap-x-8 mt-0.5 text-[clamp(1.15rem,3.6vw,3.6rem)] pr-1">
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 sm:gap-x-3 lg:gap-x-6 mt-0.5 text-[clamp(0.75rem,2.25vw,2.25rem)] pr-1">
           {serviceWord('architecture', '/architecture')}
           {bullet}
           {serviceWord('code', '/code')}
@@ -200,7 +203,7 @@ function Navigation() {
       <div className="border-t border-ink-4 px-6 lg:px-12">
 
         {/* Desktop */}
-        <div className="hidden lg:flex items-center justify-end h-9 gap-6">
+        <div className="hidden lg:flex items-center justify-end h-8 gap-6">
           <Link to="/" className="text-sm text-ink-3 hover:text-ink transition-colors duration-150">
             Home
           </Link>
@@ -216,7 +219,7 @@ function Navigation() {
         </div>
 
         {/* Mobile toggle */}
-        <div className="lg:hidden flex items-center justify-end h-9">
+        <div className="lg:hidden flex items-center justify-end h-8">
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="p-1 text-ink"

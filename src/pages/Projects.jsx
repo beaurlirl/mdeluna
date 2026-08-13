@@ -18,7 +18,7 @@ function Projects() {
 
       {/* Page header */}
       <div className="bg-paper border-b border-paper-3">
-        <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-14 lg:py-20">
+        <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-8 lg:py-10">
           <motion.div
             initial={{ opacity: 0, y: 2 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2, ease }}

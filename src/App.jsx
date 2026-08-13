@@ -10,6 +10,7 @@ const Contact = lazy(() => import('./pages/Contact'))
 const Architecture = lazy(() => import('./pages/architecture/Index'))
 const Filing = lazy(() => import('./pages/filing/Index'))
 const Code = lazy(() => import('./pages/code/Index'))
+const Zoning = lazy(() => import('./pages/zoning/Index'))
 
 function App() {
   return (
@@ -24,8 +25,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/architecture" element={<Architecture />} />
             <Route path="/filing" element={<Filing />} />
-            {/* Zoning content isn't built yet — show the Filing page for now */}
-            <Route path="/zoning" element={<Filing />} />
+            <Route path="/zoning" element={<Zoning />} />
             <Route path="/code" element={<Code />} />
             <Route path="/services" element={<Navigate to="/filing" replace />} />
             <Route path="/projects" element={<Projects />} />
