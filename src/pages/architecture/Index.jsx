@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { projects, categories } from '../../data/projects'
 import { consultingProjects } from '../../data/siteContent'
+import SEO from '../../components/SEO'
 
 const ease = [0.2, 0.6, 0.2, 1]
 const EXPEDITING_ID = 'expediting'
@@ -87,6 +88,11 @@ function ArchitectureIndex() {
 
   return (
     <div>
+      <SEO
+        title="Architecture"
+        description="Residential, commercial, hospitality, and institutional architecture in New York City. Full-service design from concept through construction by Michael De Luna, AIA."
+        path="/architecture"
+      />
       {/* Split layout — locked left, scrollable right */}
       <motion.div
         initial={{ opacity: 0 }}

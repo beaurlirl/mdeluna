@@ -2,6 +2,7 @@ import { useParams, Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { getProjectById, projects, categories } from '../data/projects'
 import { useEffect, useState, useMemo } from 'react'
+import SEO from '../components/SEO'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
@@ -59,6 +60,10 @@ function ProjectDetail() {
 
   if (!project) return null
 
+  const projectOgImage = project.coverImage.startsWith('/')
+    ? `https://mdeluna.com${project.coverImage}`
+    : project.coverImage
+
   const goPrev = () => navigate(`/projects/${prevProject.id}`, { state: { dir: -1 } })
   const goNext = () => navigate(`/projects/${nextProject.id}`, { state: { dir: 1 } })
 
@@ -79,6 +84,12 @@ function ProjectDetail() {
       dragElastic={0.15}
       onDragEnd={handleDragEnd}
     >
+      <SEO
+        title={project.title}
+        description={`${project.title} — ${project.description} ${project.location}${project.year ? `, ${project.year}` : ''}. Architecture by Michael De Luna, AIA.`}
+        path={`/projects/${project.id}`}
+        ogImage={projectOgImage}
+      />
 
       {/* Header */}
       <div className="bg-paper border-b border-paper-3">

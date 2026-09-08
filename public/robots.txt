@@ -1,0 +1,5 @@
+# robots.txt for mdeluna.com
+User-agent: *
+Allow: /
+
+Sitemap: https://mdeluna.com/sitemap.xml

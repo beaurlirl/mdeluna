@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { projects, categories } from '../data/projects'
 import ProjectCard from '../components/ProjectCard'
+import SEO from '../components/SEO'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
@@ -15,6 +16,11 @@ function Projects() {
 
   return (
     <div>
+      <SEO
+        title="Projects"
+        description="Architecture portfolio featuring residential, commercial, and hospitality projects across New York City. Browse work by Michael De Luna, AIA."
+        path="/projects"
+      />
 
       {/* Page header */}
       <div className="bg-paper border-b border-paper-3">
