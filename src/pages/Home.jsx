@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { projects } from '../data/projects'
+import SEO from '../components/SEO'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
@@ -72,6 +73,7 @@ function HeroSlideshow() {
 function Home() {
   return (
     <section className="relative bg-paper overflow-hidden h-viewport-header">
+      <SEO path="/" />
 
       {/* Background image */}
       <HeroSlideshow />

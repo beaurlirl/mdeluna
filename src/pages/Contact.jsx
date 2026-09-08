@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { contact } from '../data/siteContent'
+import SEO from '../components/SEO'
 
 const CONTACT_ENDPOINT = '/api/contact'
 
@@ -14,6 +15,11 @@ function Contact() {
 
   return (
     <div>
+      <SEO
+        title="Contact"
+        description="Start your architecture project with Michael De Luna, AIA. Located at 220 Congress Street, Brooklyn NY. Call 917.405.7186 or email michael@mdeluna.com."
+        path="/contact"
+      />
 
       {/* Page header */}
       <div className="bg-paper border-b border-paper-3">

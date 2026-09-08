@@ -1,12 +1,18 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { about } from '../data/siteContent'
+import SEO from '../components/SEO'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
 function About() {
   return (
     <div>
+      <SEO
+        title="About"
+        description="Michael De Luna, AIA has practiced architecture in New York City since 1994. Licensed architect, AIA member, NCARB certified. 30+ years of residential, commercial, and hospitality design."
+        path="/about"
+      />
 
       {/* Page header */}
       <div className="bg-paper border-b border-paper-3">

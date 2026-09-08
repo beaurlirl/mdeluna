@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { services, consultingProjects } from '../../data/siteContent'
+import SEO from '../../components/SEO'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
@@ -44,6 +45,11 @@ function FilingIndex() {
 
   return (
     <div className="flex flex-col lg:flex-row lg:h-[calc(100vh-var(--header-height,9rem))]">
+      <SEO
+        title="Filing & Expediting"
+        description="NYC DOB filing and expediting services. Building permits, approvals, certificates of occupancy, landmarks applications, and construction equipment permits since 1994."
+        path="/filing"
+      />
 
       {/* ── Left panel — locked on desktop, flows on mobile ── */}
       <div className="w-full lg:w-[38%] flex flex-col border-r border-paper-3 lg:overflow-hidden">

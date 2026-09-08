@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
 import { codeServices } from '../../data/siteContent'
+import SEO from '../../components/SEO'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
@@ -24,6 +25,11 @@ function CodeIndex() {
 
   return (
     <div>
+      <SEO
+        title="Code Compliance"
+        description="NYC Building Code compliance and approval services. Special inspections, apartment approvals, equipment permits, restaurant approvals, and certificates of occupancy."
+        path="/code"
+      />
 
       {/* Page header */}
       <div className="border-b border-paper-3">

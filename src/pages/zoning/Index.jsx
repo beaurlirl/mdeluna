@@ -1,12 +1,18 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { zoningServices } from '../../data/siteContent'
+import SEO from '../../components/SEO'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
 function ZoningIndex() {
   return (
     <div>
+      <SEO
+        title="Zoning"
+        description="NYC zoning analysis and land use strategy. FAR calculations, variances, special permits, landmark district compliance, and zoning lot mergers by Michael De Luna, AIA."
+        path="/zoning"
+      />
 
       {/* Page header */}
       <div className="border-b border-paper-3">
