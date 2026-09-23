@@ -27,7 +27,7 @@ export const services = [
     id: 'approvals',
     letter: 'A',
     title: 'Approvals and Building Department',
-    color: '#6B1629',
+    color: '#F04135',
     details: [
       'New Building Applications',
       'Subsequent applications for Structural',
@@ -47,7 +47,7 @@ export const services = [
     id: 'work-permits',
     letter: 'W',
     title: 'Work Permits',
-    color: '#6B1629',
+    color: '#F04135',
     details: [
       'Obtaining Permit for Contractor',
       'Permit Renewals',
@@ -60,7 +60,7 @@ export const services = [
     id: 'landmarks',
     letter: 'L',
     title: 'NYC Landmarks Preservation Commission Services',
-    color: '#6B1629',
+    color: '#F04135',
     details: [
       'Certificates of No Effect',
       'Certificates of Minor Work',
@@ -72,7 +72,7 @@ export const services = [
     id: 'occupancy-fire',
     letter: 'C',
     title: 'Certificate of Occupancy and Fire Department Approvals',
-    color: '#6B1629',
+    color: '#F04135',
     details: [
       'TCO Renewals',
       'Divisional Sign Offs: Updates',
@@ -89,7 +89,7 @@ export const services = [
     id: 'otcr-dot',
     letter: 'O',
     title: 'OTCR and DOT Permits',
-    color: '#6B1629',
+    color: '#F04135',
     details: [
       'Indoor Automated Parking Garages',
       'Construction Equipment Permits and Renewals',

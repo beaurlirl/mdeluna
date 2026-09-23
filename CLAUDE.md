@@ -105,10 +105,10 @@ ink:          #111111   ← primary text, dark surfaces
 ink-2:        #3A3A3A   ← body text
 ink-3:        #666666   ← secondary text, nav links
 ink-4:        #9E9E9E   ← labels, captions, metadata
-red:          #C8102E   ← site accent (active nav, active service word, bullets, section labels)
-red-deep:     #8A0E20   ← button hover
-red-bright:   #E51938
-red-wash:     #F2D8DC
+red:          #F04135   ← site accent (active nav, active service word, bullets, section labels)
+red-deep:     #C42A1F   ← button hover
+red-bright:   #FF5E4F
+red-wash:     #FDE2DF
 approved:     #2F6B3A
 pending:      #B07A1A
 accent:       #2B3A2E   ← deep green (bullet dots on homepage headline)
@@ -116,7 +116,7 @@ accent-light: #E8EDE9
 stone:        #C8C0B0
 ```
 
-Use these Tailwind tokens (e.g. `text-red`, `bg-ink`, `text-ink-3`) — do not hardcode hex values except `#C1272D` on homepage CTAs (user-specified, keep as-is).
+Use these Tailwind tokens (e.g. `text-red`, `bg-ink`, `text-ink-3`) — do not hardcode hex values except `#F04135` on homepage CTAs (user-specified, keep as-is).
 
 ---
 
@@ -277,7 +277,7 @@ Expediting.
 
 Hero subhead: keep existing copy from `siteContent.js`.
 
-CTAs: Keep `#C1272D` filled + outlined — user-specified, do not change.
+CTAs: Keep `#F04135` filled + outlined — user-specified, do not change.
 
 Borough strip bottom left: `MANHATTAN · BROOKLYN · QUEENS · BRONX · STATEN IS.` — `text-ink-3`, small, wide tracking.
 
@@ -444,7 +444,7 @@ For missing images: use a gray placeholder div with the project name, do NOT sho
 
 1. **Global header is sacred.** Same structure on every page. Only the active red service word changes.
 2. **The two-row wordmark is the brand.** Row 1: `Michael De Luna, AIA, Architect` + address. Row 2: `Architecture Code Zoning Filing`. No separate logomark.
-3. **Red (`text-red`, `#C8102E`) = active state only** in the service strip and breadcrumbs. CTAs use `#C1272D` (user-specified, keep as-is).
+3. **Red (`text-red`, `#F04135`) = active state only** in the service strip and breadcrumbs. CTAs use `#F04135` (user-specified, keep as-is).
 4. **Section title bars** — full-width `bg-[#4A4A4A] text-paper font-bold` on all portfolio and code sub-pages.
 5. **Project lists left, photography right** — all portfolio pages.
 6. **No scroll on home** — `lg:overflow-hidden` on the hero container.
