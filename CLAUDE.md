@@ -473,3 +473,14 @@ For missing images: use a gray placeholder div with the project name, do NOT sho
 ---
 
 *Prepared by DBA Studio for Michael De Luna, AIA Architect — June 2026*
+
+---
+
+## Photos: graded files (added 2026-10-20)
+
+Every photo in `public/` is a **graded** version: one "architectural render" look (per-photo white balance, exposure and saturation, then a shared tone curve) baked into the file so the site's colour stays steady. There is no runtime CSS filter, so do not add one (it would grade twice).
+
+- **Originals** (untouched) live outside the repo: `~/Desktop/mdelunanewsite-photos-original/public`, laid out like `public/`. Keep that folder; it is the only copy besides git history.
+- **New or replaced photo:** put the original there at the same relative path, then run `python3 scripts/grade-stills.py ~/Desktop/mdelunanewsite-photos-original/public public` (needs Pillow and numpy). Never run it on `public/` itself; it refuses.
+- **Change the look:** edit the constants at the top of `scripts/grade-stills.py` and rerun the command above from the originals. Check the result on the yellow stairwell (`jewishacademy2.jpeg`) and a daylight exterior before keeping it.
+- The home page's `og:image` (`petrossian1.jpg`) is graded too, so link previews match the site.
