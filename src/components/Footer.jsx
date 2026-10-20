@@ -26,8 +26,11 @@ function Footer() {
             <h4 className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-4 mb-5">Navigation</h4>
             <nav className="space-y-2.5">
               {[
+                { label: 'DOB Filing & Expediting', to: '/filing' },
+                { label: 'Zoning Analysis', to: '/zoning' },
+                { label: 'Code Compliance', to: '/code' },
+                { label: 'Architecture', to: '/architecture' },
                 { label: 'Projects', to: '/projects' },
-                { label: 'Services', to: '/services' },
                 { label: 'About',    to: '/about' },
                 { label: 'Contact',  to: '/contact' },
               ].map((l) => (

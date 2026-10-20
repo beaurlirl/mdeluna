@@ -28,6 +28,7 @@ const heroImages = GALLERY_PROJECT_IDS
 
 const HERO_HOLD = 5600
 const HERO_FADE = 2200
+const HERO_INTRO = 1600 // first image eases in from white instead of popping
 
 function HeroSlideshow() {
   const [index, setIndex] = useState(0)
@@ -59,10 +60,10 @@ function HeroSlideshow() {
           loading="eager"
           fetchpriority={index === 0 ? 'high' : undefined}
           className="absolute inset-0 w-full h-full object-cover scale-105 blur-[2px]"
-          initial={isFirstRender.current ? false : { opacity: 0 }}
+          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: HERO_FADE / 1000, ease }}
+          transition={{ duration: isFirstRender.current ? HERO_INTRO / 1000 : HERO_FADE / 1000, ease }}
         />
       </AnimatePresence>
       <div className="absolute inset-0 bg-paper/30" />
@@ -82,21 +83,41 @@ function Home() {
       <div className="relative h-full max-w-screen-xl mx-auto px-6 lg:px-12 flex flex-col items-center justify-center text-center gap-6 lg:gap-8 py-16">
 
         <motion.div
+          className="max-w-3xl bg-paper/85 px-6 py-8 lg:px-10 lg:py-10"
+          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.5, ease }}
+        >
+          <h1 className="font-sans font-bold text-ink text-3xl md:text-4xl lg:text-5xl leading-tight">
+            NYC Architect and DOB Expediter
+          </h1>
+          <p className="mt-4 text-base lg:text-lg text-ink-2 leading-relaxed">
+            Stuck on a permit, violation or filing? Michael De Luna, AIA has designed, filed and
+            expedited projects with the NYC Department of Buildings since 1994: building permits,
+            zoning analysis, code compliance, LPC approvals and certificates of occupancy in all five boroughs.
+          </p>
+          <p className="mt-4 font-sans text-sm text-ink-3">
+            <a href="tel:9174057186" className="text-ink hover:text-red transition-colors duration-150">917.405.7186</a>
+            <span className="mx-2 text-ink-4">·</span>
+            <a href="mailto:michael@mdeluna.com" className="text-ink hover:text-red transition-colors duration-150">michael@mdeluna.com</a>
+          </p>
+        </motion.div>
+
+        <motion.div
           className="flex flex-wrap justify-center gap-4"
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.15, ease }}
+          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.8, ease }}
         >
           <Link
-            to="/architecture"
+            to="/filing"
             className="bg-red text-paper text-base lg:text-lg font-sans font-medium px-7 py-4 min-h-11 inline-flex items-center hover:bg-ink transition-colors duration-150"
           >
-            View Services →
+            Filing &amp; Expediting →
           </Link>
           <Link
             to="/contact"
             className="border border-red text-red text-base lg:text-lg font-sans font-medium px-7 py-4 min-h-11 inline-flex items-center hover:bg-red hover:text-paper transition-colors duration-150"
           >
-            Start a Project →
+            Get a Free Project Review →
           </Link>
         </motion.div>
 

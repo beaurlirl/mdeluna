@@ -16,8 +16,8 @@ function Contact() {
   return (
     <div>
       <SEO
-        title="Contact"
-        description="Start your architecture project with Michael De Luna, AIA. Located at 220 Congress Street, Brooklyn NY. Call 917.405.7186 or email michael@mdeluna.com."
+        title="Contact a NYC Architect & Expediter"
+        description="Need a permit, filing or architect in NYC? Call Michael De Luna, AIA at 917.405.7186 or email michael@mdeluna.com. 220 Congress Street, Suite 4F, Brooklyn."
         path="/contact"
       />
 
@@ -33,7 +33,7 @@ function Contact() {
               Start Your Project
             </h1>
             <p className="mt-5 font-sans italic text-lg lg:text-xl text-ink-2 max-w-prose leading-relaxed">
-              Ready to discuss your project? Get in touch and we'll outline the path forward.
+              Tell us the address and what's stuck. You'll hear back from Michael directly, usually within one business day.
             </p>
           </motion.div>
         </div>
@@ -158,6 +158,9 @@ function Contact() {
                         <option value="commercial">Commercial</option>
                         <option value="hospitality">Hospitality</option>
                         <option value="filing">DOB Filing / Expediting</option>
+                        <option value="violation">Violation / Stop Work Order</option>
+                        <option value="co">Certificate of Occupancy</option>
+                        <option value="zoning">Zoning / Landmarks</option>
                         <option value="other">Other</option>
                       </select>
                     </div>

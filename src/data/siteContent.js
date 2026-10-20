@@ -313,7 +313,7 @@ export const stats = [
 ]
 
 export const about = {
-  headline: 'Designing New York Since 1993',
+  headline: 'Designing New York Since 1994',
   intro: 'Michael De Luna, AIA, brings over three decades of experience to every project. As a licensed architect in New York State, Michael has developed expertise across residential, commercial, and hospitality sectors.',
   paragraphs: [
     'Our practice integrates architectural design with deep knowledge of NYC building regulations. This unique combination allows us to create inspired spaces while navigating the complex approval process efficiently.',

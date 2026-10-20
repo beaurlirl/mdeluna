@@ -4,8 +4,8 @@ const SITE_URL = 'https://mdeluna.com'
 const DEFAULT_OG_IMAGE = `${SITE_URL}/petrossian1.jpg`
 
 const defaults = {
-  title: 'Michael De Luna, AIA | Architect | New York City',
-  description: 'Licensed architect in New York City since 1994. Expert in DOB filings, zoning analysis, code compliance, and architectural design across all five boroughs.',
+  title: 'NYC Architect & DOB Expediter | Michael De Luna, AIA',
+  description: 'Licensed NYC architect and DOB expediter since 1994. Building permits, zoning analysis, code compliance, LPC approvals and certificates of occupancy in all five boroughs. Call 917.405.7186.',
   type: 'website',
 }
 
