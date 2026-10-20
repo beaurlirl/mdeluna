@@ -82,30 +82,12 @@ function Home() {
       {/* Content */}
       <div className="relative h-full max-w-screen-xl mx-auto px-6 lg:px-12 flex flex-col items-center justify-center text-center gap-6 lg:gap-8 py-16">
 
-        <motion.div
-          className="max-w-3xl bg-paper/85 px-6 py-8 lg:px-10 lg:py-10"
-          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.5, ease }}
-        >
-          <h1 className="font-sans font-bold text-ink text-3xl md:text-4xl lg:text-5xl leading-tight">
-            NYC Architect and DOB Expediter
-          </h1>
-          <p className="mt-4 text-base lg:text-lg text-ink-2 leading-relaxed">
-            Stuck on a permit, violation or filing? Michael De Luna, AIA has designed, filed and
-            expedited projects with the NYC Department of Buildings since 1994: building permits,
-            zoning analysis, code compliance, LPC approvals and certificates of occupancy in all five boroughs.
-          </p>
-          <p className="mt-4 font-sans text-sm text-ink-3">
-            <a href="tel:9174057186" className="text-ink hover:text-red transition-colors duration-150">917.405.7186</a>
-            <span className="mx-2 text-ink-4">·</span>
-            <a href="mailto:michael@mdeluna.com" className="text-ink hover:text-red transition-colors duration-150">michael@mdeluna.com</a>
-          </p>
-        </motion.div>
+        <h1 className="sr-only">NYC Architect and DOB Expediter</h1>
 
         <motion.div
           className="flex flex-wrap justify-center gap-4"
           initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.8, ease }}
+          transition={{ duration: 0.9, delay: 0.5, ease }}
         >
           <Link
             to="/filing"
