@@ -60,6 +60,13 @@ const core = [
     h1: 'Start Your Project',
     body: 'Call 917.405.7186, cell 929.761.6640, or email michael@mdeluna.com. Office: 220 Congress Street, Suite 4F, Brooklyn, NY 11201.',
   },
+  {
+    path: '/resources',
+    title: 'NYC DOB Forms, DOB NOW & Code Resources',
+    description: 'Quick links to NYC Department of Buildings forms, DOB NOW, BIS, code bulletins, violation guidance, zoning maps and landmarks applications.',
+    h1: 'Resources and References',
+    body: 'Official NYC links for DOB forms and applications, DOB NOW and BIS, construction codes and bulletins, violations and stop work orders, zoning (ZoLa), the Landmarks Preservation Commission and the Board of Standards and Appeals.',
+  },
 ]
 
 const projectRoutes = projects.map((p) => ({

@@ -27,6 +27,16 @@ const dropdownItems = {
     { label: 'LPC Services', to: '/filing#landmarks' },
     { label: 'Certificates of Occupancy (Filing)', to: '/filing#occupancy-fire' },
     { label: 'OTCR & DOT Permits', to: '/filing#otcr-dot' },
+  ],
+  resources: [
+    { label: 'All Resources & References', to: '/resources' },
+    { label: 'DOB Forms & Applications', to: '/resources#dob-forms' },
+    { label: 'DOB NOW & Online Systems', to: '/resources#online-systems' },
+    { label: 'Codes, Bulletins & Notices', to: '/resources#codes-bulletins' },
+    { label: 'Violations & Enforcement', to: '/resources#violations' },
+    { label: 'Zoning, Landmarks & Other Agencies', to: '/resources#agencies' },
+  ],
+  code: [
     { label: 'All Code/Approval Information', to: '/code' },
     { label: 'Special Inspections', to: '/code#special-inspections' },
     { label: 'Apartment Approvals', to: '/code#apartment-approvals' },
@@ -43,7 +53,7 @@ function DropdownMenu({ items, align = 'left' }) {
       initial={{ opacity: 0, y: 3 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 3 }}
-      transition={{ duration: 0.12, ease }}
+      transition={{ duration: 0.22, ease }}
     >
       {items.map((item) => (
         <Link
@@ -110,37 +120,14 @@ function Navigation() {
   const onExpeditingTab = path === '/architecture' && new URLSearchParams(location.search).get('category') === 'expediting'
   const isArchitecture = path.startsWith('/architecture') && !onExpeditingTab
   const isCode = path.startsWith('/code')
-  const isZoning = path.startsWith('/zoning')
   const isFiling = path.startsWith('/filing') || onExpeditingTab
-  const isServiceSection = isArchitecture || isCode || isZoning || isFiling
-
-  // "Architect" is red on home and neutral pages; service word takes red when in a section
-  const architectRed = !isServiceSection
-
-  const serviceWord = (section, to) => {
-    const active =
-      (section === 'architecture' && isArchitecture) ||
-      (section === 'code' && isCode) ||
-      (section === 'zoning' && isZoning) ||
-      (section === 'filing' && isFiling)
-    return (
-      <Link
-        to={to}
-        className={`font-bold leading-none transition-colors duration-150 ${
-          section === 'architecture' ? 'italic' : ''
-        } ${active ? 'text-red' : 'text-ink hover:text-red'}`}
-      >
-        {section.charAt(0).toUpperCase() + section.slice(1)}
-      </Link>
-    )
-  }
-
-  const bullet = <span className="text-accent leading-none select-none" aria-hidden="true">&bull;</span>
 
   // Row 3 active state per section
   const row3Active = (key) => {
     if (key === 'portfolio') return isArchitecture
-    if (key === 'expediting') return isFiling || isCode
+    if (key === 'expediting') return isFiling
+    if (key === 'code') return isCode
+    if (key === 'resources') return path === '/resources'
     if (key === 'about') return path === '/about' || path === '/contact'
     return false
   }
@@ -152,10 +139,10 @@ function Navigation() {
     <div className="relative" key={key}>
       <button
         onClick={() => toggleDropdown(key)}
-        className={`flex items-center gap-0.5 text-sm transition-colors duration-150 ${
+        className={`flex items-center gap-1.5 text-base font-medium transition-colors duration-150 ${
           row3Active(key) || activeDropdown === key
-            ? 'text-ink'
-            : 'text-ink-3 hover:text-ink'
+            ? 'text-red'
+            : 'text-ink hover:text-red'
         }`}
       >
         {label}
@@ -170,56 +157,47 @@ function Navigation() {
   )
 
   return (
-    <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50 bg-paper border-b border-paper-3">
+    <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50 bg-paper">
 
-      <div className="px-6 lg:px-12 pt-2 pb-3">
-        {/* Row 1 — Wordmark */}
-        <Link to="/" className="inline-block leading-none">
-          <span className="font-bold text-[clamp(1.25rem,3.3vw,3.3rem)] leading-[1.05] text-ink">
-            Michael De Luna, AIA,{' '}
+      {/* Top bar — wordmark */}
+      <div className="bg-red text-paper px-6 lg:px-12 py-3 lg:py-5">
+        <Link to="/" className="flex flex-wrap items-center gap-x-5 gap-y-1 leading-none">
+          <span className="font-bold text-[clamp(1.25rem,2.6vw,2.5rem)] leading-[1.05]">
+            Michael De Luna, AIA, <span className="text-ink">Architect</span>
           </span>
-          <span
-            className={`font-bold text-[clamp(1.25rem,3.3vw,3.3rem)] leading-[1.05] transition-colors duration-150 ${
-              architectRed ? 'text-red' : 'text-ink'
-            }`}
-          >
-            Architect
+          <span className="hidden sm:block self-stretch w-px bg-paper/80" aria-hidden="true" />
+          <span className="hidden sm:block font-medium text-[clamp(0.8rem,1.3vw,1.25rem)]">
+            Architecture <span className="text-ink">+</span> Zoning <span className="text-ink">+</span> Expediting
           </span>
         </Link>
-
-        {/* Row 2 — Service words */}
-        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 sm:gap-x-3 lg:gap-x-6 mt-0.5 text-[clamp(0.75rem,2.25vw,2.25rem)] pr-1">
-          {serviceWord('architecture', '/architecture')}
-          {bullet}
-          {serviceWord('code', '/code')}
-          {bullet}
-          {serviceWord('zoning', '/zoning')}
-          {bullet}
-          {serviceWord('filing', '/filing')}
-        </div>
       </div>
 
-      {/* Row 3 — Secondary nav */}
-      <div className="border-t border-ink-4 px-6 lg:px-12">
+      {/* Nav row */}
+      <div className="px-6 lg:px-12 border-b border-paper-3">
 
         {/* Desktop */}
-        <div className="hidden lg:flex items-center justify-end h-8 gap-6">
-          <Link to="/" className="text-sm text-ink-3 hover:text-ink transition-colors duration-150">
+        <div className="hidden lg:flex items-center justify-between h-14 max-w-screen-xl mx-auto">
+          <Link
+            to="/"
+            className={`text-base font-medium transition-colors duration-150 ${path === '/' ? 'text-red' : 'text-ink hover:text-red'}`}
+          >
             Home
           </Link>
-          {row3Btn('about', 'About Us', 'right')}
-          {row3Btn('portfolio', 'Portfolio', 'right')}
-          {row3Btn('expediting', 'Municipal Filing', 'right')}
+          {row3Btn('about', 'About Us')}
+          {row3Btn('portfolio', 'Our Work')}
+          {row3Btn('expediting', 'Expediting')}
+          {row3Btn('code', 'Code/Approval Information')}
+          {row3Btn('resources', 'Resources')}
           <Link
             to="/contact"
-            className="bg-ink text-paper text-sm px-4 py-1 hover:bg-ink-2 transition-colors duration-150"
+            className="bg-ink text-paper text-base px-5 py-1.5 hover:bg-red transition-colors duration-150"
           >
             Contact
           </Link>
         </div>
 
         {/* Mobile toggle */}
-        <div className="lg:hidden flex items-center justify-end h-8">
+        <div className="lg:hidden flex items-center justify-end h-10">
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="p-1 text-ink"
@@ -239,7 +217,7 @@ function Navigation() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="lg:hidden bg-paper border-t border-paper-3 overflow-y-auto max-h-[70vh]"
+            data-lenis-prevent className="lg:hidden bg-paper border-t border-paper-3 overflow-y-auto max-h-[70vh]"
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
@@ -252,8 +230,10 @@ function Navigation() {
 
               {[
                 { key: 'about',      label: 'About Us' },
-                { key: 'portfolio',  label: 'Portfolio' },
-                { key: 'expediting', label: 'Municipal Filing' },
+                { key: 'portfolio',  label: 'Our Work' },
+                { key: 'expediting', label: 'Expediting' },
+                { key: 'code',       label: 'Code/Approval Information' },
+                { key: 'resources',  label: 'Resources' },
               ].map(({ key, label }) => (
                 <div key={key} className="border-b border-paper-3">
                   <button
