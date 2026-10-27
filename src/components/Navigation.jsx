@@ -162,7 +162,7 @@ function Navigation() {
       {/* Top bar — wordmark */}
       <div className="bg-red text-paper px-6 lg:px-12 py-3 lg:py-5">
         <Link to="/" className="flex flex-wrap items-center gap-x-5 gap-y-1 leading-none">
-          <span className="font-bold text-[clamp(1.25rem,2.6vw,2.5rem)] leading-[1.05]">
+          <span data-wordmark className="font-bold whitespace-nowrap text-[clamp(1.25rem,2.6vw,2.5rem)] leading-[1.05]">
             Michael De Luna, AIA, <span className="text-ink">Architect</span>
           </span>
           <span className="hidden sm:block self-stretch w-px bg-paper/80" aria-hidden="true" />

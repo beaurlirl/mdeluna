@@ -155,3 +155,6 @@ html.lenis, html.lenis body { height: auto; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Header wordmark stays hidden while the intro lands its copy on top */
+html.intro-active [data-wordmark] { opacity: 0; }
