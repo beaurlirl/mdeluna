@@ -73,7 +73,7 @@ function Intro() {
           transition={{ duration: 2.0, times: [0, 0.25, 0.5, 1], ease }}
           onAnimationComplete={finish}
         >
-          Michael De Luna, AIA, <span className="text-ink">Architect</span>
+          Michael De Luna, AIA, Architect
         </motion.p>
       )}
     </div>

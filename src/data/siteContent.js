@@ -309,7 +309,7 @@ export const stats = [
   { value: '30+',    label: 'YEARS',    note: 'Licensed since 1994' },
   { value: '1,800+', label: 'PROJECTS', note: 'Across all five boroughs' },
   { value: '5',      label: 'BOROUGHS', note: 'Manhattan to Staten Island' },
-  { value: '1994',   label: 'EST.',      note: 'NYS Lic. № 024891' },
+  { value: '1994',   label: 'EST.',      note: 'Practicing since 1994' },
 ]
 
 export const about = {
@@ -321,9 +321,8 @@ export const about = {
     'From brownstone renovations to ground-up commercial buildings, our portfolio reflects a commitment to design excellence and client service.',
   ],
   credentials: [
-    'Licensed Architect, New York State — Lic. № 024891',
+    'Licensed Architect, New York State',
     'Member, American Institute of Architects (AIA)',
-    'Special Inspector Agency — SIA № 008232',
   ],
 }
 

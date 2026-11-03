@@ -163,7 +163,7 @@ function Navigation() {
       <div className="bg-red text-paper px-6 lg:px-12 py-3 lg:py-5">
         <Link to="/" className="flex flex-wrap items-center gap-x-5 gap-y-1 leading-none">
           <span data-wordmark className="font-bold whitespace-nowrap text-[clamp(1.25rem,2.6vw,2.5rem)] leading-[1.05]">
-            Michael De Luna, AIA, <span className="text-ink">Architect</span>
+            Michael De Luna, AIA, Architect
           </span>
           <span className="hidden sm:block self-stretch w-px bg-paper/80" aria-hidden="true" />
           <span className="hidden sm:block font-medium text-[clamp(0.8rem,1.3vw,1.25rem)]">

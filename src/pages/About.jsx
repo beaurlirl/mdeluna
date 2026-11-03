@@ -67,7 +67,7 @@ function About() {
             <div className="mt-10 pt-8 border-t border-paper-3">
               <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 mb-6">
                 Michael De Luna, AIA, Architect<br />
-                NYS Lic. № 024891 · SIA № 008232 · Est. 1994
+                Licensed in New York State · Est. 1994
               </p>
               <Link
                 to="/contact"

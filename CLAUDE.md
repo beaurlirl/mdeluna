@@ -369,12 +369,12 @@ about: {
   paragraphs: [
     "Michael De Luna, AIA founded his practice in 1994 after eight years at Beyer Blinder Belle Architects, Rothzied Kasierman Thomson, and Bee Architects — firms known for rigorous work on complex residential and institutional projects in New York City.",
     "Over three decades, the practice has grown into a trusted resource for interior designers, developers, and contractors who need an experienced architect to shepherd their projects through New York City's regulatory environment.",
-    "The firm is licensed in New York State (Lic. 024891), and Michael holds membership in the American Institute of Architects (AIA) and the National Council of Architectural Registration Boards (NCARB)."
+    "The firm is licensed in New York State, and Michael holds membership in the American Institute of Architects (AIA) and the National Council of Architectural Registration Boards (NCARB)."
   ],
   credentials: [
     "AIA Member",
     "NCARB Certified",
-    "NYS Licensed Architect — Lic. 024891",
+    "NYS Licensed Architect",
     "City College of New York, B.Arch",
     "Practice established 1994"
   ]

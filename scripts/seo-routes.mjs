@@ -9,7 +9,7 @@ const core = [
     title: 'NYC Architect & DOB Expediter | Michael De Luna, AIA',
     description: 'Licensed NYC architect and DOB expediter since 1994. Building permits, zoning analysis, code compliance, LPC approvals and certificates of occupancy in all five boroughs. Call 917.405.7186.',
     h1: 'NYC Architect and DOB Expediter',
-    body: 'Michael De Luna, AIA is a licensed New York architect (Lic. 024891) who has designed, filed and expedited projects with the NYC Department of Buildings since 1994. Services: architecture, zoning analysis, code compliance, DOB filings, Landmarks Preservation Commission approvals, certificates of occupancy and equipment use permits. Brooklyn office at 220 Congress Street, Suite 4F. Call 917.405.7186 or email michael@mdeluna.com.',
+    body: 'Michael De Luna, AIA is a licensed New York architect who has designed, filed and expedited projects with the NYC Department of Buildings since 1994. Services: architecture, zoning analysis, code compliance, DOB filings, Landmarks Preservation Commission approvals, certificates of occupancy and equipment use permits. Brooklyn office at 220 Congress Street, Suite 4F. Call 917.405.7186 or email michael@mdeluna.com.',
   },
   {
     path: '/filing',
@@ -49,9 +49,9 @@ const core = [
   {
     path: '/about',
     title: 'About Michael De Luna, AIA | NYC Licensed Architect',
-    description: 'Michael De Luna, AIA: licensed New York State architect (Lic. 024891), AIA member and NYC Special Inspector Agency (SIA 008232). Practicing in New York City since 1994.',
+    description: 'Michael De Luna, AIA: licensed New York State architect and AIA member. Practicing in New York City since 1994.',
     h1: 'About Michael De Luna, AIA',
-    body: 'Licensed architect in New York State since 1994, AIA member, Special Inspector Agency 008232, based in Brooklyn.',
+    body: 'Licensed architect in New York State since 1994, AIA member, based in Brooklyn.',
   },
   {
     path: '/contact',

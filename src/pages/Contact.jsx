@@ -82,8 +82,7 @@ function Contact() {
 
                 <div className="pt-6 border-t border-paper-3">
                   <p className="font-sans text-[0.5rem] tracking-[0.14em] uppercase text-ink-4 leading-relaxed">
-                    NYS Lic. № 024891<br />
-                    SIA № 008232<br />
+                    Licensed Architect, New York State<br />
                     AIA<br />
                     Est. 1994
                   </p>
