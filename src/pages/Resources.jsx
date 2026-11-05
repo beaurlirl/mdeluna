@@ -23,7 +23,7 @@ function Resources() {
   return (
     <div>
       <SEO
-        title="NYC DOB Forms & Resources"
+        title="NYC Forms & Resources"
         description="Quick links to NYC Department of Buildings forms, DOB NOW, BIS, code bulletins, violation guidance, zoning maps and landmarks applications, curated by Michael De Luna, AIA."
         path="/resources"
       />

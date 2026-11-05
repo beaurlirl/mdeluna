@@ -4,7 +4,7 @@ let played = false
 try { played = sessionStorage.getItem('mdl-intro') === '1' } catch { /* storage blocked */ }
 
 export const introAlreadyPlayed = played
-export const INTRO_DELAY = played ? 0 : 1.6
+export const INTRO_DELAY = played ? 0 : 2.1
 export const markIntroPlayed = () => {
   try { sessionStorage.setItem('mdl-intro', '1') } catch { /* storage blocked */ }
 }

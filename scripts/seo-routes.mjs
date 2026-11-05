@@ -6,14 +6,14 @@ export const SITE_URL = 'https://mdeluna.com'
 const core = [
   {
     path: '/',
-    title: 'NYC Architect & DOB Expediter | Michael De Luna, AIA',
+    title: 'NYC Architect & Expediter | Michael De Luna, AIA',
     description: 'Licensed NYC architect and DOB expediter since 1994. Building permits, zoning analysis, code compliance, LPC approvals and certificates of occupancy in all five boroughs. Call 917.405.7186.',
     h1: 'NYC Architect and DOB Expediter',
     body: 'Michael De Luna, AIA is a licensed New York architect who has designed, filed and expedited projects with the NYC Department of Buildings since 1994. Services: architecture, zoning analysis, code compliance, DOB filings, Landmarks Preservation Commission approvals, certificates of occupancy and equipment use permits. Brooklyn office at 220 Congress Street, Suite 4F. Call 917.405.7186 or email michael@mdeluna.com.',
   },
   {
     path: '/filing',
-    title: 'NYC DOB Filing & Expediting Services',
+    title: 'NYC Filing & Expediting Services',
     description: 'NYC DOB filing and expediting by a licensed architect: new building and alteration applications, work permits, LPC approvals, certificates of occupancy, TCO renewals, fire and DOT permits.',
     h1: 'NYC DOB Filing and Expediting',
     body: 'Approvals and Building Department filings, work permits, Landmarks Preservation Commission certificates, certificates of occupancy, fire department approvals, OTCR and DOT permits. Filed by a licensed NYC architect since 1994.',
@@ -62,7 +62,7 @@ const core = [
   },
   {
     path: '/resources',
-    title: 'NYC DOB Forms, DOB NOW & Code Resources',
+    title: 'NYC Forms, Online Filing & Code Resources',
     description: 'Quick links to NYC Department of Buildings forms, DOB NOW, BIS, code bulletins, violation guidance, zoning maps and landmarks applications.',
     h1: 'Resources and References',
     body: 'Official NYC links for DOB forms and applications, DOB NOW and BIS, construction codes and bulletins, violations and stop work orders, zoning (ZoLa), the Landmarks Preservation Commission and the Board of Standards and Appeals.',

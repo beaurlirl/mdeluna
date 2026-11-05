@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import Wordmark from './Wordmark'
 
 const ease = [0.2, 0.6, 0.2, 1]
 
@@ -72,6 +73,9 @@ function Navigation() {
   const [activeDropdown, setActiveDropdown] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileExpanded, setMobileExpanded] = useState(null)
+  const [wordmarkHover, setWordmarkHover] = useState(false)
+  // Touch screens have no hover, so they always show the full name
+  const [noHover] = useState(() => typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches)
   const headerRef = useRef(null)
   const location = useLocation()
 
@@ -162,8 +166,16 @@ function Navigation() {
       {/* Top bar — wordmark */}
       <div className="bg-red text-paper px-6 lg:px-12 py-3 lg:py-5">
         <Link to="/" className="flex flex-wrap items-center gap-x-5 gap-y-1 leading-none">
-          <span data-wordmark className="font-bold whitespace-nowrap text-[clamp(1.25rem,2.6vw,2.5rem)] leading-[1.05]">
-            Michael De Luna, AIA, Architect
+          <span
+            data-wordmark
+            className="font-bold whitespace-nowrap text-[clamp(1.25rem,2.6vw,2.5rem)] leading-[1.05]"
+            aria-label="Michael De Luna, AIA, Architect"
+            onMouseEnter={() => setWordmarkHover(true)}
+            onMouseLeave={() => setWordmarkHover(false)}
+            onFocus={() => setWordmarkHover(true)}
+            onBlur={() => setWordmarkHover(false)}
+          >
+            <span aria-hidden="true"><Wordmark expanded={wordmarkHover || noHover} /></span>
           </span>
           <span className="hidden sm:block self-stretch w-px bg-paper/80" aria-hidden="true" />
           <span className="hidden sm:block font-medium text-[clamp(0.8rem,1.3vw,1.25rem)]">

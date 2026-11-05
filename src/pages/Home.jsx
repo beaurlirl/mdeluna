@@ -77,13 +77,6 @@ function HeroSlideshow() {
         />
       </AnimatePresence>
       <div className="absolute inset-0 bg-ink/35" />
-      <motion.div
-        key={`progress-${index}`}
-        className="absolute bottom-0 left-0 right-0 h-0.5 bg-paper/70 origin-left z-10"
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: HERO_HOLD / 1000, ease: 'linear' }}
-      />
     </div>
   )
 }
