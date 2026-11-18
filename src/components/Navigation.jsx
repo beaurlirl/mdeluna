@@ -177,8 +177,8 @@ function Navigation() {
           >
             <span aria-hidden="true"><Wordmark expanded={wordmarkHover || noHover} /></span>
           </span>
-          <span className="hidden sm:block self-stretch w-px bg-paper/80" aria-hidden="true" />
-          <span className="hidden sm:block font-medium text-[clamp(0.8rem,1.3vw,1.25rem)]">
+          <span data-wordmark-tagline className="hidden sm:block self-stretch w-px bg-paper/80" aria-hidden="true" />
+          <span data-wordmark-tagline className="hidden sm:block font-medium text-[clamp(0.8rem,1.3vw,1.25rem)]">
             Architecture <span className="text-ink">+</span> Zoning <span className="text-ink">+</span> Expediting
           </span>
         </Link>
@@ -233,7 +233,7 @@ function Navigation() {
             initial={{ opacity: 0, y: -4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.18, ease }}
+            transition={{ duration: 0.26, ease }}
           >
             <div className="px-6 py-5 space-y-1">
               <Link to="/" className="block py-2 text-sm text-ink-3 hover:text-ink border-b border-paper-3">
@@ -266,7 +266,7 @@ function Navigation() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.15, ease }}
+                        transition={{ duration: 0.26, ease }}
                         className="overflow-hidden"
                       >
                         <div className="pl-4 pb-3 space-y-2 border-l border-paper-3 ml-1">

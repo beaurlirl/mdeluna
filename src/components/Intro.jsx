@@ -4,10 +4,10 @@ import Wordmark from './Wordmark'
 import { introAlreadyPlayed, markIntroPlayed } from '../lib/intro'
 
 const ease = [0.6, 0, 0.2, 1]
-// Beats: fade in (0-0.5s) > hold > glide into the header (0.9-2.0s) > settle > fold down to MD/AIA
+// Beats: fade in (0-0.5s) > hold > glide into the header (0.9-2.0s) > settle > fold to MD/AIA > tagline eases in
 const GLIDE = 2.0
-const COLLAPSE_AT = 2400 // ms: starts only after the full name has locked into place
-const DONE_AT = 3300
+const COLLAPSE_AT = 2150 // ms: a short beat after the full name locks into place
+const DONE_AT = 3000 // fold finished; header tagline then eases in
 
 // Red curtain; the full name fades in at centre and glides up-left into the header while
 // the curtain dissolves. Once it has settled, it folds down to "MD/AIA". First visit per session only.

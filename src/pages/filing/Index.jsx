@@ -99,7 +99,7 @@ function FilingIndex() {
                       key={proj.id}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ duration: 0.15, delay: i * 0.025, ease }}
+                      transition={{ duration: 0.25, delay: Math.min(i, 10) * 0.025, ease }}
                       onClick={() => handleProjectClick(proj)}
                       className={`w-full text-left flex items-baseline justify-between gap-3 pl-5 pr-2 py-2.5 border-b border-paper-3 last:border-b-0 transition-colors duration-150 group ${
                         selectedProject?.id === proj.id ? 'bg-paper-2' : 'hover:bg-paper-2'

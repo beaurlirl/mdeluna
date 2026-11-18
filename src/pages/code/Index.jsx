@@ -60,7 +60,7 @@ function CodeIndex() {
             initial={{ opacity: 0, y: 4 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.3, delay: 0.05, ease }}
+            transition={{ duration: 0.45, delay: 0.05, ease }}
           >
             {/* Section header */}
             <div className="flex items-baseline justify-between pb-4 border-b-[1.5px] border-ink mb-6">
@@ -90,7 +90,7 @@ function CodeIndex() {
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       viewport={{ once: true }}
-                      transition={{ duration: 0.2, delay: j * 0.03, ease }}
+                      transition={{ duration: 0.4, delay: Math.min(j, 8) * 0.03, ease }}
                       className="flex items-start gap-3 py-2.5 border-b border-paper-3 last:border-b-0"
                     >
                       <span className="text-red flex-shrink-0 font-bold mt-0.5">·</span>

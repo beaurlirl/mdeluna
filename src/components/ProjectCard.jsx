@@ -15,7 +15,7 @@ function ProjectCard({ project, index = 0 }) {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.18, delay: index * 0.04, ease }}
+      transition={{ duration: 0.5, delay: Math.min(index, 6) * 0.05, ease }}
     >
       <Link to={`/projects/${project.id}`} className="flex items-center gap-6 lg:gap-10 py-5 group">
 

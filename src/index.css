@@ -158,3 +158,8 @@ html.lenis, html.lenis body { height: auto; }
 
 /* Header wordmark stays hidden while the intro lands its copy on top */
 html.intro-active [data-wordmark] { opacity: 0; }
+
+/* Divider + tagline wait until the name has folded to MD/AIA, so the gliding
+   full name never lands on top of them; they ease in once the intro lifts. */
+[data-wordmark-tagline] { transition: opacity 0.6s cubic-bezier(0.2, 0.6, 0.2, 1); }
+html.intro-active [data-wordmark-tagline] { opacity: 0; transition: none; }

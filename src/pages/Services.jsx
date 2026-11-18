@@ -56,7 +56,7 @@ function Services() {
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-16 lg:py-24">
           <motion.div
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-            viewport={{ once: true }} transition={{ duration: 0.2, ease }}
+            viewport={{ once: true }} transition={{ duration: 0.5, ease }}
             className="mb-12"
           >
             <SectionHead number="№ 01" label="Expediting" tag="DOB · LPC · FDNY · DOT" />
@@ -71,7 +71,7 @@ function Services() {
                 className="scroll-mt-32 grid grid-cols-1 lg:grid-cols-12 border-b border-paper-3 last:border-b-0"
                 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.2, delay: i * 0.04, ease }}
+                transition={{ duration: 0.5, delay: Math.min(i, 6) * 0.05, ease }}
               >
                 {/* Number + title */}
                 <div className="lg:col-span-4 p-6 lg:p-8 border-b lg:border-b-0 lg:border-r border-paper-3">
@@ -103,7 +103,7 @@ function Services() {
         <div className="max-w-screen-xl mx-auto px-6 lg:px-12 py-16 lg:py-24">
           <motion.div
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-            viewport={{ once: true }} transition={{ duration: 0.2, ease }}
+            viewport={{ once: true }} transition={{ duration: 0.5, ease }}
             className="mb-12"
           >
             <SectionHead number="№ 02" label="Consulting" tag="Selected Projects" />
@@ -116,7 +116,7 @@ function Services() {
                 key={section.title}
                 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.2, delay: i * 0.05, ease }}
+                transition={{ duration: 0.5, delay: Math.min(i, 6) * 0.05, ease }}
               >
                 <h3 className="font-sans text-[0.5625rem] tracking-[0.16em] uppercase text-ink-3 pb-3 border-b border-paper-3 mb-4">
                   {section.title}

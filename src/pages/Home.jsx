@@ -61,14 +61,14 @@ function HeroSlideshow() {
           alt={heroImages[index].alt}
           loading="eager"
           fetchpriority={index === 0 ? 'high' : undefined}
-          className="absolute inset-0 w-full h-full object-cover grayscale transform-gpu will-change-[opacity]"
+          className="absolute inset-0 w-full h-full object-cover grayscale transform-gpu will-change-[opacity,transform]"
           initial={{ opacity: 0, scale: 1.06 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 1, transition: { duration: HERO_FADE / 1000 } }}
           transition={{
             opacity: {
               duration: isFirstRender.current ? HERO_INTRO / 1000 : HERO_FADE / 1000,
-              delay: isFirstRender.current ? INTRO_DELAY * 0.6 : 0,
+              delay: isFirstRender.current ? INTRO_DELAY * 0.45 : 0,
               ease,
             },
             // slow push-in that runs for the whole slide so the image never sits dead still
@@ -96,7 +96,7 @@ function Home() {
             {['Michael De Luna, AIA ', '| ', 'Architecture, Zoning & Expediting'].map((part, i) => (
               <motion.span
                 key={part}
-                className={`inline-block whitespace-pre ${i === 1 ? 'text-red' : ''}`}
+                className={`inline-block whitespace-pre-wrap ${i === 1 ? 'text-red' : ''}`}
                 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: INTRO_DELAY + 0.3 + i * 0.2, ease }}
               >

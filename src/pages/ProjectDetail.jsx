@@ -203,7 +203,7 @@ function ProjectDetail() {
                   className="aspect-[4/3] bg-paper-3 overflow-hidden"
                   initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.18, delay: i * 0.04, ease }}
+                  transition={{ duration: 0.5, delay: Math.min(i, 6) * 0.05, ease }}
                 >
                   {!imageError[`g${i}`] ? (
                     <img
